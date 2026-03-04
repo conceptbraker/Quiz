@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Admit Card Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* -------------------- 1. DASHBOARD STYLING (MOBILE OPTIMIZED) -------------------- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 10px;
+            color: #222;
+        }
+
+        .input-container {
+            background: #ffffff;
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+        }
+
+        h1 { 
+            text-align: center; 
+            color: #000; 
+            margin-bottom: 25px; 
+            font-weight: 700; 
+            font-size: 22px;
+        }
+        
+        .section-box {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 20px 15px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .section-title {
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #fff;
+            padding: 0 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .grid-row, .grid-row-3 { display: grid; gap: 15px; }
+        .grid-row { grid-template-columns: 1fr 1fr; }
+        .grid-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        @media (max-width: 768px) {
+            .grid-row, .grid-row-3 { grid-template-columns: 1fr; } 
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-bottom: 10px;
+                border: 1px solid #eee;
+            }
+            table { min-width: 600px; } 
+        }
+
+        label { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 5px; display: block; }
+        
+        input {
+            width: 100%; padding: 10px 12px; 
+            border: 1px solid #aaa; border-radius: 6px;
+            font-size: 14px; background: #fff; color: #000;
+            box-sizing: border-box;
+        }
+        input:focus { border-color: #000; outline: none; box-shadow: 0 0 0 2px rgba(0,0,0,0.1); }
+
+        .table-responsive { width: 100%; } 
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 5px; }
+        th { background: #eee; color: #000; padding: 10px; text-align: left; font-weight: 700; border-bottom: 2px solid #ccc; white-space: nowrap; }
+        td { padding: 8px; border-bottom: 1px solid #f0f0f0; }
+        
+        input::placeholder { color: #888; font-style: italic; }
+
+        button { cursor: pointer; border: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; }
+        .btn-add { background: #e0e0e0; color: #000; padding: 10px 20px; font-size: 13px; border: 1px solid #bbb; display: inline-block; margin-top: 10px;}
+        .btn-gen { background: #000; color: white; width: 100%; padding: 15px; font-size: 16px; margin-top: 20px; letter-spacing: 1px; }
+        .btn-del { background: #ffebeb; color: #d00; padding: 6px 10px; }
+
+        /* -------------------- 2. PRINT STYLING -------------------- */
+        #print-area { display: none; }
+
+        @page { size: A4; margin: 0; }
+
+        @media print {
+            body { background: white; margin: 0; padding: 0; }
+            .input-container { display: none; }
+            #print-area { display: block; }
+            
+            .page {
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+                position: relative;
+                padding-top: 10mm;
+                box-sizing: border-box;
+            }
+            .page:last-child { page-break-after: auto; }
+
+            /* ADMIT CARD CONTAINER - Single Border */
+            .admit-card {
+                width: 190mm;
+                height: 135mm;
+                margin: 0 auto 8mm auto;
+                border: 2px solid #000; /* Single Solid Line */
+                box-sizing: border-box;
+                font-family: 'Times New Roman', serif;
+                position: relative;
+                background: #fff;
+                padding: 5px;
+            }
+
+            /* Header */
+            .card-header {
+                text-align: center;
+                padding: 5px 0 5px 0;
+                border-bottom: 1px solid #000;
+                margin-bottom: 8px;
+            }
+            .school-name { 
+                font-family: 'Arial Black', sans-serif;
+                font-size: 24px; 
+                font-weight: 900; 
+                text-transform: uppercase; 
+                color: #000;
+                line-height: 1.1;
+                margin-bottom: 2px;
+            }
+            /* Admit Card Title - Moved Below */
+            .card-title {
+                font-family: 'Arial', sans-serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-decoration: underline;
+                margin: 4px 0 2px 0;
+            }
+            /* Simple Exam Name */
+            .exam-name { 
+                font-family: 'Arial', sans-serif;
+                font-size: 15px; 
+                font-weight: bold; 
+                text-transform: uppercase; 
+                color: #000;
+                margin-top: 2px;
+            }
+
+            /* Student Details */
+            .student-grid {
+                display: flex; 
+                padding: 0 15px; 
+                gap: 20px;
+                font-family: 'Arial', sans-serif;
+                font-size: 14px;
+            }
+            .col-left { width: 65%; }
+            .col-right { width: 35%; }
+
+            .detail-item { margin-bottom: 6px; display: flex; align-items: center; }
+            .label { font-weight: bold; width: 110px; color: #000; }
+            .value { 
+                flex: 1; 
+                font-weight: 600; 
+                color: #000; 
+                border-bottom: 1px solid #ccc;
+            } 
+
+            /* Timetable */
+            .timetable-container { padding: 0 15px; margin-top: 5px; }
+            .tt-head { font-size: 13px; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; font-family: 'Arial', sans-serif; border-bottom: 1px solid #000; display: inline-block; }
+            
+            .tt-table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: 'Arial', sans-serif; }
+            .tt-table th { border: 1px solid #000; padding: 4px; text-align: center; font-weight: bold; background: #f0f0f0; color: #000; -webkit-print-color-adjust: exact; }
+            .tt-table td { border: 1px solid #000; padding: 4px; text-align: center; font-weight: 500; color: #000; }
+            .tt-table td:first-child { text-align: left; padding-left: 8px; font-weight: bold; }
+
+            /* Footer */
+            .card-footer {
+                display: flex; 
+                justify-content: space-between;
+                padding: 0 40px; 
+                position: absolute;
+                bottom: 30px; 
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .sign-box { text-align: center; }
+            .sign-line { border-top: 1px solid #000; width: 150px; padding-top: 5px; font-size: 12px; font-weight: bold; }
+
+            /* NOTE */
+            .note-section {
+                position: absolute;
+                bottom: 5px; left: 15px; right: 15px;
+                border-top: 1px solid #000;
+                padding-top: 2px;
+                font-size: 10px;
+                font-weight: bold;
+                font-family: 'Arial', sans-serif;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="input-container">
+        <h1>🎓 Admit Card Generator By Akash Sir</h1>
+        
+        <div class="section-box">
+            <div class="section-title">1. School & Exam Details</div>
+            <div class="grid-row">
+                <div><label>School Name</label><input type="text" id="schoolName" value="श्री जगदेव शिक्षण सेवा संस्थान पैकौली देवरिया (उ. प्र .)"></div>
+                <div><label>Exam Session</label><input type="text" id="examName" value="वार्षिक परीक्षा 2026-27"></div>
+            </div>
+            <div style="margin-top: 15px;">
+                <label>Important Note (Bottom of Card)</label>
+                <input type="text" id="noteText" value="Note: एग्जाम हॉल के अंदर मोबाइल फोन या इलेक्ट्रॉनिक गैजेट्स का इस्तेमाल पूरी तरह मना है।">
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">2. Batch Settings (Auto-Fill)</div>
+            <div class="grid-row-3">
+                <div><label>Class</label><input type="text" id="commonClass" placeholder="Ex: 10th - A" oninput="updateLivePreview()"></div>
+                <div><label>Starting Roll No</label><input type="number" id="startRoll" placeholder="Ex: 101" oninput="updateLivePreview()"></div>
+                <div><label>Exam Time</label><input type="text" id="commonTime" value="09:00 AM - 12:00 PM"></div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">3. Timetable Setup</div>
+            <div class="table-responsive">
+                <table id="timetableInput">
+                    <thead>
+                        <tr><th width="60%">Subject Name</th><th width="40%">Date</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><input type="text" class="t-sub" value="Hindi"></td><td><input type="text" class="t-date" value="15/03/2026"></td></tr>
+                        <tr><td><input type="text" class="t-sub" value="English"></td><td><input type="text" class="t-date" value="17/03/2026"></td></tr>
+                        <tr><td><input type="text" class="t-sub" value="Mathematics"></td><td><input type="text" class="t-date" value="19/03/2026"></td></tr>
+                        <tr><td><input type="text" class="t-sub" value="Science"></td><td><input type="text" class="t-date" value="21/03/2026"></td></tr>
+                        <tr><td><input type="text" class="t-sub" value="Social Science"></td><td><input type="text" class="t-date" value="23/03/2026"></td></tr>
+                        <tr><td><input type="text" class="t-sub" value="Drawing/Art"></td><td><input type="text" class="t-date" value="25/03/2026"></td></tr>
+                        <tr><td><input type="text" class="t-sub" value="Sanskrit"></td><td><input type="text" class="t-date" value="27/03/2026"></td></tr>
+                        <tr><td><input type="text" class="t-sub" value="History"></td><td><input type="text" class="t-date" value="29/03/2026"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 10px;">
+                <button class="btn-add" onclick="addTimetableRow()">+ Add Subject</button>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">4. Student Details</div>
+            <div class="table-responsive">
+                <table id="studentInput">
+                    <thead>
+                        <tr>
+                            <th width="15%">Roll No</th>
+                            <th width="35%">Student Name</th>
+                            <th width="35%">Father's Name</th>
+                            <th width="10%">Class</th>
+                            <th width="5%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 10px;">
+                <button class="btn-add" onclick="addStudentRow()">+ Add Student Row</button>
+            </div>
+        </div>
+
+        <button class="btn-gen" onclick="generateCards()">GENERATE ADMIT CARDS & PRINT</button>
+    </div>
+
+    <div id="print-area"></div>
+
+    <script>
+        // Initialize with 5 empty student rows
+        window.onload = function() {
+            for(let i=0; i<5; i++) addStudentRow();
+            updateLivePreview(); 
+        };
+
+        function updateLivePreview() {
+            const commonClass = document.getElementById('commonClass').value;
+            const startRoll = document.getElementById('startRoll').value;
+            const rows = document.querySelectorAll('#studentInput tbody tr');
+
+            rows.forEach((row, index) => {
+                const classInput = row.querySelector('.s-class');
+                if (commonClass) classInput.placeholder = commonClass;
+                else classInput.placeholder = "Auto";
+
+                const rollInput = row.querySelector('.s-roll');
+                if (startRoll) rollInput.placeholder = parseInt(startRoll) + index;
+                else rollInput.placeholder = "Auto";
+            });
+        }
+
+        function addStudentRow() {
+            const tbody = document.getElementById('studentInput').querySelector('tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="s-roll" placeholder="Auto"></td>
+                <td><input type="text" class="s-name"></td>
+                <td><input type="text" class="s-father"></td>
+                <td><input type="text" class="s-class" placeholder="Auto"></td>
+                <td align="center"><button class="btn-del" onclick="removeRow(this)">✕</button></td>
+            `;
+            tbody.appendChild(tr);
+            updateLivePreview();
+        }
+
+        function removeRow(btn) {
+            btn.closest('tr').remove();
+            updateLivePreview();
+        }
+
+        function addTimetableRow() {
+            const tbody = document.getElementById('timetableInput').querySelector('tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><input type="text" class="t-sub"></td><td><input type="text" class="t-date"></td>`;
+            tbody.appendChild(tr);
+        }
+
+        function generateCards() {
+            const school = document.getElementById('schoolName').value;
+            const exam = document.getElementById('examName').value;
+            const note = document.getElementById('noteText').value;
+            const cClass = document.getElementById('commonClass').value;
+            const cTime = document.getElementById('commonTime').value;
+            let startRoll = parseInt(document.getElementById('startRoll').value) || null;
+
+            let ttRows = "";
+            document.querySelectorAll('#timetableInput tbody tr').forEach(tr => {
+                const sub = tr.querySelector('.t-sub').value;
+                const date = tr.querySelector('.t-date').value;
+                if(sub) {
+                    ttRows += `<tr>
+                        <td>${sub}</td>
+                        <td>${date}</td>
+                        <td>${cTime}</td>
+                        <td></td>
+                    </tr>`;
+                }
+            });
+
+            const studentRows = document.querySelectorAll('#studentInput tbody tr');
+            let printHTML = "";
+            let pageHTML = "";
+            let counter = 0;
+            let validIndex = 0;
+
+            studentRows.forEach(tr => {
+                const name = tr.querySelector('.s-name').value;
+                if(name) {
+                    let roll = tr.querySelector('.s-roll').value;
+                    let cls = tr.querySelector('.s-class').value || cClass;
+                    const father = tr.querySelector('.s-father').value;
+
+                    if(!roll && startRoll !== null) {
+                        roll = startRoll + validIndex;
+                    }
+
+                    pageHTML += `
+                        <div class="admit-card">
+                            <div class="card-header">
+                                <div class="school-name">${school}</div>
+                                <div class="exam-name">${exam}</div>
+                                <div class="card-title">ADMIT CARD</div>
+                            </div>
+
+                            <div class="student-grid">
+                                <div class="col-left">
+                                    <div class="detail-item"><div class="label">Name:</div> <div class="value">${name}</div></div>
+                                    <div class="detail-item"><div class="label">Father's Name:</div> <div class="value">${father}</div></div>
+                                </div>
+                                <div class="col-right">
+                                    <div class="detail-item"><div class="label">Roll No:</div> <div class="value">${roll}</div></div>
+                                    <div class="detail-item"><div class="label">Class:</div> <div class="value">${cls}</div></div>
+                                </div>
+                            </div>
+
+                            <div class="timetable-container">
+                                <div class="tt-head">Examination Schedule</div>
+                                <table class="tt-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="35%">Subject</th>
+                                            <th width="25%">Date</th>
+                                            <th width="25%">Time</th>
+                                            <th width="15%">Invigilator Sign</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>${ttRows}</tbody>
+                                </table>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="sign-box"><div class="sign-line">Class Teacher</div></div>
+                                <div class="sign-box"><div class="sign-line">Principal / Seal</div></div>
+                            </div>
+
+                            <div class="note-section">
+                                <b>* </b> ${note}
+                            </div>
+                        </div>
+                    `;
+
+                    counter++;
+                    validIndex++;
+
+                    if(counter % 2 === 0) {
+                        printHTML += `<div class="page">${pageHTML}</div>`;
+                        pageHTML = "";
+                    }
+                }
+            });
+
+            if(pageHTML) {
+                printHTML += `<div class="page">${pageHTML}</div>`;
+            }
+
+            document.getElementById('print-area').innerHTML = printHTML;
+            
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Fee Receipt Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* -------------------- 1. DASHBOARD STYLING (MOBILE OPTIMIZED) -------------------- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 10px;
+            color: #222;
+        }
+
+        .input-container {
+            background: #ffffff;
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+        }
+
+        h1 { 
+            text-align: center; 
+            color: #000; 
+            margin-bottom: 25px; 
+            font-weight: 700; 
+            font-size: 22px;
+        }
+        
+        .section-box {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 20px 15px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .section-title {
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #fff;
+            padding: 0 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .grid-row, .grid-row-3 { display: grid; gap: 15px; }
+        .grid-row { grid-template-columns: 1fr 1fr; }
+        .grid-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        @media (max-width: 768px) {
+            .grid-row, .grid-row-3 { grid-template-columns: 1fr; } 
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-bottom: 10px;
+                border: 1px solid #eee;
+            }
+            table { min-width: 600px; } 
+        }
+
+        label { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 5px; display: block; }
+        
+        input {
+            width: 100%; padding: 10px 12px; 
+            border: 1px solid #aaa; border-radius: 6px;
+            font-size: 14px; background: #fff; color: #000;
+            box-sizing: border-box;
+        }
+        input:focus { border-color: #000; outline: none; box-shadow: 0 0 0 2px rgba(0,0,0,0.1); }
+
+        .table-responsive { width: 100%; } 
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 5px; }
+        th { background: #eee; color: #000; padding: 10px; text-align: left; font-weight: 700; border-bottom: 2px solid #ccc; white-space: nowrap; }
+        td { padding: 8px; border-bottom: 1px solid #f0f0f0; }
+        
+        input::placeholder { color: #888; font-style: italic; }
+
+        button { cursor: pointer; border: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; }
+        .btn-add { background: #e0e0e0; color: #000; padding: 10px 20px; font-size: 13px; border: 1px solid #bbb; display: inline-block; margin-top: 10px;}
+        .btn-gen { background: #000; color: white; width: 100%; padding: 15px; font-size: 16px; margin-top: 20px; letter-spacing: 1px; }
+        .btn-del { background: #ffebeb; color: #d00; padding: 6px 10px; }
+
+        /* -------------------- 2. PRINT STYLING -------------------- */
+        #print-area { display: none; }
+
+        @page { size: A4; margin: 0; }
+
+        @media print {
+            body { background: white; margin: 0; padding: 0; }
+            .input-container { display: none; }
+            #print-area { display: block; }
+            
+            .page {
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+                position: relative;
+                padding-top: 10mm;
+                box-sizing: border-box;
+            }
+            .page:last-child { page-break-after: auto; }
+
+            /* RECEIPT CONTAINER */
+            .receipt-card {
+                width: 190mm;
+                height: 135mm;
+                margin: 0 auto 8mm auto;
+                border: 2px solid #000; 
+                box-sizing: border-box;
+                font-family: 'Times New Roman', serif;
+                position: relative;
+                background: #fff;
+                padding: 5px;
+            }
+
+            /* Header */
+            .card-header {
+                text-align: center;
+                padding: 5px 0 5px 0;
+                border-bottom: 2px solid #000;
+                margin-bottom: 8px;
+            }
+            .school-name { 
+                font-family: 'Arial Black', sans-serif;
+                font-size: 24px; 
+                font-weight: 900; 
+                text-transform: uppercase; 
+                color: #000;
+                line-height: 1.1;
+                margin-bottom: 2px;
+            }
+            .card-title {
+                font-family: 'Arial', sans-serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-decoration: underline;
+                margin: 4px 0 2px 0;
+            }
+            .session-name { 
+                font-family: 'Arial', sans-serif;
+                font-size: 14px; 
+                font-weight: bold; 
+                text-transform: uppercase; 
+                color: #000;
+                margin-top: 2px;
+            }
+
+            /* Student Details */
+            .student-grid {
+                display: flex; 
+                padding: 0 15px; 
+                gap: 20px;
+                font-family: 'Arial', sans-serif;
+                font-size: 14px;
+            }
+            .col-left { width: 65%; }
+            .col-right { width: 35%; }
+
+            .detail-item { margin-bottom: 6px; display: flex; align-items: center; }
+            .label { font-weight: bold; width: 110px; color: #000; }
+            .value { 
+                flex: 1; 
+                font-weight: 600; 
+                color: #000; 
+                border-bottom: 1px dotted #555;
+            } 
+
+            /* Fee Table */
+            .fee-container { padding: 0 15px; margin-top: 10px; }
+            
+            .fee-table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: 'Arial', sans-serif; }
+            .fee-table th { border: 1px solid #000; padding: 6px; text-align: center; font-weight: bold; background: #f0f0f0; color: #000; -webkit-print-color-adjust: exact; }
+            .fee-table td { border: 1px solid #000; padding: 6px; color: #000; }
+            
+            /* Alignments for Fee Table */
+            .col-sno { width: 10%; text-align: center !important; }
+            .col-part { width: 60%; text-align: left !important; padding-left: 10px !important; }
+            .col-amt { width: 30%; text-align: right !important; padding-right: 10px !important; font-weight: bold; }
+            .row-total th { text-align: right; padding-right: 10px; font-size: 14px; }
+
+            /* Footer */
+            .card-footer {
+                display: flex; 
+                justify-content: space-between;
+                padding: 0 30px; 
+                position: absolute;
+                bottom: 30px; 
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .sign-box { text-align: center; }
+            .sign-line { border-top: 1px solid #000; width: 160px; padding-top: 5px; font-size: 12px; font-weight: bold; font-family: 'Arial', sans-serif; }
+
+            /* NOTE */
+            .note-section {
+                position: absolute;
+                bottom: 5px; left: 15px; right: 15px;
+                border-top: 1px solid #000;
+                padding-top: 2px;
+                font-size: 10px;
+                font-weight: bold;
+                font-family: 'Arial', sans-serif;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="input-container">
+        <h1>🧾 Fee Receipt Generator By Akash Sir</h1>
+        
+        <div class="section-box">
+            <div class="section-title">1. School & Receipt Details</div>
+            <div class="grid-row">
+                <div><label>School Name</label><input type="text" id="schoolName" value="श्री जगदेव शिक्षण सेवा संस्थान पैकौली देवरिया (उ. प्र .)"></div>
+                <div><label>Fee Session / Month</label><input type="text" id="sessionName" value="Academic Session 2026-27 (April - June)"></div>
+            </div>
+            <div style="margin-top: 15px;">
+                <label>Important Note (Bottom of Receipt)</label>
+                <input type="text" id="noteText" value="Note: एक बार जमा की गई फीस किसी भी परिस्थिति में वापस नहीं होगी (Fee once paid is not refundable).">
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">2. Batch Settings (Auto-Fill)</div>
+            <div class="grid-row-3">
+                <div><label>Class</label><input type="text" id="commonClass" placeholder="Ex: 10th - A" oninput="updateLivePreview()"></div>
+                <div><label>Starting Receipt No.</label><input type="number" id="startReceipt" placeholder="Ex: 1001" oninput="updateLivePreview()"></div>
+                <div><label>Date of Issue</label><input type="text" id="commonDate" value="10/04/2026"></div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">3. Fee Particulars (Breakdown)</div>
+            <div class="table-responsive">
+                <table id="feeInput">
+                    <thead>
+                        <tr><th width="70%">Fee Type / Particulars</th><th width="30%">Amount (₹)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><input type="text" class="f-part" value="Admission Fee"></td><td><input type="number" class="f-amt" value="500"></td></tr>
+                        <tr><td><input type="text" class="f-part" value="Tuition Fee (3 Months)"></td><td><input type="number" class="f-amt" value="1500"></td></tr>
+                        <tr><td><input type="text" class="f-part" value="Computer / Lab Fee"></td><td><input type="number" class="f-amt" value="300"></td></tr>
+                        <tr><td><input type="text" class="f-part" value="Transport Fee"></td><td><input type="number" class="f-amt" value="0"></td></tr>
+                        <tr><td><input type="text" class="f-part" value="Exam Fee"></td><td><input type="number" class="f-amt" value="200"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 10px;">
+                <button class="btn-add" onclick="addFeeRow()">+ Add Fee Type</button>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">4. Student Details</div>
+            <div class="table-responsive">
+                <table id="studentInput">
+                    <thead>
+                        <tr>
+                            <th width="15%">Receipt No</th>
+                            <th width="15%">Roll No</th>
+                            <th width="30%">Student Name</th>
+                            <th width="25%">Father's Name</th>
+                            <th width="10%">Class</th>
+                            <th width="5%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 10px;">
+                <button class="btn-add" onclick="addStudentRow()">+ Add Student Row</button>
+            </div>
+        </div>
+
+        <button class="btn-gen" onclick="generateReceipts()">GENERATE FEE RECEIPTS & PRINT</button>
+    </div>
+
+    <div id="print-area"></div>
+
+    <script>
+        // Initialize with 5 empty student rows
+        window.onload = function() {
+            for(let i=0; i<5; i++) addStudentRow();
+            
+            // Set today's date automatically
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let yyyy = today.getFullYear();
+            document.getElementById('commonDate').value = dd + '/' + mm + '/' + yyyy;
+            
+            updateLivePreview(); 
+        };
+
+        function updateLivePreview() {
+            const commonClass = document.getElementById('commonClass').value;
+            const startReceipt = document.getElementById('startReceipt').value;
+            const rows = document.querySelectorAll('#studentInput tbody tr');
+
+            rows.forEach((row, index) => {
+                const classInput = row.querySelector('.s-class');
+                if (commonClass) classInput.placeholder = commonClass;
+                else classInput.placeholder = "Auto";
+
+                const receiptInput = row.querySelector('.s-receipt');
+                if (startReceipt) receiptInput.placeholder = parseInt(startReceipt) + index;
+                else receiptInput.placeholder = "Auto";
+            });
+        }
+
+        function addStudentRow() {
+            const tbody = document.getElementById('studentInput').querySelector('tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="s-receipt" placeholder="Auto"></td>
+                <td><input type="text" class="s-roll" placeholder="Ex: 101"></td>
+                <td><input type="text" class="s-name"></td>
+                <td><input type="text" class="s-father"></td>
+                <td><input type="text" class="s-class" placeholder="Auto"></td>
+                <td align="center"><button class="btn-del" onclick="removeRow(this)">✕</button></td>
+            `;
+            tbody.appendChild(tr);
+            updateLivePreview();
+        }
+
+        function removeRow(btn) {
+            btn.closest('tr').remove();
+            updateLivePreview();
+        }
+
+        function addFeeRow() {
+            const tbody = document.getElementById('feeInput').querySelector('tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><input type="text" class="f-part"></td><td><input type="number" class="f-amt" value="0"></td>`;
+            tbody.appendChild(tr);
+        }
+
+        function generateReceipts() {
+            const school = document.getElementById('schoolName').value;
+            const session = document.getElementById('sessionName').value;
+            const note = document.getElementById('noteText').value;
+            const cClass = document.getElementById('commonClass').value;
+            const recDate = document.getElementById('commonDate').value;
+            let startReceipt = parseInt(document.getElementById('startReceipt').value) || null;
+
+            // Generate Fee Breakdown Rows and Calculate Total
+            let feeRowsHTML = "";
+            let grandTotal = 0;
+            let sno = 1;
+
+            document.querySelectorAll('#feeInput tbody tr').forEach(tr => {
+                const part = tr.querySelector('.f-part').value;
+                const amtVal = parseFloat(tr.querySelector('.f-amt').value);
+                const amt = isNaN(amtVal) ? 0 : amtVal;
+                
+                if(part && amt > 0) { // Only add rows where amount is greater than 0
+                    feeRowsHTML += `<tr>
+                        <td class="col-sno">${sno++}</td>
+                        <td class="col-part">${part}</td>
+                        <td class="col-amt">₹ ${amt.toFixed(2)}</td>
+                    </tr>`;
+                    grandTotal += amt;
+                }
+            });
+
+            // Add Grand Total Row at the bottom of the table
+            feeRowsHTML += `<tr class="row-total">
+                <th colspan="2">GRAND TOTAL :</th>
+                <th class="col-amt">₹ ${grandTotal.toFixed(2)}</th>
+            </tr>`;
+
+            const studentRows = document.querySelectorAll('#studentInput tbody tr');
+            let printHTML = "";
+            let pageHTML = "";
+            let counter = 0;
+            let validIndex = 0;
+
+            studentRows.forEach(tr => {
+                const name = tr.querySelector('.s-name').value;
+                if(name) {
+                    let receiptNo = tr.querySelector('.s-receipt').value;
+                    let roll = tr.querySelector('.s-roll').value || "-";
+                    let cls = tr.querySelector('.s-class').value || cClass;
+                    const father = tr.querySelector('.s-father').value;
+
+                    if(!receiptNo && startReceipt !== null) {
+                        receiptNo = startReceipt + validIndex;
+                    }
+
+                    pageHTML += `
+                        <div class="receipt-card">
+                            <div class="card-header">
+                                <div class="school-name">${school}</div>
+                                <div class="session-name">${session}</div>
+                                <div class="card-title">FEE RECEIPT</div>
+                            </div>
+
+                            <div class="student-grid">
+                                <div class="col-left">
+                                    <div class="detail-item"><div class="label">Receipt No:</div> <div class="value">${receiptNo || '____'}</div></div>
+                                    <div class="detail-item"><div class="label">Name:</div> <div class="value">${name}</div></div>
+                                    <div class="detail-item"><div class="label">Father's Name:</div> <div class="value">${father}</div></div>
+                                </div>
+                                <div class="col-right">
+                                    <div class="detail-item"><div class="label">Date:</div> <div class="value">${recDate}</div></div>
+                                    <div class="detail-item"><div class="label">Roll No:</div> <div class="value">${roll}</div></div>
+                                    <div class="detail-item"><div class="label">Class:</div> <div class="value">${cls}</div></div>
+                                </div>
+                            </div>
+
+                            <div class="fee-container">
+                                <table class="fee-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-sno">S.No.</th>
+                                            <th class="col-part">Fee Particulars</th>
+                                            <th class="col-amt">Amount (₹)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>${feeRowsHTML}</tbody>
+                                </table>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="sign-box"><div class="sign-line">Depositor / Parent Sign</div></div>
+                                <div class="sign-box"><div class="sign-line">Cashier / Clerk Sign</div></div>
+                            </div>
+
+                            <div class="note-section">
+                                <b>* </b> ${note}
+                            </div>
+                        </div>
+                    `;
+
+                    counter++;
+                    validIndex++;
+
+                    // 2 Receipts per A4 Page
+                    if(counter % 2 === 0) {
+                        printHTML += `<div class="page">${pageHTML}</div>`;
+                        pageHTML = "";
+                    }
+                }
+            });
+
+            if(pageHTML) {
+                printHTML += `<div class="page">${pageHTML}</div>`;
+            }
+
+            document.getElementById('print-area').innerHTML = printHTML;
+            
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
+    </script>
+</body>
+</html>

@@ -3,453 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Admit Card Generator By Akash Sir</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Pro Studio Master Tool By Akash Deoria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';</script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
     <style>
-        /* -------------------- 1. DASHBOARD STYLING (MOBILE OPTIMIZED) -------------------- */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 10px;
-            color: #222;
-        }
-
-        .input-container {
-            background: #ffffff;
-            padding: 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid #e0e0e0;
-        }
-
-        h1 { 
-            text-align: center; 
-            color: #000; 
-            margin-bottom: 25px; 
-            font-weight: 700; 
-            font-size: 22px;
-        }
+        body { font-family: 'Poppins', sans-serif; background: #f4f7f6; padding: 20px; color: #222; }
+        .container { background: #fff; padding: 30px; max-width: 950px; margin: 0 auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #000; font-size: 26px; margin-bottom: 30px; font-weight: 700; }
         
-        .section-box {
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            padding: 20px 15px;
-            margin-bottom: 25px;
-            position: relative;
-        }
+        .section-title { font-size: 18px; font-weight: 700; background: #222; color: #fff; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; display: inline-block; }
+        .box { border: 1px solid #ddd; padding: 25px; border-radius: 12px; margin-bottom: 30px; background: #fafafa; }
+        .hint-text { font-size: 12px; color: #555; margin-bottom: 15px; display: block; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        label { font-weight: 600; font-size: 13px; margin-bottom: 5px; display: block; }
+        input[type="file"], input[type="password"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        input[type="range"] { width: 100%; cursor: pointer; margin-top: 10px; }
         
-        .section-title {
-            position: absolute;
-            top: -12px;
-            left: 15px;
-            background: #fff;
-            padding: 0 10px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #000;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .grid-row, .grid-row-3 { display: grid; gap: 15px; }
-        .grid-row { grid-template-columns: 1fr 1fr; }
-        .grid-row-3 { grid-template-columns: 1fr 1fr 1fr; }
-
-        @media (max-width: 768px) {
-            .grid-row, .grid-row-3 { grid-template-columns: 1fr; } 
-            .table-responsive {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                margin-bottom: 10px;
-                border: 1px solid #eee;
-            }
-            table { min-width: 600px; } 
-        }
-
-        label { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 5px; display: block; }
+        button { cursor: pointer; border: none; border-radius: 6px; font-weight: bold; transition: all 0.3s; padding: 12px 20px; font-size: 14px; }
+        .btn-main { background: #000; color: white; width: 100%; font-size: 16px; padding: 15px;}
+        .btn-main:hover { background: #333; }
         
-        input {
-            width: 100%; padding: 10px 12px; 
-            border: 1px solid #aaa; border-radius: 6px;
-            font-size: 14px; background: #fff; color: #000;
-            box-sizing: border-box;
-        }
-        input:focus { border-color: #000; outline: none; box-shadow: 0 0 0 2px rgba(0,0,0,0.1); }
-
-        .table-responsive { width: 100%; } 
-        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 5px; }
-        th { background: #eee; color: #000; padding: 10px; text-align: left; font-weight: 700; border-bottom: 2px solid #ccc; white-space: nowrap; }
-        td { padding: 8px; border-bottom: 1px solid #f0f0f0; }
+        .btn-action { background: #007bff; color: white; margin: 5px; }
+        .btn-action:hover { background: #0056b3; }
         
-        input::placeholder { color: #888; font-style: italic; }
+        .btn-rotate { background: #ff9800; color: white; margin-right: 5px; padding: 8px 12px; font-size: 13px; margin-bottom: 5px;}
+        .btn-rotate:hover { background: #e68a00; }
 
-        button { cursor: pointer; border: none; border-radius: 6px; font-weight: 600; transition: all 0.3s; }
-        .btn-add { background: #e0e0e0; color: #000; padding: 10px 20px; font-size: 13px; border: 1px solid #bbb; display: inline-block; margin-top: 10px;}
-        .btn-gen { background: #000; color: white; width: 100%; padding: 15px; font-size: 16px; margin-top: 20px; letter-spacing: 1px; }
-        .btn-del { background: #ffebeb; color: #d00; padding: 6px 10px; }
+        .btn-download { background: #28a745; color: white; width: 48%; padding: 15px; font-size: 16px;}
+        .btn-print { background: #dc3545; color: white; width: 48%; padding: 15px; font-size: 16px;}
+        .btn-clear { background: #dc3545; color: white; padding: 8px 15px; font-size: 12px; margin-top: 10px; width: 100%; }
+        .btn-clear:hover { background: #c82333; }
 
-        /* -------------------- 2. PRINT STYLING -------------------- */
+        /* Workspace */
+        .workspace { display: none; margin-top: 20px; }
+        .crop-container { max-height: 500px; overflow: hidden; border: 2px solid #555; margin-bottom: 15px; background: #eee; border-radius: 8px;}
+        img.target-img { max-width: 100%; display: block; }
+
+        /* Previews */
+        .preview-box { display: flex; justify-content: space-around; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-top: 20px; gap: 10px; position: relative;}
+        .preview-item { text-align: center; width: 45%; }
+        .preview-item img { width: 100%; border: 1px dashed #ccc; display: block; margin-top: 10px; min-height: 100px; background: #fdfdfd; }
+        
+        .final-actions { display: flex; justify-content: space-between; margin-top: 25px; display: none; }
+
+        /* Print Styling */
         #print-area { display: none; }
-
-        @page { size: A4; margin: 0; }
-
         @media print {
             body { background: white; margin: 0; padding: 0; }
-            .input-container { display: none; }
+            .container { display: none; }
             #print-area { display: block; }
-            
-            .page {
-                width: 210mm;
-                height: 297mm;
-                page-break-after: always;
-                position: relative;
-                padding-top: 10mm;
-                box-sizing: border-box;
-            }
-            .page:last-child { page-break-after: auto; }
-
-            /* ADMIT CARD CONTAINER - Single Border */
-            .admit-card {
-                width: 190mm;
-                height: 135mm;
-                margin: 0 auto 8mm auto;
-                border: 2px solid #000; /* Single Solid Line */
-                box-sizing: border-box;
-                font-family: 'Times New Roman', serif;
-                position: relative;
-                background: #fff;
-                padding: 5px;
-            }
-
-            /* Header */
-            .card-header {
-                text-align: center;
-                padding: 5px 0 5px 0;
-                border-bottom: 1px solid #000;
-                margin-bottom: 8px;
-            }
-            .school-name { 
-                font-family: 'Arial Black', sans-serif;
-                font-size: 24px; 
-                font-weight: 900; 
-                text-transform: uppercase; 
-                color: #000;
-                line-height: 1.1;
-                margin-bottom: 2px;
-            }
-            /* Admit Card Title - Moved Below */
-            .card-title {
-                font-family: 'Arial', sans-serif;
-                font-size: 18px;
-                font-weight: bold;
-                text-decoration: underline;
-                margin: 4px 0 2px 0;
-            }
-            /* Simple Exam Name */
-            .exam-name { 
-                font-family: 'Arial', sans-serif;
-                font-size: 15px; 
-                font-weight: bold; 
-                text-transform: uppercase; 
-                color: #000;
-                margin-top: 2px;
-            }
-
-            /* Student Details */
-            .student-grid {
-                display: flex; 
-                padding: 0 15px; 
-                gap: 20px;
-                font-family: 'Arial', sans-serif;
-                font-size: 14px;
-            }
-            .col-left { width: 65%; }
-            .col-right { width: 35%; }
-
-            .detail-item { margin-bottom: 6px; display: flex; align-items: center; }
-            .label { font-weight: bold; width: 110px; color: #000; }
-            .value { 
-                flex: 1; 
-                font-weight: 600; 
-                color: #000; 
-                border-bottom: 1px solid #ccc;
-            } 
-
-            /* Timetable */
-            .timetable-container { padding: 0 15px; margin-top: 5px; }
-            .tt-head { font-size: 13px; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; font-family: 'Arial', sans-serif; border-bottom: 1px solid #000; display: inline-block; }
-            
-            .tt-table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: 'Arial', sans-serif; }
-            .tt-table th { border: 1px solid #000; padding: 4px; text-align: center; font-weight: bold; background: #f0f0f0; color: #000; -webkit-print-color-adjust: exact; }
-            .tt-table td { border: 1px solid #000; padding: 4px; text-align: center; font-weight: 500; color: #000; }
-            .tt-table td:first-child { text-align: left; padding-left: 8px; font-weight: bold; }
-
-            /* Footer */
-            .card-footer {
-                display: flex; 
-                justify-content: space-between;
-                padding: 0 40px; 
-                position: absolute;
-                bottom: 30px; 
-                width: 100%;
-                box-sizing: border-box;
-            }
-            .sign-box { text-align: center; }
-            .sign-line { border-top: 1px solid #000; width: 150px; padding-top: 5px; font-size: 12px; font-weight: bold; }
-
-            /* NOTE */
-            .note-section {
-                position: absolute;
-                bottom: 5px; left: 15px; right: 15px;
-                border-top: 1px solid #000;
-                padding-top: 2px;
-                font-size: 10px;
-                font-weight: bold;
-                font-family: 'Arial', sans-serif;
-                text-align: center;
-            }
+            @page { size: A4; margin: 0; }
+            .page { width: 210mm; height: 297mm; padding-top: 10mm; display: flex; justify-content: center; gap: 5mm; }
+            .print-card { width: 85mm; height: 54mm; object-fit: fill; border: 1px dashed #999; border-radius: 4px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="input-container">
-        <h1>🎓 Admit Card Generator By Akash Sir</h1>
+    <div class="container">
+        <h1>🛠️ Pro Studio Master Tool Akash Deoria</h1>
         
-        <div class="section-box">
-            <div class="section-title">1. School & Exam Details</div>
-            <div class="grid-row">
-                <div><label>School Name</label><input type="text" id="schoolName" value="श्री जगदेव शिक्षण सेवा संस्थान पैकौली देवरिया (उ. प्र .)"></div>
-                <div><label>Exam Session</label><input type="text" id="examName" value="वार्षिक परीक्षा 2025-26"></div>
+        <div class="box">
+            <div class="section-title">💳 1. Aadhaar Auto-Crop & Edit</div>
+            <div class="grid">
+                <div><label>Select e-Aadhaar PDF</label><input type="file" id="pdfFile" accept="application/pdf"></div>
+                <div><label>PDF Password</label><input type="password" id="pdfPassword" placeholder="e.g. RAJU1995"></div>
             </div>
-            <div style="margin-top: 15px;">
-                <label>Important Note (Bottom of Card)</label>
-                <input type="text" id="noteText" value="Note: एग्जाम हॉल के अंदर मोबाइल फोन या इलेक्ट्रॉनिक गैजेट्स का इस्तेमाल पूरी तरह मना है।">
+            <button class="btn-main" onclick="loadPdf()">OPEN PDF & AUTO-CROP</button>
+
+            <div class="workspace" id="aadhaarWorkspace">
+                <p style="font-weight: 600; color: #28a745;">✅ Success! Cards auto-cropped below. If cutting is slightly off, adjust the box here and re-capture.</p>
+                <p class="hint-text">💡 <b>Tip:</b> You can now zoom in/out freely on the full page!</p>
+                
+                <div class="crop-container"><img id="pdfImage" class="target-img" src=""></div>
+                
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <button class="btn-action" onclick="captureFront()">📸 Capture FRONT</button>
+                    <button class="btn-action" onclick="captureBack()" style="background:#17a2b8;">📸 Capture BACK</button>
+                </div>
+
+                <div class="preview-box">
+                    <div class="preview-item"><strong>Front Card</strong><img id="frontPreview" src=""></div>
+                    <div class="preview-item"><strong>Back Card</strong><img id="backPreview" src=""></div>
+                </div>
+
+                <div class="final-actions" id="finalActionsAadhaar">
+                    <button class="btn-download" onclick="downloadAadhaarImages()">⬇️ SAVE BOTH JPGs</button>
+                    <button class="btn-print" onclick="printAadhaarCards()">🖨️ PRINT AADHAAR ON A4</button>
+                </div>
             </div>
         </div>
 
-        <div class="section-box">
-            <div class="section-title">2. Batch Settings (Auto-Fill)</div>
-            <div class="grid-row-3">
-                <div><label>Class</label><input type="text" id="commonClass" placeholder="Ex: 10th - A" oninput="updateLivePreview()"></div>
-                <div><label>Starting Roll No</label><input type="number" id="startRoll" placeholder="Ex: 101" oninput="updateLivePreview()"></div>
-                <div><label>Exam Time</label><input type="text" id="commonTime" value="09:00 AM - 12:00 PM"></div>
+        <div class="box">
+            <div class="section-title">🖼️ 2. Multi-Image Crop & Print</div>
+            <span class="hint-text">💡 <b>Tip:</b> Upload 1st photo ➔ Capture Front. Upload 2nd photo ➔ Capture Back. Print together!</span>
+            
+            <div>
+                <label>Select Any Image (JPG/PNG)</label>
+                <input type="file" id="generalImgFile" accept="image/*" onchange="loadGeneralImage(event)">
+            </div>
+
+            <div class="workspace" id="generalWorkspace">
+                <div style="margin-bottom: 15px; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                    <label>📐 Fine-Tune Alignment</label>
+                    <input type="range" id="rotateSlider" min="-45" max="45" value="0" step="0.5" oninput="fineRotateImage()">
+                    <div style="margin-top: 10px;">
+                        <button class="btn-rotate" onclick="resetGeneralRotate()">↻ Reset Angle</button>
+                        <button class="btn-rotate" onclick="rotateGenManual(90)" style="background:#17a2b8;">↻ Rotate 90°</button>
+                    </div>
+                </div>
+                
+                <div class="crop-container"><img id="generalImage" class="target-img" src=""></div>
+                
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <button class="btn-action" onclick="captureGen1()">📸 Capture as FRONT</button>
+                    <button class="btn-action" onclick="captureGen2()" style="background:#17a2b8;">📸 Capture as BACK</button>
+                </div>
+
+                <div class="preview-box">
+                    <div class="preview-item">
+                        <strong>Front Image</strong>
+                        <img id="genPreview1" src="">
+                        <button class="btn-clear" onclick="clearGen1()">🗑️ Clear Front</button>
+                    </div>
+                    <div class="preview-item">
+                        <strong>Back Image</strong>
+                        <img id="genPreview2" src="">
+                        <button class="btn-clear" onclick="clearGen2()">🗑️ Clear Back</button>
+                    </div>
+                </div>
+
+                <div class="final-actions" id="finalActionsGen">
+                    <button class="btn-download" onclick="downloadGenImages()">⬇️ SAVE JPG(s)</button>
+                    <button class="btn-print" onclick="printGenCards()">🖨️ PRINT ON A4</button>
+                </div>
             </div>
         </div>
 
-        <div class="section-box">
-            <div class="section-title">3. Timetable Setup</div>
-            <div class="table-responsive">
-                <table id="timetableInput">
-                    <thead>
-                        <tr><th width="60%">Subject Name</th><th width="40%">Date</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><input type="text" class="t-sub" value="Hindi"></td><td><input type="text" class="t-date" value="10/03/2026"></td></tr>
-                        <tr><td><input type="text" class="t-sub" value="English"></td><td><input type="text" class="t-date" value="12/03/2026"></td></tr>
-                        <tr><td><input type="text" class="t-sub" value="Mathematics"></td><td><input type="text" class="t-date" value="14/03/2026"></td></tr>
-                        <tr><td><input type="text" class="t-sub" value="Science"></td><td><input type="text" class="t-date" value="15/03/2026"></td></tr>
-                        <tr><td><input type="text" class="t-sub" value="Social Science"></td><td><input type="text" class="t-date" value="16/03/2026"></td></tr>
-                        <tr><td><input type="text" class="t-sub" value="Drawing/Art"></td><td><input type="text" class="t-date" value="18/03/2026"></td></tr>
-                        <tr><td><input type="text" class="t-sub" value="Sanskrit"></td><td><input type="text" class="t-date" value="20/03/2026"></td></tr>
-                        <tr><td><input type="text" class="t-sub" value="History"></td><td><input type="text" class="t-date" value="22/03/2026"></td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="text-align: right; margin-top: 10px;">
-                <button class="btn-add" onclick="addTimetableRow()">+ Add Subject</button>
-            </div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">4. Student Details</div>
-            <div class="table-responsive">
-                <table id="studentInput">
-                    <thead>
-                        <tr>
-                            <th width="15%">Roll No</th>
-                            <th width="35%">Student Name</th>
-                            <th width="35%">Father's Name</th>
-                            <th width="10%">Class</th>
-                            <th width="5%"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        </tbody>
-                </table>
-            </div>
-            <div style="text-align: right; margin-top: 10px;">
-                <button class="btn-add" onclick="addStudentRow()">+ Add Student Row</button>
-            </div>
-        </div>
-
-        <button class="btn-gen" onclick="generateCards()">GENERATE ADMIT CARDS & PRINT</button>
     </div>
 
     <div id="print-area"></div>
 
     <script>
-        // Initialize with 5 empty student rows
-        window.onload = function() {
-            for(let i=0; i<5; i++) addStudentRow();
-            updateLivePreview(); 
-        };
+        // ================= AADHAAR LOGIC =================
+        let aadhaarCropper = null;
 
-        function updateLivePreview() {
-            const commonClass = document.getElementById('commonClass').value;
-            const startRoll = document.getElementById('startRoll').value;
-            const rows = document.querySelectorAll('#studentInput tbody tr');
+        async function loadPdf() {
+            const fileInput = document.getElementById('pdfFile');
+            const password = document.getElementById('pdfPassword').value;
+            if (fileInput.files.length === 0) { alert('Please select Aadhaar PDF!'); return; }
 
-            rows.forEach((row, index) => {
-                const classInput = row.querySelector('.s-class');
-                if (commonClass) classInput.placeholder = commonClass;
-                else classInput.placeholder = "Auto";
+            const fileReader = new FileReader();
+            fileReader.onload = async function() {
+                try {
+                    const typedarray = new Uint8Array(this.result);
+                    const loadingTask = pdfjsLib.getDocument({ data: typedarray, password: password });
+                    const pdf = await loadingTask.promise;
+                    const page = await pdf.getPage(1);
 
-                const rollInput = row.querySelector('.s-roll');
-                if (startRoll) rollInput.placeholder = parseInt(startRoll) + index;
-                else rollInput.placeholder = "Auto";
-            });
-        }
+                    const scale = 3; 
+                    const viewport = page.getViewport({ scale: scale });
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    await page.render({ canvasContext: context, viewport: viewport }).promise;
 
-        function addStudentRow() {
-            const tbody = document.getElementById('studentInput').querySelector('tbody');
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><input type="text" class="s-roll" placeholder="Auto"></td>
-                <td><input type="text" class="s-name"></td>
-                <td><input type="text" class="s-father"></td>
-                <td><input type="text" class="s-class" placeholder="Auto"></td>
-                <td align="center"><button class="btn-del" onclick="removeRow(this)">✕</button></td>
-            `;
-            tbody.appendChild(tr);
-            updateLivePreview();
-        }
+                    const fullWidth = canvas.width;
+                    const fullHeight = canvas.height;
 
-        function removeRow(btn) {
-            btn.closest('tr').remove();
-            updateLivePreview();
-        }
+                    const imgElement = document.getElementById('pdfImage');
+                    imgElement.src = canvas.toDataURL('image/png');
+                    document.getElementById('aadhaarWorkspace').style.display = 'block';
 
-        function addTimetableRow() {
-            const tbody = document.getElementById('timetableInput').querySelector('tbody');
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td><input type="text" class="t-sub"></td><td><input type="text" class="t-date"></td>`;
-            tbody.appendChild(tr);
-        }
+                    if (aadhaarCropper) aadhaarCropper.destroy();
+                    aadhaarCropper = new Cropper(imgElement, {
+                        viewMode: 1, 
+                        dragMode: 'crop', 
+                        zoomable: true, 
+                        ready() {
+                            setTimeout(() => {
+                                const boxY = fullHeight * 0.655; 
+                                const boxW = fullWidth * 0.460;
+                                const boxH = fullHeight * 0.295;
 
-        function generateCards() {
-            const school = document.getElementById('schoolName').value;
-            const exam = document.getElementById('examName').value;
-            const note = document.getElementById('noteText').value;
-            const cClass = document.getElementById('commonClass').value;
-            const cTime = document.getElementById('commonTime').value;
-            let startRoll = parseInt(document.getElementById('startRoll').value) || null;
+                                aadhaarCropper.setData({ x: fullWidth * 0.040, y: boxY, width: boxW, height: boxH });
+                                document.getElementById('frontPreview').src = aadhaarCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
+                                
+                                aadhaarCropper.setData({ x: fullWidth * 0.500, y: boxY, width: boxW, height: boxH });
+                                document.getElementById('backPreview').src = aadhaarCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
+                                
+                                aadhaarCropper.setData({ x: fullWidth * 0.040, y: boxY, width: boxW, height: boxH });
 
-            let ttRows = "";
-            document.querySelectorAll('#timetableInput tbody tr').forEach(tr => {
-                const sub = tr.querySelector('.t-sub').value;
-                const date = tr.querySelector('.t-date').value;
-                if(sub) {
-                    ttRows += `<tr>
-                        <td>${sub}</td>
-                        <td>${date}</td>
-                        <td>${cTime}</td>
-                        <td></td>
-                    </tr>`;
+                                document.getElementById('finalActionsAadhaar').style.display = 'flex';
+                            }, 200);
+                        }
+                    });
+                } catch (error) {
+                    if (error.name === 'PasswordException') alert('❌ Wrong Password!');
+                    else alert('❌ Error loading PDF.');
                 }
-            });
+            };
+            fileReader.readAsArrayBuffer(fileInput.files[0]);
+        }
 
-            const studentRows = document.querySelectorAll('#studentInput tbody tr');
-            let printHTML = "";
-            let pageHTML = "";
-            let counter = 0;
-            let validIndex = 0;
+        function captureFront() {
+            if (!aadhaarCropper) return;
+            document.getElementById('frontPreview').src = aadhaarCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
+        }
+        function captureBack() {
+            if (!aadhaarCropper) return;
+            document.getElementById('backPreview').src = aadhaarCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
+        }
 
-            studentRows.forEach(tr => {
-                const name = tr.querySelector('.s-name').value;
-                if(name) {
-                    let roll = tr.querySelector('.s-roll').value;
-                    let cls = tr.querySelector('.s-class').value || cClass;
-                    const father = tr.querySelector('.s-father').value;
+        function downloadAadhaarImages() {
+            const front = document.getElementById('frontPreview').src;
+            const back = document.getElementById('backPreview').src;
+            if(front) { const link = document.createElement('a'); link.href = front; link.download = 'Aadhaar_Front.jpg'; link.click(); }
+            if(back) setTimeout(() => { const link = document.createElement('a'); link.href = back; link.download = 'Aadhaar_Back.jpg'; link.click(); }, 300);
+        }
 
-                    if(!roll && startRoll !== null) {
-                        roll = startRoll + validIndex;
-                    }
+        function printAadhaarCards() {
+            const front = document.getElementById('frontPreview').src;
+            const back = document.getElementById('backPreview').src;
+            document.getElementById('print-area').innerHTML = `<div class="page"><img src="${front}" class="print-card"><img src="${back}" class="print-card"></div>`;
+            setTimeout(() => { window.print(); }, 500);
+        }
 
-                    pageHTML += `
-                        <div class="admit-card">
-                            <div class="card-header">
-                                <div class="school-name">${school}</div>
-                                <div class="exam-name">${exam}</div>
-                                <div class="card-title">ADMIT CARD</div>
-                            </div>
 
-                            <div class="student-grid">
-                                <div class="col-left">
-                                    <div class="detail-item"><div class="label">Name:</div> <div class="value">${name}</div></div>
-                                    <div class="detail-item"><div class="label">Father's Name:</div> <div class="value">${father}</div></div>
-                                </div>
-                                <div class="col-right">
-                                    <div class="detail-item"><div class="label">Roll No:</div> <div class="value">${roll}</div></div>
-                                    <div class="detail-item"><div class="label">Class:</div> <div class="value">${cls}</div></div>
-                                </div>
-                            </div>
+        // ================= GENERAL IMAGE LOGIC =================
+        let genCropper = null;
 
-                            <div class="timetable-container">
-                                <div class="tt-head">Examination Schedule</div>
-                                <table class="tt-table">
-                                    <thead>
-                                        <tr>
-                                            <th width="35%">Subject</th>
-                                            <th width="25%">Date</th>
-                                            <th width="25%">Time</th>
-                                            <th width="15%">Invigilator Sign</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>${ttRows}</tbody>
-                                </table>
-                            </div>
+        function loadGeneralImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-                            <div class="card-footer">
-                                <div class="sign-box"><div class="sign-line">Class Teacher</div></div>
-                                <div class="sign-box"><div class="sign-line">Principal / Seal</div></div>
-                            </div>
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgElement = document.getElementById('generalImage');
+                imgElement.src = e.target.result;
+                document.getElementById('generalWorkspace').style.display = 'block';
+                document.getElementById('rotateSlider').value = 0; 
+                
+                checkGenFinalActions(); 
 
-                            <div class="note-section">
-                                <b>* </b> ${note}
-                            </div>
-                        </div>
-                    `;
+                if (genCropper) genCropper.destroy();
+                genCropper = new Cropper(imgElement, {
+                    viewMode: 1, dragMode: 'crop', autoCropArea: 0.8, zoomable: true
+                });
+                
+                event.target.value = '';
+            };
+            reader.readAsDataURL(file);
+        }
 
-                    counter++;
-                    validIndex++;
-
-                    if(counter % 2 === 0) {
-                        printHTML += `<div class="page">${pageHTML}</div>`;
-                        pageHTML = "";
-                    }
-                }
-            });
-
-            if(pageHTML) {
-                printHTML += `<div class="page">${pageHTML}</div>`;
+        function fineRotateImage() {
+            if (genCropper) {
+                const degree = parseFloat(document.getElementById('rotateSlider').value);
+                genCropper.rotateTo(degree);
             }
+        }
 
-            document.getElementById('print-area').innerHTML = printHTML;
+        function rotateGenManual(degree) {
+            if (genCropper) genCropper.rotate(degree);
+        }
+
+        function resetGeneralRotate() {
+            if (genCropper) {
+                document.getElementById('rotateSlider').value = 0;
+                genCropper.rotateTo(0);
+            }
+        }
+
+        function captureGen1() {
+            if (!genCropper) return;
+            document.getElementById('genPreview1').src = genCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
+            checkGenFinalActions();
+        }
+
+        function captureGen2() {
+            if (!genCropper) return;
+            document.getElementById('genPreview2').src = genCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
+            checkGenFinalActions();
+        }
+
+        function checkGenFinalActions() {
+            const src1 = document.getElementById('genPreview1').src;
+            const src2 = document.getElementById('genPreview2').src;
             
-            setTimeout(() => {
-                window.print();
-            }, 500);
+            // Check if source contains data (not empty)
+            const hasImg1 = src1 && src1.length > 100;
+            const hasImg2 = src2 && src2.length > 100;
+
+            if (hasImg1 || hasImg2) {
+                document.getElementById('finalActionsGen').style.display = 'flex';
+            } else {
+                document.getElementById('finalActionsGen').style.display = 'none';
+            }
+        }
+
+        // NEW: Clear Only Front
+        function clearGen1() {
+            document.getElementById('genPreview1').src = "";
+            checkGenFinalActions();
+        }
+
+        // NEW: Clear Only Back
+        function clearGen2() {
+            document.getElementById('genPreview2').src = "";
+            checkGenFinalActions();
+        }
+
+        function downloadGenImages() {
+            const src1 = document.getElementById('genPreview1').src;
+            const src2 = document.getElementById('genPreview2').src;
+            
+            if (src1 && src1.length > 100) {
+                const link1 = document.createElement('a'); link1.href = src1; link1.download = 'Custom_Front.jpg'; link1.click();
+            }
+            if (src2 && src2.length > 100) {
+                setTimeout(() => {
+                    const link2 = document.createElement('a'); link2.href = src2; link2.download = 'Custom_Back.jpg'; link2.click();
+                }, 300);
+            }
+        }
+
+        function printGenCards() {
+            const src1 = document.getElementById('genPreview1').src;
+            const src2 = document.getElementById('genPreview2').src;
+            
+            let printHtml = '<div class="page">';
+            if (src1 && src1.length > 100) printHtml += `<img src="${src1}" class="print-card">`;
+            if (src2 && src2.length > 100) printHtml += `<img src="${src2}" class="print-card">`;
+            printHtml += '</div>';
+
+            document.getElementById('print-area').innerHTML = printHtml;
+            setTimeout(() => { window.print(); }, 500);
         }
     </script>
 </body>
-
 </html>
-

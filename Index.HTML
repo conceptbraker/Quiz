@@ -1,432 +1,1887 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Studio Master Tool By Akash Deoria</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SSC GS Master Pro</title>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-    <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';</script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Poppins', sans-serif; background: #f4f7f6; padding: 20px; color: #222; }
-        .container { background: #fff; padding: 30px; max-width: 1250px; margin: 0 auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #000; font-size: 26px; margin-bottom: 30px; font-weight: 700; }
-        
-        .section-title { font-size: 18px; font-weight: 700; background: #222; color: #fff; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; display: inline-block; }
-        .box { border: 1px solid #ddd; padding: 25px; border-radius: 12px; margin-bottom: 30px; background: #fafafa; }
-        .hint-text { font-size: 12px; color: #555; margin-bottom: 15px; display: block; }
-
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        label { font-weight: 600; font-size: 13px; margin-bottom: 5px; display: block; }
-        input[type="file"], input[type="password"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        input[type="range"] { width: 100%; cursor: pointer; margin-top: 10px; }
-        
-        button { cursor: pointer; border: none; border-radius: 6px; font-weight: bold; transition: all 0.3s; padding: 12px 20px; font-size: 14px; }
-        .btn-main { background: #000; color: white; width: 100%; font-size: 16px; padding: 15px;}
-        .btn-main:hover { background: #333; }
-        
-        .btn-action { background: #007bff; color: white; width: 48%; padding: 10px; font-size: 13px; }
-        .btn-action:hover { background: #0056b3; }
-        
-        .btn-rotate { background: #ff9800; color: white; margin-right: 5px; padding: 8px 12px; font-size: 13px; margin-bottom: 5px;}
-        .btn-rotate:hover { background: #e68a00; }
-
-        .btn-print { background: #dc3545; color: white; width: 100%; padding: 15px; font-size: 16px;}
-        .btn-clear { background: #dc3545; color: white; padding: 8px 15px; font-size: 12px; margin-top: 10px; width: 100%; }
-        .btn-clear:hover { background: #c82333; }
-
-        /* Workspace & Desktop Layout */
-        .workspace { display: none; margin-top: 20px; }
-        .workspace-layout { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
-        .left-col { flex: 2; min-width: 450px; }
-        .right-col { flex: 1.2; min-width: 320px; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-
-        .crop-container { max-height: 600px; overflow: auto; border: 2px solid #555; background: #eee; border-radius: 8px;}
-        img.target-img { max-width: 100%; display: block; }
-
-        /* Previews */
-        .preview-box { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px;}
-        .preview-item { text-align: center; width: 48%; }
-        .preview-item img { width: 100%; border: 1px dashed #ccc; display: block; margin-top: 10px; min-height: 100px; background: #fdfdfd; }
-        
-        .final-actions { display: flex; flex-direction: column; margin-top: 25px; display: none; }
-
-        .action-buttons-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
-
-        /* Print Styling */
-        #print-area { display: none; }
-        @media print {
-            body { background: white; margin: 0; padding: 0; overflow: hidden; } 
-            .container { display: none !important; }
-            #print-area { display: block; }
-            @page { size: A4; margin: 0; }
-            .page { 
-                width: 210mm; 
-                height: 296mm; 
-                box-sizing: border-box; 
-                padding-top: 10mm; 
-                display: flex; 
-                justify-content: center; 
-                gap: 5mm; 
-                overflow: hidden; 
-            }
-            .page-gen { padding-top: 40mm; } 
-            .print-card { width: 85mm; height: 54mm; object-fit: fill; border: 1px dashed #999; border-radius: 4px; }
+        :root {
+            /* Scientific Premium Theme (Slate & Cyan) */
+            --bg-dark: #0f172a;
+            --bg-gradient: radial-gradient(circle at top left, #1e293b, #0f172a 80%);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-hover: rgba(51, 65, 85, 0.9);
+            --card-back: rgba(15, 23, 42, 0.95);
+            --primary: #06b6d4; /* Cyan */
+            --primary-hover: #0891b2;
+            --primary-glow: rgba(6, 182, 212, 0.3);
+            --green: #10b981; /* Emerald */
+            --danger: #f43f5e; /* Rose */
+            --warning: #f59e0b; /* Amber */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(6, 182, 212, 0.15);
+            
+            /* Layout */
+            --nav-height: 75px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden; 
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        .app-container {
+            width: 100%;
+            height: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--bg-gradient);
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Animations */
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px var(--primary-glow); }
+            50% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.6); }
+            100% { box-shadow: 0 0 15px var(--primary-glow); }
+        }
+
+        /* View Switching */
+        .view {
+            display: none;
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 24px 20px 100px 20px; 
+            animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .view.active { display: block; }
+        .view::-webkit-scrollbar { display: none; } 
+
+        /* Typography & Utilities */
+        .text-primary { color: var(--primary); }
+        .text-green { color: var(--green); }
+        .text-danger { color: var(--danger); }
+        .text-warning { color: var(--warning); }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+        .page-header { margin-bottom: 28px; }
+        .page-header h2 { font-size: 26px; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.5px; }
+        .page-header p { color: var(--text-muted); font-size: 14px; font-weight: 500;}
+
+        /* Hero Card */
+        .hero-card {
+            background: rgba(6, 182, 212, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .hero-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+        .hero-top h1 { font-size: 24px; font-weight: 800; background: linear-gradient(to right, #fff, #67e8f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;}
+        .hero-top .subtitle { font-size: 13px; color: var(--primary); margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
+        .streak-badge { background: rgba(245, 158, 11, 0.1); padding: 8px 14px; border-radius: 20px; font-weight: 700; color: var(--warning); display: flex; gap: 8px; align-items: center; font-size: 14px; border: 1px solid rgba(245, 158, 11, 0.2);}
+        
+        .stats-container { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .stat-box { text-align: center; flex: 1; background: rgba(0,0,0,0.3); padding: 12px; border-radius: var(--radius-md); margin: 0 4px; border: 1px solid var(--glass-border);}
+        .stat-box h3 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+        .stat-box p { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;}
+        
+        .progress-track-main { height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill-main { height: 100%; background: linear-gradient(90deg, var(--primary), #67e8f9); border-radius: 10px; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 10px var(--primary-glow);}
+        .progress-text { font-size: 12px; color: var(--text-muted); text-align: right; font-weight: 600;}
+
+        /* Category/Folder Cards */
+        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.5px;}
+        .section-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; font-weight: 500;}
+        
+        .category-card {
+            background: var(--card-bg); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+            padding: 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 18px;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0; animation: slideUpFade 0.4s forwards;
+        }
+        .category-card:active { transform: scale(0.96); }
+        .category-card:hover { background: var(--card-hover); border-color: rgba(6, 182, 212, 0.4); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
+        .cat-icon-box { width: 56px; height: 56px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.05)); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--primary); flex-shrink: 0; border: 1px solid rgba(6, 182, 212, 0.2);}
+        .cat-info { flex: 1; }
+        .cat-info h3 { font-size: 17px; color: #fff; margin-bottom: 6px; font-weight: 700;}
+        .cat-info p { font-size: 12px; color: var(--text-muted); font-weight: 500;}
+        .cat-arrow { color: var(--text-muted); font-size: 16px; background: rgba(255,255,255,0.05); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%;}
+
+        /* Sets Grid */
+        .sets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding-bottom: 20px;}
+        .set-file-card {
+            background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 20px;
+            padding: 18px; cursor: pointer; position: relative; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0; animation: slideUpFade 0.3s forwards; backdrop-filter: blur(10px);
+        }
+        .set-file-card:active { transform: scale(0.95); }
+        .folder-icon-wrapper { position: relative; display: inline-block; margin-bottom: 12px; }
+        .set-icon { font-size: 2.2rem; color: var(--primary); transition: color 0.3s; opacity: 0.9;}
+        .set-file-card.completed .set-icon { color: var(--green); }
+        .folder-tick { display: none; position: absolute; top: -4px; right: -8px; background: var(--green); color: #000; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; align-items: center; justify-content: center; font-weight: 800; border: 2px solid var(--bg-dark); }
+        .set-file-card.completed .folder-tick { display: flex; }
+        .set-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: #f8fafc; line-height: 1.3;}
+        .set-info { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; font-weight: 500;}
+        .set-badges { display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 6px; }
+        .status-badge { font-size: 10px; padding: 4px 8px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 0.5px;}
+        .status-badge.pending { background: rgba(244, 63, 94, 0.1); color: var(--danger); border: 1px solid rgba(244, 63, 94, 0.2);}
+        .status-badge.completed { background: rgba(16, 185, 129, 0.1); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.2);}
+        .score-badge { font-size: 10px; padding: 4px 8px; border-radius: 8px; font-weight: 700; background: rgba(245, 158, 11, 0.15); color: var(--warning); display: none; border: 1px solid rgba(245, 158, 11, 0.3);}
+
+        /* Floating Bottom Nav */
+        .bottom-nav { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; height: var(--nav-height); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 100; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #64748b; font-size: 11px; gap: 6px; width: 60px; transition: 0.3s; font-weight: 600;}
+        .nav-item i { font-size: 22px; transition: 0.3s; }
+        .nav-item.active { color: #fff; }
+        .nav-item.active i { transform: translateY(-4px); color: var(--primary); filter: drop-shadow(0 4px 6px var(--primary-glow));}
+
+        /* OVERLAYS */
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 200; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; animation: slideUpFade 0.3s forwards;}
+        .overlay.hidden { display: none; }
+        .btn-exit { display: flex; align-items: center; gap: 8px; color: #fff; background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); border-radius: 30px; font-size: 14px; font-weight: 600; cursor: pointer; padding: 10px 18px; transition: 0.2s;}
+        .btn-exit:active { transform: scale(0.95); background: rgba(255,255,255,0.15);}
+        
+        /* Flashcard Specifics */
+        .fc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+        .fc-title-area { text-align: center; }
+        .fc-set-name { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.5px;}
+        .fc-learned { font-size: 12px; color: var(--primary); font-weight: 600; margin-top: 2px;}
+        
+        .fc-stats-row { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .pill { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: 20px; padding: 8px 14px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: #fff; }
+        
+        .fc-progress-container { flex: 1; display: flex; align-items: center; gap: 12px; }
+        .fc-progress-track { flex: 1; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);}
+        .fc-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--green)); border-radius: 10px; transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fc-progress-text { font-size: 12px; color: #fff; font-weight: 700; width: 30px; text-align: right; }
+
+        .cards-container { display: flex; flex-direction: column; gap: 24px; padding-bottom: 40px; }
+        
+        .flashcard { background-color: transparent; height: 380px; perspective: 1000px; cursor: pointer; }
+        .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; box-shadow: 0 15px 35px rgba(0,0,0,0.4); border-radius: 24px; }
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+        
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 24px; padding: 24px; border: 1px solid var(--glass-border); display: flex; flex-direction: column; background: var(--card-bg); backdrop-filter: blur(15px);}
+        .card-back { background: var(--card-back); transform: rotateY(180deg); overflow-y: auto;}
+        .card-back::-webkit-scrollbar { display: none; }
+
+        .fc-top-row { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: auto; }
+        .fc-number { font-size: 13px; font-weight: 800; color: var(--primary); background: rgba(6, 182, 212, 0.1); padding: 6px 12px; border-radius: 10px;}
+        .fc-actions { display: flex; gap: 16px; align-items: center; }
+        .fc-actions i { font-size: 20px; color: var(--text-muted); cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.05); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%;}
+        .fc-actions i.fa-solid.fa-bookmark { color: var(--warning); background: rgba(245, 158, 11, 0.15);}
+        .fc-actions i:active { transform: scale(0.8); }
+        
+        /* GS Card specific content styling */
+        .fc-center-front { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
+        .gs-question { font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-bottom: 20px; line-height: 1.4;}
+        .tap-hint { font-size: 0.9rem; color: var(--primary); font-weight: 600; background: rgba(6, 182, 212, 0.1); padding: 8px 18px; border-radius: 20px; border: 1px dashed var(--primary);}
+        
+        .gs-answer { font-size: 1.3rem; font-weight: 800; color: var(--green); margin-bottom: 15px; text-align: left; line-height: 1.4; background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 12px; border-left: 4px solid var(--green);}
+        .details-box { width: 100%; text-align: left; font-size: 0.95rem; line-height: 1.6; }
+        .theory-box { margin-bottom: 15px; color: #e2e8f0; background: rgba(0,0,0,0.3); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); font-size: 14px;}
+        .trick-box { background: rgba(245, 158, 11, 0.1); border: 1px dashed var(--warning); color: #fff; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 500;}
+        .detail-title { font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; display: block;}
+        .theory-title { color: var(--primary); }
+        .trick-title { color: var(--warning); }
+
+        /* Quiz Specifics */
+        .quiz-option { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 18px; border-radius: 16px; color: #fff; text-align: left; font-size: 14px; font-weight: 600; display: flex; gap: 16px; align-items: center; cursor: pointer; margin-bottom: 12px; transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.2);}
+        .quiz-option:active { transform: scale(0.97); }
+        .quiz-option.correct { background: rgba(16, 185, 129, 0.15); border-color: var(--green); box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);}
+        .quiz-option.wrong { background: rgba(244, 63, 94, 0.15); border-color: var(--danger); box-shadow: 0 0 20px rgba(244, 63, 94, 0.2);}
+        .opt-letter { background: rgba(255,255,255,0.1); width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; color: var(--text-muted);}
+        .quiz-option.correct .opt-letter { background: var(--green); color: #000;}
+        .quiz-option.wrong .opt-letter { background: var(--danger); color: #fff;}
+
+        .btn-primary { width: 100%; background: var(--primary); color: #0f172a; border: none; padding: 18px; border-radius: var(--radius-lg); font-size: 16px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.2s; box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4); animation: pulseGlow 3s infinite;}
+        .btn-primary:active { transform: scale(0.97); }
+
+        /* Celebration */
+        .celebration-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: rgba(30, 41, 59, 0.95); border: 2px solid var(--primary); box-shadow: 0 0 50px rgba(6, 182, 212, 0.4); padding: 40px 30px; border-radius: 24px; text-align: center; z-index: 1000; backdrop-filter: blur(20px); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 85%; max-width: 400px; }
+        .celebration-popup.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .celebration-popup h2 { color: var(--primary); font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+
+        /* Search UI */
+        .search-input-wrapper { position: relative; margin-bottom: 20px; }
+        .search-input-wrapper i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;}
+        .search-input-wrapper input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 18px 18px 18px 50px; color: #fff; font-size: 15px; outline: none; transition: 0.3s; font-weight: 500;}
+        .search-input-wrapper input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); background: rgba(0,0,0,0.6);}
+        .search-result-card { background: var(--card-bg); padding: 18px; border-radius: var(--radius-md); margin-bottom: 12px; border: 1px solid var(--glass-border); animation: slideUpFade 0.3s forwards;}
+        .search-result-card h4 { font-size: 16px; margin-bottom: 8px; font-weight: 700; line-height: 1.4;}
+        .highlight { color: var(--bg-dark); font-weight: 800; background: var(--primary); padding: 0 4px; border-radius: 4px;}
+
+        /* Bookmarks list UI */
+        .saved-item-card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: flex-start; border: 1px solid var(--glass-border); animation: slideUpFade 0.3s forwards; box-shadow: 0 5px 15px rgba(0,0,0,0.3);}
+        .saved-item-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; line-height: 1.4; color:#fff;}
+        .saved-item-info p { font-size: 13px; color: var(--green); font-weight: 700;}
+        .saved-action { color: var(--danger); font-size: 18px; cursor: pointer; flex-shrink: 0; margin-left: 10px; padding: 10px; background: rgba(244, 63, 94, 0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;}
+
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>🛠️ Pro Studio Master Tool By Akash Deoria</h1>
+    <div class="app-container">
         
-        <div class="box">
-            <div class="section-title">💳 1. Aadhaar Auto-Crop & Edit</div>
-            <div class="grid">
-                <div><label>Select e-Aadhaar PDF</label><input type="file" id="pdfFile" accept="application/pdf"></div>
-                <div><label>PDF Password</label><input type="password" id="pdfPassword" placeholder="e.g. RAJU1995"></div>
-            </div>
-            <button class="btn-main" onclick="loadPdf()">OPEN PDF & AUTO-CROP</button>
-
-            <div class="workspace" id="aadhaarWorkspace">
-                <p style="font-weight: 600; color: #28a745;">✅ Success! Cards auto-cropped. Adjust the box and re-capture if needed.</p>
-                <p class="hint-text">💡 <b>Tip:</b> Image fix kar di gayi hai! Ab sirf Crop Box ko pakad kar set karein. (No weird zooming)</p>
+        <!-- 1. MAIN HOME VIEW (Subjects) -->
+        <main id="view-home" class="view active">
+            <header class="hero-card">
+                <div class="hero-top">
+                    <div>
+                        <h1>GS Master Pro</h1>
+                        <p class="subtitle">All Subjects Library</p>
+                    </div>
+                    <div class="streak-badge">
+                        <i class="fa-solid fa-fire"></i> <span id="global-timer">00:00</span>
+                    </div>
+                </div>
                 
-                <div class="workspace-layout">
-                    <div class="left-col">
-                        <div class="crop-container"><img id="pdfImage" class="target-img" src=""></div>
+                <div class="stats-container">
+                    <div class="stat-box">
+                        <h3 id="stat-sets" class="text-green">0/0</h3>
+                        <p>Sets Done</p>
                     </div>
-                    
-                    <div class="right-col">
-                        <div class="action-buttons-row">
-                            <button class="btn-action" onclick="captureFront()">📸 Capture FRONT</button>
-                            <button class="btn-action" onclick="captureBack()" style="background:#17a2b8;">📸 Capture BACK</button>
-                        </div>
-
-                        <div class="preview-box">
-                            <div class="preview-item"><strong>Front Card</strong><img id="frontPreview" src=""></div>
-                            <div class="preview-item"><strong>Back Card</strong><img id="backPreview" src=""></div>
-                        </div>
-
-                        <div class="final-actions" id="finalActionsAadhaar">
-                            <button class="btn-print" onclick="printAadhaarCards()">🖨️ PRINT AADHAAR ON A4</button>
-                        </div>
+                    <div class="stat-box">
+                        <h3 id="stat-bookmarks-home" class="text-warning">0</h3>
+                        <p>Saved Qs</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3 id="stat-total-words" class="text-primary">0</h3>
+                        <p>Total Qs</p>
                     </div>
                 </div>
+                
+                <div class="progress-track-main">
+                    <div class="progress-fill-main" id="overall-progress-bar" style="width: 0%;"></div>
+                </div>
+                <p class="progress-text"><span id="overall-progress-text">0</span>% syllabus completed</p>
+            </header>
+
+            <section class="word-sets-section">
+                <h2 class="section-title">Subjects</h2>
+                <p class="section-subtitle">Select a subject to dive in</p>
+                
+                <div id="subject-list">
+                    <!-- Subjects injected via JS -->
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px; margin-bottom: 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4);">Scientifically Designed for SSC Aspirants 🧠</div>
+            </section>
+        </main>
+
+        <!-- 2. TOPICS SUB-VIEW -->
+        <main id="view-topics" class="view">
+            <header class="page-header flex-between" style="align-items: flex-start;">
+                <div>
+                    <h2 id="topics-page-title">Subject</h2>
+                    <p id="topics-page-subtitle">Select a topic</p>
+                </div>
+                <button class="btn-exit" onclick="goBackToHome()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </header>
+            <div id="topics-list">
+                <!-- Topics injected via JS -->
+            </div>
+        </main>
+
+        <!-- 3. SETS SUB-VIEW -->
+        <main id="view-sets" class="view">
+            <header class="page-header flex-between" style="align-items: flex-start;">
+                <div>
+                    <h2 id="sets-page-title">Topic</h2>
+                    <p id="sets-page-subtitle">Sets inside</p>
+                </div>
+                <button class="btn-exit" onclick="goBackToTopics()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </header>
+            <div class="sets-grid" id="setsGridContainer">
+                <!-- Sets injected via JS -->
+            </div>
+        </main>
+
+        <!-- SEARCH VIEW -->
+        <main id="view-search" class="view">
+            <header class="page-header">
+                <h2>GS Search</h2>
+                <p>Find exact questions, answers, or theory</p>
+            </header>
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-input" placeholder="Search keyword (e.g. 'संविधान')...">
+            </div>
+            <div id="search-results">
+                <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                    <i class="fa-solid fa-landmark" style="font-size: 48px; opacity: 0.2; margin-bottom: 16px;"></i>
+                    <p style="font-weight: 600;">Start typing to search history...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- QUIZ HOME VIEW (Subjects) -->
+        <main id="view-quiz" class="view">
+            <header class="page-header">
+                <h2>Mock Test Mode</h2>
+                <p>Select Subject for Quiz</p>
+            </header>
+            <div id="quiz-subjects-list">
+                <!-- Quiz Subjects injected via JS -->
+            </div>
+        </main>
+
+        <!-- QUIZ TOPICS VIEW -->
+        <main id="view-quiz-topics" class="view">
+            <header class="page-header flex-between" style="align-items: flex-start;">
+                <div>
+                    <h2 id="quiz-topics-title">Subject Quizzes</h2>
+                    <p>Select a topic</p>
+                </div>
+                <button class="btn-exit" onclick="goBackToQuizHome()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </header>
+            <div id="quiz-topics-list">
+                <!-- Quiz Topics injected via JS -->
+            </div>
+        </main>
+
+        <!-- QUIZ SETS VIEW -->
+        <main id="view-quiz-sets" class="view">
+            <header class="page-header flex-between" style="align-items: flex-start;">
+                <div>
+                    <h2 id="quiz-sets-title">Topic</h2>
+                    <p id="quiz-sets-subtitle">Select Mock Test</p>
+                </div>
+                <button class="btn-exit" onclick="goBackToQuizTopics()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </header>
+            <div class="sets-grid" id="quiz-sets-grid">
+                <!-- Quiz Sets injected via JS -->
+            </div>
+        </main>
+
+        <!-- SAVED VIEW (Bookmarks) -->
+        <main id="view-saved" class="view">
+            <header class="page-header flex-between">
+                <div>
+                    <h2>Revision List</h2>
+                    <p><span id="saved-count-text">0</span> tough questions saved</p>
+                </div>
+                <div class="streak-badge" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                    <i class="fa-solid fa-bookmark"></i> <span id="saved-badge-count">0</span>
+                </div>
+            </header>
+            <div id="saved-list">
+                <!-- Bookmarks injected via JS -->
+            </div>
+        </main>
+
+        <!-- OVERLAYS -->
+        
+        <!-- Flashcard Study Overlay -->
+        <div id="overlay-flashcard" class="overlay hidden">
+            <div class="fc-header">
+                <button class="btn-exit" onclick="closeOverlay('overlay-flashcard')">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                <div class="fc-title-area">
+                    <div class="fc-set-name" id="fc-set-title">Set 1</div>
+                    <div class="fc-learned" id="fc-learned-text">0/0 Read</div>
+                </div>
+                <div style="width: 80px;"></div>
+            </div>
+
+            <div class="fc-stats-row">
+                <div class="pill">
+                    <i class="fa-solid fa-layer-group text-primary"></i> <span id="flipDisplay">0</span> Flips
+                </div>
+                <div class="pill">
+                    <i class="fa-solid fa-clock text-warning"></i> <span id="timerDisplay">00:00</span>
+                </div>
+                <div class="fc-progress-container">
+                    <div class="fc-progress-track">
+                        <div class="fc-progress-fill" id="fc-progressBar"></div>
+                    </div>
+                    <div class="fc-progress-text" id="fc-progress-text">0%</div>
+                </div>
+            </div>
+
+            <div class="cards-container" id="cardsScreen">
+                <!-- Cards injected here -->
             </div>
         </div>
 
-        <div class="box">
-            <div class="section-title">🖼️ 2. Multi-Image Crop & Print</div>
-            <span class="hint-text">💡 <b>Tip:</b> Upload 1st photo ➔ Apply Filters ➔ Capture Front.</span>
-            
-            <div style="margin-bottom: 20px;">
-                <label>Select Any Image (JPG/PNG)</label>
-                <input type="file" id="generalImgFile" accept="image/*" onchange="loadGeneralImage(event)">
+        <!-- Active Quiz Overlay -->
+        <div id="overlay-quiz" class="overlay hidden">
+            <header class="flex-between" style="margin-bottom: 24px;">
+                <button class="btn-exit" onclick="closeOverlay('overlay-quiz')">
+                    <i class="fa-solid fa-xmark"></i> Quit
+                </button>
+                <div style="font-weight: 800; font-size: 16px; color:#fff;" id="quiz-title">Set 1 Quiz</div>
+                <div class="streak-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--green); border-color: rgba(16, 185, 129, 0.3);" id="quiz-score-badge"><i class="fa-solid fa-bullseye"></i> 0/0</div>
+            </header>
+
+            <div class="progress-track-main" style="margin-bottom: 30px; background: rgba(255,255,255,0.1);">
+                <div class="progress-fill-main" id="quiz-progressBar" style="width: 10%; background: var(--primary); box-shadow: 0 0 10px var(--primary-glow);"></div>
             </div>
 
-            <div class="workspace" id="generalWorkspace">
-                <div class="workspace-layout">
-                    
-                    <div class="left-col">
-                        <div class="crop-container"><img id="generalImage" class="target-img" src=""></div>
-                    </div>
-                    
-                    <div class="right-col">
-                        <div style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
-                            <label>📐 Fine-Tune Alignment</label>
-                            <input type="range" id="rotateSlider" min="-45" max="45" value="0" step="0.5" oninput="fineRotateImage()">
-                            <div style="margin-top: 10px;">
-                                <button class="btn-rotate" onclick="resetGeneralRotate()">↻ Reset Angle</button>
-                                <button class="btn-rotate" onclick="rotateGenManual(90)" style="background:#17a2b8;">↻ Rotate 90°</button>
-                            </div>
-                        </div>
-                        
-                        <div id="filtersControlPanel" style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
-                            <h4 style="margin: 0 0 10px 0; font-size: 14px;">✨ Live Adjustments</h4>
-                            <div class="filter-group" style="margin-bottom: 8px;">
-                                <label style="font-size: 12px;">☀️ Brightness</label>
-                                <input type="range" id="brightnessSlider" min="0" max="200" value="100" step="1" oninput="applyImagePreviewFilters()" style="margin-top: 2px;">
-                            </div>
-                            <div class="filter-group" style="margin-bottom: 8px;">
-                                <label style="font-size: 12px;">🌓 Contrast</label>
-                                <input type="range" id="contrastSlider" min="0" max="200" value="100" step="1" oninput="applyImagePreviewFilters()" style="margin-top: 2px;">
-                            </div>
-                            <div class="filter-group">
-                                <label style="font-size: 12px;">👤 Shadow</label>
-                                <input type="range" id="shadowSlider" min="0" max="20" value="0" step="1" oninput="applyImagePreviewFilters()" style="margin-top: 2px;">
-                            </div>
-                            <button class="btn-rotate" style="margin-top: 10px; background:#6c757d;" onclick="resetGeneralFilters()">↻ Reset Filters</button>
-                        </div>
-                        
-                        <div class="action-buttons-row">
-                            <button class="btn-action" onclick="captureGen1()">📸 Capture FRONT</button>
-                            <button class="btn-action" onclick="captureGen2()" style="background:#17a2b8;">📸 Capture BACK</button>
-                        </div>
-
-                        <div class="preview-box">
-                            <div class="preview-item">
-                                <strong style="font-size: 13px;">Front Image</strong>
-                                <img id="genPreview1" src="">
-                                <button class="btn-clear" onclick="clearGen1()">🗑️ Clear</button>
-                            </div>
-                            <div class="preview-item">
-                                <strong style="font-size: 13px;">Back Image</strong>
-                                <img id="genPreview2" src="">
-                                <button class="btn-clear" onclick="clearGen2()">🗑️ Clear</button>
-                            </div>
-                        </div>
-
-                        <div class="final-actions" id="finalActionsGen">
-                            <button class="btn-print" onclick="printGenCards()">🖨️ PRINT ON A4</button>
-                        </div>
-                    </div>
-
-                </div>
+            <div id="quiz-question-container">
+                <!-- Question injected here -->
             </div>
         </div>
 
+        <!-- Celebration Popup -->
+        <div class="celebration-popup" id="celebrationPopup">
+            <i class="fa-solid fa-award" style="font-size: 50px; color: var(--primary); margin-bottom: 16px;"></i>
+            <h2>WELL DONE!</h2>
+            <p style="color: #e2e8f0; font-size: 1.1rem; font-weight: 500;">You have mastered this concept.</p>
+        </div>
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-target="view-home" onclick="resetToHome()">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-target="view-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Search</span>
+            </a>
+            <a href="#" class="nav-item" data-target="view-quiz" onclick="resetToQuizHome()">
+                <i class="fa-solid fa-clipboard-question"></i>
+                <span>Mock Quiz</span>
+            </a>
+            <a href="#" class="nav-item" data-target="view-saved">
+                <i class="fa-solid fa-bookmark"></i>
+                <span>Revise</span>
+            </a>
+        </nav>
     </div>
 
-    <div id="print-area"></div>
-
+    <!-- JAVASCRIPT -->
     <script>
-        // ================= AADHAAR LOGIC =================
-        let aadhaarCropper = null;
+        // ==========================================
+        // DYNAMIC GS DATA
+        // Just add a new object here and define its "setId" to match the folder structure below.
+        // ==========================================
+        const gsData = [
+            // ====== SET 1: Polity - आधार और अंतरिम सरकार (setId: 1) ======
+            { 
+                setId: 1, id: "q1", question: "भारत के लिए 'संविधान सभा' का विचार पहली बार किसने प्रस्तुत किया था?", answer: "एम. एन. रॉय (1934)", 
+                theory: "1934 में वामपंथी नेता एम. एन. रॉय ने पहली बार भारत के लिए संविधान सभा का विचार प्रस्तुत किया। इसके बाद 1935 में कांग्रेस ने आधिकारिक तौर पर इसकी मांग की.", 
+                booster: "Brain Booster 🧠: रॉय (Roy) ने पहली 'राय' (विचार) दी थी।",
+                options: ["एम. एन. रॉय (1934)", "मोतीलाल नेहरू (1928)", "जवाहरलाल नेहरू (1938)", "महात्मा गांधी (1922)"]
+            },
+            { 
+                setId: 1, id: "q2", question: "कैबिनेट मिशन योजना (1946) के तहत संविधान सभा में कुल कितनी सीटें निर्धारित की गई थीं?", answer: "389", 
+                theory: "कैबिनेट मिशन योजना के तहत कुल 389 सीटें थीं, जिसमें 296 ब्रिटिश भारत का प्रतिनिधित्व करती थीं (292 गवर्नरों के प्रांत + 4 मुख्य आयुक्त प्रांत) और 93 देशी रियासतों के लिए थीं.", 
+                booster: "Brain Booster 🧠: 389 (3-8-9) याद रखें। विभाजन के बाद यह 299 रह गई थी।",
+                options: ["389", "296", "299", "395"]
+            },
+            { 
+                setId: 1, id: "q3", question: "संविधान सभा के लिए चुनाव किस विधि द्वारा किए गए थे?", answer: "अप्रत्यक्ष चुनाव (आनुपातिक प्रतिनिधित्व)", 
+                theory: "प्रांतीय विधानसभाओं के सदस्यों द्वारा आनुपातिक प्रतिनिधित्व (Proportional Representation) और एकल संक्रमणीय मत (Single Transferable Vote) के माध्यम से अप्रत्यक्ष रूप से चुनाव हुए थे.", 
+                booster: "Brain Booster 🧠: जनता ने सीधे वोट नहीं दिया था (अप्रत्यक्ष/Indirect Election)।",
+                options: ["अप्रत्यक्ष चुनाव (आनुपातिक प्रतिनिधित्व)", "प्रत्यक्ष वयस्क मताधिकार", "ब्रिटिश सरकार द्वारा मनोनयन", "केवल राजाओं द्वारा चयन"]
+            },
+            { 
+                setId: 1, id: "q4", question: "स्वतंत्र भारत का संविधान बिना बाहरी हस्तक्षेप के बने, यह घोषणा 1938 में किसने की थी?", answer: "जवाहरलाल नेहरू", 
+                theory: "1938 में भारतीय राष्ट्रीय कांग्रेस (INC) की ओर से जवाहरलाल नेहरू ने घोषणा की कि स्वतंत्र भारत का संविधान वयस्क मताधिकार के आधार पर चुनी गई संविधान सभा द्वारा बिना बाहरी हस्तक्षेप के बनाया जाना चाहिए.", 
+                booster: "Brain Booster 🧠: 'बिना बाहरी हस्तक्षेप' का संकल्प पहले नेहरू जी ने लिया था।",
+                options: ["जवाहरलाल नेहरू", "सरदार वल्लभभाई पटेल", "डॉ. बी. आर. अंबेडकर", "सुभाष चंद्र बोस"]
+            },
+            { 
+                setId: 1, id: "q5", question: "2 सितंबर 1946 को गठित 'अंतरिम सरकार' में कार्यकारी परिषद के अध्यक्ष कौन थे?", answer: "भारत के वायसराय", 
+                theory: "अंतरिम सरकार में कार्यकारी परिषद के अध्यक्ष (President) वायसराय (विस्काउंट वेवेल, फिर माउंटबेटन) थे। जवाहरलाल नेहरू उपाध्यक्ष (Vice President) थे.", 
+                booster: "Brain Booster 🧠: नेहरू जी 'उपाध्यक्ष' थे, 'अध्यक्ष' अंग्रेज वायसराय ही रहा।",
+                options: ["भारत के वायसराय", "जवाहरलाल नेहरू", "डॉ. राजेंद्र प्रसाद", "सरदार वल्लभभाई पटेल"]
+            },
+            { 
+                setId: 1, id: "q6", question: "अंतरिम सरकार (1946) में गृह, सूचना एवं प्रसारण मंत्री कौन थे?", answer: "सरदार वल्लभभाई पटेल", 
+                theory: "सरदार पटेल को गृह (Home) और सूचना एवं प्रसारण (I&B) विभाग सौंपा गया था, जबकि रक्षा मंत्री बलदेव सिंह थे.", 
+                booster: "Brain Booster 🧠: 'गृह' (Home) को मजबूत रखने का काम 'सरदार' (लौह पुरुष) का ही था।",
+                options: ["सरदार वल्लभभाई पटेल", "जवाहरलाल नेहरू", "लियाकत अली खान", "सी. राजगोपालाचारी"]
+            },
+            { 
+                setId: 1, id: "q7", question: "अंतरिम सरकार में रक्षा मंत्रालय किसे सौंपा गया था?", answer: "बलदेव सिंह", 
+                theory: "अंतरिम सरकार में रक्षा मंत्रालय बलदेव सिंह (कांग्रेस) के पास था। कृषि और खाद्य मंत्रालय डॉ. राजेंद्र प्रसाद के पास था.", 
+                booster: "Brain Booster 🧠: रक्षा के लिए 'बल' (Force/Bal) की जरुरत होती है (बल-देव)।",
+                options: ["बलदेव सिंह", "जॉन मथाई", "जगजीवन राम", "असफ अली"]
+            },
+            { 
+                setId: 1, id: "q8", question: "कैबिनेट मिशन योजना में 3 ब्रिटिश सदस्य कौन थे?", answer: "पैथिक लॉरेंस, स्टैफ़ोर्ड क्रिप्स और ए.वी. अलेक्जेंडर", 
+                theory: "1946 में आए कैबिनेट मिशन में तीन सदस्य थे: पैथिक लॉरेंस (अध्यक्ष), स्टैफ़ोर्ड क्रिप्स और ए.वी. अलेक्जेंडर. इसे कांग्रेस और मुस्लिम लीग दोनों ने स्वीकार किया था.", 
+                booster: "Brain Booster 🧠: Trick - PCA (Pethick, Cripps, Alexander).",
+                options: ["पैथिक लॉरेंस, स्टैफ़ोर्ड क्रिप्स और ए.वी. अलेक्जेंडर", "लॉर्ड माउंटबेटन, पैथिक लॉरेंस, मैकडोनाल्ड", "स्टैफ़ोर्ड क्रिप्स, क्लेमेंट एटली, चर्चिल", "साइमन, पैथिक लॉरेंस, वेवेल"]
+            },
+            { 
+                setId: 1, id: "q9", question: "किस प्रकार की सरकार में शक्ति जनता के पास होती है और चुने गए प्रतिनिधियों के माध्यम से प्रयोग की जाती है?", answer: "लोकतांत्रिक (Democratic)", 
+                theory: "लोकतांत्रिक सरकार (Democratic) वह रूप है जिसमें शक्ति जनता के पास होती है। जबकि साम्यवादी (Communist) में राज्य का नियंत्रण और अल्पतंत्र (Oligarchic) में कुछ लोगों का शासन होता है.", 
+                booster: "Brain Booster 🧠: लोक (जनता) + तंत्र (सिस्टम) = लोकतंत्र।",
+                options: ["लोकतांत्रिक (Democratic)", "साम्यवादी (Communist)", "अल्पतंत्र (Oligarchic)", "सर्वसत्तावादी (Totalitarian)"]
+            },
+            { 
+                setId: 1, id: "q10", question: "जुलाई-अगस्त 1946 में हुए संविधान सभा चुनावों में कांग्रेस (INC) ने कितनी सीटें जीती थीं?", answer: "208", 
+                theory: "चुनाव परिणामों में कांग्रेस ने भारी बहुमत से 208 सीटें जीतीं। मुस्लिम लीग को 73 और निर्दलीयों को 15 सीटें मिलीं.", 
+                booster: "Brain Booster 🧠: 296 (ब्रिटिश भारत) में से अकेले 208 कांग्रेस के पास थीं।",
+                options: ["208", "73", "296", "389"]
+            },
 
-        async function loadPdf() {
-            const fileInput = document.getElementById('pdfFile');
-            const password = document.getElementById('pdfPassword').value;
-            if (fileInput.files.length === 0) { alert('Please select Aadhaar PDF!'); return; }
+            // ====== SET 2: Polity - समितियां और बैठकें (setId: 2) ======
+            { 
+                setId: 2, id: "q11", question: "संविधान सभा की पहली बैठक कब आयोजित की गई थी?", answer: "9 दिसंबर 1946", 
+                theory: "प्रथम बैठक 9 दिसंबर 1946 को हुई। इसमें सबसे वरिष्ठ सदस्य डॉ. सच्चिदानंद सिन्हा को अस्थायी अध्यक्ष (French practice) चुना गया था.", 
+                booster: "Brain Booster 🧠: 9 Dec (पहली बैठक) -> 11 Dec (स्थायी अध्यक्ष) -> 13 Dec (उद्देश्य प्रस्ताव)।",
+                options: ["9 दिसंबर 1946", "11 दिसंबर 1946", "13 दिसंबर 1946", "26 नवंबर 1949"]
+            },
+            { 
+                setId: 2, id: "q12", question: "संविधान सभा में 'उद्देश्य प्रस्ताव' (Objective Resolution) किसने पेश किया था?", answer: "जवाहरलाल नेहरू", 
+                theory: "13 दिसंबर 1946 को जवाहरलाल नेहरू ने ऐतिहासिक उद्देश्य प्रस्ताव पेश किया, जिसने संविधान के दर्शन की रूपरेखा रखी। इसे 22 जनवरी 1947 को अपनाया गया.", 
+                booster: "Brain Booster 🧠: यही 'उद्देश्य प्रस्ताव' आगे चलकर हमारी संविधान की 'प्रस्तावना' (Preamble) बना।",
+                options: ["जवाहरलाल नेहरू", "डॉ. बी. आर. अंबेडकर", "सरदार वल्लभभाई पटेल", "डॉ. राजेंद्र प्रसाद"]
+            },
+            { 
+                setId: 2, id: "q13", question: "प्रारूप समिति (Drafting Committee) की स्थापना कब की गई थी?", answer: "29 अगस्त 1947", 
+                theory: "संविधान का ड्राफ्ट तैयार करने के लिए 29 अगस्त 1947 को प्रारूप समिति बनी, जिसके अध्यक्ष डॉ. बी. आर. अंबेडकर थे। इसमें कुल 7 सदस्य थे.", 
+                booster: "Brain Booster 🧠: आज़ादी (15 अगस्त) के ठीक 14 दिन बाद प्रारूप समिति बनी।",
+                options: ["29 अगस्त 1947", "15 अगस्त 1947", "26 नवंबर 1949", "24 जनवरी 1950"]
+            },
+            { 
+                setId: 2, id: "q14", question: "संघ शक्ति समिति (Union Powers Committee) के अध्यक्ष कौन थे?", answer: "जवाहरलाल नेहरू", 
+                theory: "जवाहरलाल नेहरू 'संघ शक्ति समिति', 'संघीय संविधान समिति' और 'राज्यों की समिति' के अध्यक्ष थे। जबकि 'प्रांतीय संविधान समिति' सरदार पटेल के पास थी.", 
+                booster: "Brain Booster 🧠: जहाँ 'संघ' (Union) शब्द आए, वहाँ अक्सर उत्तर 'जवाहरलाल नेहरू' होता है।",
+                options: ["जवाहरलाल नेहरू", "सरदार वल्लभभाई पटेल", "डॉ. राजेंद्र प्रसाद", "जे. बी. कृपलानी"]
+            },
+            { 
+                setId: 2, id: "q15", question: "संविधान सभा की 'संचालन समिति' (Steering Committee) के अध्यक्ष कौन थे?", answer: "डॉ. राजेंद्र प्रसाद", 
+                theory: "डॉ. राजेंद्र प्रसाद संचालन समिति, प्रक्रिया नियम समिति, और राष्ट्रीय ध्वज पर तदर्थ समिति के अध्यक्ष थे.", 
+                booster: "Brain Booster 🧠: जो सभा का स्थायी अध्यक्ष (President) होगा, वही सभा का 'संचालन' (Steer) करेगा।",
+                options: ["डॉ. राजेंद्र प्रसाद", "के. एम. मुंशी", "जवाहरलाल नेहरू", "डॉ. बी. आर. अंबेडकर"]
+            },
+            { 
+                setId: 2, id: "q16", question: "संविधान का प्रारूप तैयार करने में कुल कितना समय लगा?", answer: "2 वर्ष 11 महीने 18 दिन", 
+                theory: "संविधान सभा ने संविधान निर्माण के लिए कुल 11 सत्र आयोजित किए और इसे पूरा करने में 2 वर्ष, 11 महीने और 18 दिन का समय लगा.", 
+                booster: "Brain Booster 🧠: 3 साल में सिर्फ 12 दिन कम।",
+                options: ["2 वर्ष 11 महीने 18 दिन", "2 वर्ष 10 महीने 15 दिन", "3 वर्ष 1 महीने 10 दिन", "2 वर्ष 8 महीने 12 दिन"]
+            },
+            { 
+                setId: 2, id: "q17", question: "संविधान सभा के वैधानिक सलाहकार (Legal Advisor) के रूप में किसे नियुक्त किया गया था?", answer: "बी. एन. राव", 
+                theory: "सर बी. एन. राव को संविधान सभा का कानूनी/संवैधानिक सलाहकार (Constitutional Advisor) नियुक्त किया गया था। मुख्य प्रारूपकार (Chief Draftsman) एस. एन. मुखर्जी थे.", 
+                booster: "Brain Booster 🧠: राव (Rau) साहब ने संवैधानिक राय (Advice) दी थी।",
+                options: ["बी. एन. राव", "एस. एन. मुखर्जी", "एच. वी. अयंगर", "के. एम. मुंशी"]
+            },
+            { 
+                setId: 2, id: "q18", question: "बी. आर. अंबेडकर ने संविधान सभा के समक्ष अंतिम प्रारूप (Final Draft) कब पेश किया?", answer: "4 नवंबर 1948", 
+                theory: "पहला प्रारूप फरवरी 1948 में, दूसरा अक्टूबर 1948 में और अंतिम प्रारूप 4 नवंबर 1948 को पेश किया गया, जिस पर पहली रीडिंग शुरू हुई.", 
+                booster: "Brain Booster 🧠: फाइनल ड्राफ्ट पेश करने के बाद 3 वाचन (Readings) हुए थे।",
+                options: ["4 नवंबर 1948", "21 फरवरी 1948", "26 नवंबर 1949", "15 अगस्त 1947"]
+            },
+            { 
+                setId: 2, id: "q19", question: "संविधान सभा के उपाध्यक्ष (Vice Presidents) कौन थे?", answer: "एच. सी. मुखर्जी और वी. टी. कृष्णामचारी", 
+                theory: "संविधान सभा के दो उपाध्यक्ष थे: एच. सी. मुखर्जी और वी. टी. कृष्णामचारी। डॉ. राजेंद्र प्रसाद अध्यक्ष थे.", 
+                booster: "Brain Booster 🧠: मुखर्जी और कृष्णामचारी दोनों (MK) ने उपाध्यक्ष पद संभाला।",
+                options: ["एच. सी. मुखर्जी और वी. टी. कृष्णामचारी", "सच्चिदानंद सिन्हा और बी. एन. राव", "के. एम. मुंशी और अल्लादी कृष्णस्वामी अय्यर", "जे. बी. कृपलानी और पट्टाभि सीतारमैया"]
+            },
+            { 
+                setId: 2, id: "q20", question: "संविधान तैयार करने में कुल कितना खर्च (बजट) आया था?", answer: "64 लाख रुपये", 
+                theory: "संविधान को तैयार करने में कुल 64 लाख रुपये (लगभग) का खर्च आया था और 11 सत्र (165 दिन) आयोजित किए गए थे.", 
+                booster: "Brain Booster 🧠: 1947 के समय में 64 लाख बहुत बड़ी रकम थी (64 Lakhs)।",
+                options: ["64 लाख रुपये", "50 लाख रुपये", "86 लाख रुपये", "1 करोड़ रुपये"]
+            },
 
-            const fileReader = new FileReader();
-            fileReader.onload = async function() {
-                try {
-                    const typedarray = new Uint8Array(this.result);
-                    const loadingTask = pdfjsLib.getDocument({ data: typedarray, password: password });
-                    const pdf = await loadingTask.promise;
-                    const page = await pdf.getPage(1);
+            // ====== SET 3: Polity - महत्वपूर्ण तथ्य (setId: 3) ======
+            { 
+                setId: 3, id: "q21", question: "भारतीय संविधान को आधिकारिक तौर पर कब अपनाया (Adopted) गया?", answer: "26 नवंबर 1949", 
+                theory: "संविधान सभा ने 26 नवंबर 1949 को संविधान को अपनाया। इसी दिन को अब 'संविधान दिवस' (Constitution Day) के रूप में मनाया जाता है.", 
+                booster: "Brain Booster 🧠: अपनाया (Adopted) = 26 Nov 1949. लागू (Enforced) = 26 Jan 1950.",
+                options: ["26 नवंबर 1949", "26 जनवरी 1950", "15 अगस्त 1947", "24 जनवरी 1950"]
+            },
+            { 
+                setId: 3, id: "q22", question: "मूल संविधान में कितने अनुच्छेद (Articles) और अनुसूचियां (Schedules) शामिल थीं?", answer: "395 अनुच्छेद, 8 अनुसूचियां", 
+                theory: "26 नवंबर 1949 को अपनाए गए मूल संविधान में 395 अनुच्छेद, 8 अनुसूचियां, 22 भाग और एक प्रस्तावना शामिल थी.", 
+                booster: "Brain Booster 🧠: वर्तमान में अनुसूचियां 8 से बढ़कर 12 हो गई हैं।",
+                options: ["395 अनुच्छेद, 8 अनुसूचियां", "448 अनुच्छेद, 12 अनुसूचियां", "395 अनुच्छेद, 10 अनुसूचियां", "390 अनुच्छेद, 8 अनुसूचियां"]
+            },
+            { 
+                setId: 3, id: "q23", question: "संविधान सभा ने राष्ट्रीय ध्वज (National Flag) को कब अपनाया था?", answer: "22 जुलाई 1947", 
+                theory: "संविधान सभा ने स्वतंत्रता से कुछ दिन पहले, 22 जुलाई 1947 को तिरंगे को राष्ट्रीय ध्वज के रूप में अपनाया. इसके डिज़ाइनर पिंगली वेंकैया थे.", 
+                booster: "Brain Booster 🧠: ध्वज 15 अगस्त से पहले चाहिए था, इसलिए 22 जुलाई को अपना लिया गया।",
+                options: ["22 जुलाई 1947", "24 जनवरी 1950", "15 अगस्त 1947", "26 जनवरी 1950"]
+            },
+            { 
+                setId: 3, id: "q24", question: "भारत का राष्ट्रगान (जन गण मन) और राष्ट्रीय गीत (वंदे मातरम) कब अपनाया गया?", answer: "24 जनवरी 1950", 
+                theory: "संविधान सभा की अंतिम बैठक 24 जनवरी 1950 को हुई थी। इसी दिन राष्ट्रगान, राष्ट्रीय गीत अपनाया गया और डॉ. राजेंद्र प्रसाद को प्रथम राष्ट्रपति चुना गया.", 
+                booster: "Brain Booster 🧠: गणतंत्र दिवस (26 Jan) से ठीक 2 दिन पहले ये ऐतिहासिक काम हुए।",
+                options: ["24 जनवरी 1950", "22 जुलाई 1947", "26 नवंबर 1949", "26 जनवरी 1950"]
+            },
+            { 
+                setId: 3, id: "q25", question: "भारतीय संविधान का अंग्रेजी सुलेखन (Calligraphy) किसने किया था?", answer: "प्रेम बिहारी नारायण रायजादा", 
+                theory: "भारतीय संविधान मूल रूप से हस्तलिखित था। प्रेम बिहारी नारायण रायजादा ने इसे अंग्रेजी (इटैलिक शैली) में लिखा था। वसंत कृष्ण वैद्य ने इसे हिंदी में लिखा था.", 
+                booster: "Brain Booster 🧠: 'प्रेम' से संविधान को अपने हाथों से लिखा (रायजादा)।",
+                options: ["प्रेम बिहारी नारायण रायजादा", "नंद लाल बोस", "वसंत कृष्ण वैद्य", "एच. वी. अयंगर"]
+            },
+            { 
+                setId: 3, id: "q26", question: "संविधान की सजावट (Illumination) शांतिनिकेतन के कलाकारों ने की थी, उनका नेतृत्व किसने किया?", answer: "नंद लाल बोस और ब्योहार राममनोहर सिन्हा", 
+                theory: "संविधान के पन्नों को सजाने और कलात्मक रूप देने का काम शांतिनिकेतन के कलाकारों ने किया, जिसमें नंद लाल बोस और ब्योहार राममनोहर सिन्हा प्रमुख थे.", 
+                booster: "Brain Booster 🧠: 'नंद लाल' ने संविधान में कला के 'लाल' रंग भरे।",
+                options: ["नंद लाल बोस और ब्योहार राममनोहर सिन्हा", "प्रेम बिहारी नारायण रायजादा", "एच. सी. मुखर्जी", "पिंगली वेंकैया"]
+            },
+            { 
+                setId: 3, id: "q27", question: "संविधान सभा का प्रतीक (Symbol / Seal) क्या था?", answer: "हाथी (Elephant)", 
+                theory: "भारत का संविधान सबसे बड़ा लिखित संविधान है और इसके विशाल आकार को दर्शाते हुए 'हाथी' (Elephant) को संविधान सभा के प्रतीक (Seal) के रूप में अपनाया गया था.", 
+                booster: "Brain Booster 🧠: विशाल संविधान = विशाल जानवर (हाथी)।",
+                options: ["हाथी", "शेर", "कमल", "अशोक चक्र"]
+            },
+            { 
+                setId: 3, id: "q28", question: "किस कारण से 26 जनवरी को संविधान लागू करने का दिन चुना गया?", answer: "1930 में कांग्रेस के पूर्ण स्वराज दिवस के कारण", 
+                theory: "इस तिथि (26 जनवरी 1950) को चुनने का कारण ऐतिहासिक था, क्योंकि 1929 के लाहौर अधिवेशन के बाद 26 जनवरी 1930 को ही कांग्रेस ने 'पूर्ण स्वराज दिवस' मनाया था.", 
+                booster: "Brain Booster 🧠: 20 साल पुरानी ऐतिहासिक तारीख (1930) को सम्मान देने के लिए।",
+                options: ["1930 में कांग्रेस के पूर्ण स्वराज दिवस के कारण", "इसी दिन भारत आजाद हुआ था", "कैबिनेट मिशन का यह आदेश था", "इसी दिन क्रिप्स मिशन भारत आया था"]
+            },
+            { 
+                setId: 3, id: "q29", question: "संविधान सभा की महत्वपूर्ण महिला सदस्यों में से उत्तर प्रदेश की प्रथम महिला राज्यपाल कौन बनीं?", answer: "सरोजिनी नायडू", 
+                theory: "संविधान सभा में कुल 15 महिला सदस्य थीं। इनमें सरोजिनी नायडू (यूपी की पहली महिला राज्यपाल), सुचेता कृपलानी (यूपी की पहली महिला सीएम) और राजकुमारी अमृत कौर (पहली स्वास्थ्य मंत्री) शामिल थीं.", 
+                booster: "Brain Booster 🧠: भारत की 'कोकिला' सरोजिनी नायडू पहली महिला गवर्नर थीं।",
+                options: ["सरोजिनी नायडू", "सुचेता कृपलानी", "राजकुमारी अमृत कौर", "विजय लक्ष्मी पंडित"]
+            },
+            { 
+                setId: 3, id: "q30", question: "संविधान सभा की चर्चाओं के मुद्रित रिकॉर्ड (Constituent Assembly Debates) कितने खंडों में संकलित किए गए?", answer: "12 खंडों में", 
+                theory: "संविधान सभा में हुई हर एक चर्चा को सावधानीपूर्वक रिकॉर्ड किया गया और मुद्रित किया गया। इसे कुल 12 मोटे खंडों (Volumes) में संकलित किया गया था.", 
+                booster: "Brain Booster 🧠: 1 साल में 12 महीने होते हैं, वैसे ही 12 खंडों में चर्चाओं को छापा गया।",
+                options: ["12 खंडों में", "11 खंडों में", "22 खंडों में", "8 खंडों में"]
+            },
+            
+             // ====== SET 4: ब्रह्मांड की उत्पत्ति (setId: 4) ======
+            { 
+                setId: 4, id: "g1", question: "ब्रह्मांड के अध्ययन को विज्ञान की किस शाखा में रखा जाता है?", answer: "कॉस्मोलॉजी (Cosmology)", 
+                theory: "ब्रह्मांड के अस्तित्व और उत्पत्ति के अध्ययन को ब्रह्मांड विज्ञान या कॉस्मोलॉजी कहा जाता है। खगोलीय पिंडों का अध्ययन खगोल विज्ञान (Astronomy) कहलाता है।", 
+                booster: "Brain Booster 🧠: कॉस्मो (Cosmo) का मतलब ब्रह्मांड होता है।",
+                options: ["कॉस्मोलॉजी (Cosmology)", "एस्ट्रोनॉमी (Astronomy)", "जियोलॉजी (Geology)", "सिस्मोलॉजी (Seismology)"]
+            },
+            { 
+                setId: 4, id: "g2", question: "महाविस्फोट सिद्धांत (Big Bang Theory) का प्रतिपादन 1927 में किसने किया था?", answer: "जॉर्ज लेमैत्रे", 
+                theory: "बिग बैंग थ्योरी ब्रह्मांड की उत्पत्ति का सबसे मान्य सिद्धांत है, जिसे 1927 में जॉर्ज लेमैत्रे द्वारा दिया गया था। इसके अनुसार 13.8 अरब वर्ष पूर्व ब्रह्मांड का विस्तार शुरू हुआ।", 
+                booster: "Brain Booster 🧠: लेमैत्रे ने बताया कि ब्रह्मांड एक छोटे बिंदु से 'फैल' रहा है।",
+                options: ["जॉर्ज लेमैत्रे", "एडविन हबल", "अल्बर्ट आइंस्टीन", "निकोलस कोपरनिकस"]
+            },
+            { 
+                setId: 4, id: "g3", question: "1929 में किसने यह प्रमाणित किया कि ब्रह्मांड का निरंतर विस्तार हो रहा है?", answer: "एडविन हबल", 
+                theory: "एडविन हबल ने ब्रह्मांड के विस्तार की परिकल्पना दी। उन्होंने बताया कि दूर की आकाशगंगाएं पृथ्वी से और दूर जा रही हैं, जिससे ब्रह्मांड के फैलने का प्रमाण मिला।", 
+                booster: "Brain Booster 🧠: इन्हीं के नाम पर 'हबल टेलीस्कोप' का नाम रखा गया है।",
+                options: ["एडविन हबल", "फ्रेड होयल", "थॉमस गोल्ड", "जॉर्ज लेमैत्रे"]
+            },
+            { 
+                setId: 4, id: "g4", question: "ब्रह्मांड की 'स्थिर अवस्था सिद्धांत' (Steady State Theory) किसने प्रस्तुत किया था?", answer: "फ्रेड होयल, हर्मन बॉन्डी, और थॉमस गोल्ड", 
+                theory: "स्थिर अवस्था सिद्धांत के अनुसार ब्रह्मांड लगातार विस्तार कर रहा है, लेकिन इसके औसत गुणों और घनत्व में कोई बदलाव नहीं होता है।", 
+                booster: "Brain Booster 🧠: बिग बैंग के विपरीत, इसमें ब्रह्मांड हमेशा एक सा (Steady) रहता है।",
+                options: ["फ्रेड होयल, हर्मन बॉन्डी, और थॉमस गोल्ड", "चैंबरलिन और मोल्टन", "रसेल और लाप्लास", "निकोलस कोपरनिकस"]
+            },
+            { 
+                setId: 4, id: "g5", question: "हमारी आकाशगंगा (दुग्ध मेखला) के सबसे नजदीक स्थित आकाशगंगा कौन सी है?", answer: "देवयानी (एंड्रोमेडा / M-31)", 
+                theory: "हमारी आकाशगंगा दुग्ध मेखला (Milky Way) के सबसे निकट की आकाशगंगा देवयानी (Andromeda / M-31) है।", 
+                booster: "Brain Booster 🧠: हमारा मिल्की वे और पड़ोसी एंड्रोमेडा।",
+                options: ["देवयानी (एंड्रोमेडा)", "उर्सा मेजर", "ओरियन स्वान", "सीरियस"]
+            },
+            { 
+                setId: 4, id: "g6", question: "'हेलियोसेंट्रिक सिद्धांत' किसने दिया था, जिसके अनुसार सूर्य ब्रह्मांड के केंद्र में है?", answer: "निकोलस कोपरनिकस", 
+                theory: "1543 में निकोलस कोपरनिकस ने अपनी पुस्तक 'डि रेवोल्यूशनिबस' में हेलियोसेंट्रिक सिद्धांत दिया कि सूर्य केंद्र में है और पृथ्वी सहित ग्रह उसकी परिक्रमा करते हैं।", 
+                booster: "Brain Booster 🧠: हेलियो (Helio) मतलब सूर्य, सेंट्रिक (Centric) मतलब केंद्र।",
+                options: ["निकोलस कोपरनिकस", "गैलीलियो गैलीली", "योहानस केप्लर", "आइजैक न्यूटन"]
+            },
+            { 
+                setId: 4, id: "g7", question: "सौरमंडल की उत्पत्ति से संबंधित 'निहारिका परिकल्पना' (Nebular Hypothesis) 1796 में किसने दी थी?", answer: "पियरे-साइमन लाप्लास", 
+                theory: "लाप्लास की निहारिका परिकल्पना के अनुसार, सौरमंडल का निर्माण गैस और धूल के घूमते हुए बादल (नेबुला) के टकराने और डिस्क के रूप में फैलने से हुआ। (1755 में इसे इमैनुअल कांट ने प्रस्तुत किया था)।", 
+                booster: "Brain Booster 🧠: लाप्लास ने कांट के सिद्धांत को सुधारा था।",
+                options: ["पियरे-साइमन लाप्लास", "थॉमस चैंबरलिन", "फ्रेस्ट रे मोल्टन", "एच. एन. रसेल"]
+            },
+            { 
+                setId: 4, id: "g8", question: "सौरमंडल के निर्माण की 'ग्रहाणु सिद्धांत' (Planetesimal Hypothesis) किसने दी?", answer: "चैंबरलिन और मोल्टन (1905)", 
+                theory: "1905 में थॉमस चैंबरलिन और फॉरेस्ट रे मोल्टन ने निष्कर्ष निकाला कि एक गुजरता हुआ तारा सूर्य के निकट आया, जिसके गुरुत्वाकर्षण से सूर्य का कुछ अंश खिंच गया, जिससे ग्रह बने।", 
+                booster: "Brain Booster 🧠: गुजरते तारे ने सूर्य से ग्रहाणु (Planetesimals) खींच लिए।",
+                options: ["चैंबरलिन और मोल्टन", "लाप्लास और कांट", "एच. एन. रसेल", "जॉर्ज लेमैत्रे"]
+            },
+            { 
+                setId: 4, id: "g9", question: "सौरमंडल की 'द्विआधारी तारा परिकल्पना' (Binary Star Hypothesis) 1937 में किसने दी?", answer: "एच. एन. रसेल", 
+                theory: "एच. एन. रसेल के अनुसार पृथ्वी और अन्य ग्रह सूर्य के साथी तारे के विस्फोट के बाद बचे मलबे से बने हैं।", 
+                booster: "Brain Booster 🧠: द्विआधारी (Binary) का मतलब दो तारे- एक सूर्य और उसका साथी।",
+                options: ["एच. एन. रसेल", "एडविन हबल", "फ्रेड होयल", "निकोलस कोपरनिकस"]
+            },
+            { 
+                setId: 4, id: "g10", question: "अंतरिक्ष की वे वस्तुएँ जो अपना प्रकाश स्वयं उत्सर्जित करती हैं, क्या कहलाती हैं?", answer: "दीप्त वस्तुएं (Luminous objects)", 
+                theory: "वे वस्तुएं जो अपना स्वयं का प्रकाश उत्सर्जित करती हैं (जैसे तारे, जुगनू) दीप्त वस्तुएं कहलाती हैं। जो दूसरों के प्रकाश से चमकती हैं (जैसे चंद्रमा, ग्रह) अदीप्त वस्तुएं कहलाती हैं।", 
+                booster: "Brain Booster 🧠: सूर्य दीप्त है, जबकि चाँद अदीप्त है।",
+                options: ["दीप्त वस्तुएं (Luminous)", "अदीप्त वस्तुएं (Non-luminous)", "क्षुद्रग्रह", "उल्कापिंड"]
+            },
 
-                    const scale = 3; 
-                    const viewport = page.getViewport({ scale: scale });
-                    
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-                    await page.render({ canvasContext: context, viewport: viewport }).promise;
+            // ====== SET 5: सूर्य और तारे (setId: 5) ======
+            { 
+                setId: 5, id: "g11", question: "सूर्य के केंद्र में ऊर्जा उत्पन्न करने की मुख्य प्रक्रिया क्या है?", answer: "नाभिकीय संलयन (Nuclear Fusion)", 
+                theory: "सूर्य के केंद्र में अत्यधिक उच्च तापमान (15 मिलियन °C) और दबाव के कारण हाइड्रोजन (73%) हीलियम (25-28%) में परिवर्तित होता है। इसे नाभिकीय संलयन कहते हैं।", 
+                booster: "Brain Booster 🧠: संलयन (Fusion) यानी जुड़ना, जहाँ हाइड्रोजन मिलकर हीलियम बनते हैं।",
+                options: ["नाभिकीय संलयन (Nuclear Fusion)", "नाभिकीय विखंडन (Nuclear Fission)", "रेडियोएक्टिव क्षय", "रासायनिक दहन"]
+            },
+            { 
+                setId: 5, id: "g12", question: "सूर्य और सौरमंडल पर इसके प्रभाव का अध्ययन करने वाले विज्ञान को क्या कहा जाता है?", answer: "हेलियोफिजिक्स (Heliophysics)", 
+                theory: "सूर्य हमारे सौरमंडल के द्रव्यमान का लगभग 99% वहन करता है। इसके प्रभावों के अध्ययन को हेलियोफिजिक्स कहा जाता है।", 
+                booster: "Brain Booster 🧠: हेलियो (Helio) = सूर्य, फिजिक्स = भौतिकी।",
+                options: ["हेलियोफिजिक्स (Heliophysics)", "कॉस्मोलॉजी", "सिस्मोलॉजी", "एस्ट्रोबायोलॉजी"]
+            },
+            { 
+                setId: 5, id: "g13", question: "सूर्य के प्रकाश को 3 लाख किमी/सेकंड की गति से पृथ्वी तक पहुँचने में कितना समय लगता है?", answer: "8 मिनट 20 सेकंड", 
+                theory: "सूर्य पृथ्वी से लगभग 149.6 मिलियन (15 करोड़) किमी दूर है। प्रकाश को पृथ्वी तक पहुँचने में 8 मिनट 20 सेकंड (लगभग 500 सेकंड) का समय लगता है।", 
+                booster: "Brain Booster 🧠: 500 सेकंड = 8 मिनट और 20 सेकंड।",
+                options: ["8 मिनट 20 सेकंड", "8 मिनट 40 सेकंड", "7 मिनट 20 सेकंड", "9 मिनट"]
+            },
+            { 
+                setId: 5, id: "g14", question: "सूर्य की सतह (Photosphere) का तापमान लगभग कितना होता है?", answer: "5800K या 5600°C", 
+                theory: "सूर्य की सतह (प्रकाशमंडल) का तापमान लगभग 5600°C (या 5800 केल्विन) होता है। इसके केंद्र का तापमान 15.7 मिलियन केल्विन तक पहुँच जाता है।", 
+                booster: "Brain Booster 🧠: सतह 5.6k°C है, लेकिन कोर 1.5 करोड़°C से भी ज्यादा है।",
+                options: ["5800K या 5600°C", "15000°C", "2000°C", "10000K"]
+            },
+            { 
+                setId: 5, id: "g15", question: "सूर्य की सबसे बाहरी परत कौन सी है, जो केवल सूर्य ग्रहण के दौरान दिखाई देती है?", answer: "कोरोना (Corona)", 
+                theory: "सूर्य की परतें क्रमानुसार: कोर > विकिरण क्षेत्र > संवहन क्षेत्र > प्रकाशमंडल > वर्णमंडल > कोरोना। कोरोना सबसे बाहरी परत है जो सिर्फ ग्रहण के समय दिखती है।", 
+                booster: "Brain Booster 🧠: कोरोना का लैटिन अर्थ 'मुकुट' (Crown) होता है।",
+                options: ["कोरोना", "प्रकाशमंडल (Photosphere)", "वर्णमंडल (Chromosphere)", "क्रोड (Core)"]
+            },
+            { 
+                setId: 5, id: "g16", question: "सूर्य की सतह पर गहरे रंग के अस्थायी क्षेत्रों को क्या कहा जाता है?", answer: "सूर्य धब्बे (Sunspots)", 
+                theory: "सूर्य धब्बे तीव्र चुंबकीय गतिविधि के कारण बनते हैं, जिससे ऊष्मा स्थानांतरण बाधित होता है। ये आसपास के क्षेत्रों की तुलना में ठंडे होते हैं।", 
+                booster: "Brain Booster 🧠: इनका चक्र (Sunspot Cycle) 11 वर्षों का होता है।",
+                options: ["सूर्य धब्बे (Sunspots)", "सौर ज्वाला (Solar Flare)", "कोरोना", "सौर पवन (Solar Wind)"]
+            },
+            { 
+                setId: 5, id: "g17", "question": "पृथ्वी के ध्रुवीय क्षेत्रों में वायुमंडल से टकराने वाली सौर ज्वालाओं से उत्पन्न प्रकाश को क्या कहते हैं?", answer: "अरोरा (Aurora)", 
+                theory: "उत्तरी ध्रुव पर इसे 'अरोरा बोरेलिस' (Aurora Borealis) और दक्षिणी ध्रुव पर 'अरोरा ऑस्ट्रेलिस' (Aurora Australis) कहा जाता है।", 
+                booster: "Brain Booster 🧠: ऑस्ट्रेलिया दक्षिण में है, इसलिए वहां 'ऑस्ट्रेलिस' होता है।",
+                options: ["अरोरा (Aurora)", "पल्सर", "सुपरनोवा", "धूमकेतु"]
+            },
+            { 
+                setId: 5, id: "g18", question: "उर्सा मेजर (Great Bear) तारामंडल को भारत में किस नाम से जाना जाता है?", answer: "सप्तर्षि", 
+                theory: "उर्सा मेजर या ग्रेट बियर एक तारामंडल है जिसे भारत में 'सप्तर्षि' कहा जाता है। इसमें स्थित एक तारा 'बिग डिपर' तारामंडल को भी दर्शाता है।", 
+                booster: "Brain Booster 🧠: यह महान भालू (Great Bear) के आकार का होता है।",
+                options: ["सप्तर्षि", "ओरियन", "कैसिओपिया", "सिग्नस"]
+            },
+            { 
+                setId: 5, id: "g19", question: "रात के आकाश में सबसे चमकीला तारा कौन सा है?", answer: "सीरियस (Sirius)", 
+                theory: "सीरियस (जिसे डॉग स्टार भी कहा जाता है) रात के आकाश का सबसे चमकीला तारा है। यह ओरियन (हंटर) तारामंडल के पास दिखाई देता है।", 
+                booster: "Brain Booster 🧠: 'Serious'ly यह बहुत चमकता है!",
+                options: ["सीरियस (Sirius)", "प्रॉक्सिमा सेंचुरी", "ध्रुव तारा (Polaris)", "रिगेल (Rigel)"]
+            },
+            { 
+                setId: 5, id: "g20", question: "सूर्य के बाद पृथ्वी के सबसे निकटतम तारा कौन सा है?", answer: "प्रॉक्सिमा सेंचुरी", 
+                theory: "सूर्य के बाद, प्रॉक्सिमा सेंचुरी (Proxima Centauri) हमारे सौरमंडल का सबसे निकटतम तारा है।", 
+                booster: "Brain Booster 🧠: Proxima का अर्थ ही होता है 'सबसे करीब'।",
+                options: ["प्रॉक्सिमा सेंचुरी", "सीरियस", "अल्फा सेंचुरी", "ध्रुव तारा"]
+            },
 
-                    const fullWidth = canvas.width;
-                    const fullHeight = canvas.height;
+            // ====== SET 6: आंतरिक ग्रह (Mercury to Mars) (setId: 6) ======
+            { 
+                setId: 6, id: "g21", question: "चट्टानी पदार्थों से बने और सूर्य के निकट स्थित ग्रहों को क्या कहा जाता है?", answer: "स्थलीय ग्रह (Terrestrial Planets)", 
+                theory: "बुध, शुक्र, पृथ्वी और मंगल को स्थलीय ग्रह कहा जाता है। ये अपेक्षाकृत छोटे, चट्टानी होते हैं और इनके पास कम या कोई चंद्रमा नहीं होता है।", 
+                booster: "Brain Booster 🧠: बृहस्पति, शनि, अरुण, वरुण गैसीय ग्रह (Jovian Planets) हैं।",
+                options: ["स्थलीय ग्रह (Terrestrial)", "गैसीय ग्रह (Jovian)", "बौने ग्रह (Dwarf)", "बर्फ दानव (Ice Giants)"]
+            },
+            { 
+                setId: 6, id: "g22", question: "सौरमंडल का सबसे छोटा और सबसे तेज ग्रह कौन सा है?", answer: "बुध (Mercury)", 
+                theory: "बुध सूर्य के सबसे निकट है। इसका व्यास 4900 किमी है और यह 88 दिनों में सूर्य की परिक्रमा पूरी कर लेता है (गति 172500 किमी/घंटा)। इसका कोई वायुमंडल नहीं है।", 
+                booster: "Brain Booster 🧠: यह सबसे तेज़ है इसलिए 88 दिन में एक साल पूरा हो जाता है।",
+                options: ["बुध (Mercury)", "शुक्र (Venus)", "मंगल (Mars)", "प्लूटो (Pluto)"]
+            },
+            { 
+                setId: 6, id: "g23", question: "सौरमंडल का सबसे गर्म ग्रह कौन सा है?", answer: "शुक्र (Venus)", 
+                theory: "बुध सूर्य के निकट है, फिर भी शुक्र सबसे गर्म है। इसके वायुमंडल में सल्फ्यूरिक अम्ल (H2SO4) और कार्बन डाइऑक्साइड (CO2) ऊष्मा को रोक लेते हैं।", 
+                booster: "Brain Booster 🧠: इसे 'पृथ्वी की जुड़वां बहन' भी कहा जाता है।",
+                options: ["शुक्र (Venus)", "बुध (Mercury)", "मंगल (Mars)", "बृहस्पति (Jupiter)"]
+            },
+            { 
+                setId: 6, id: "g24", question: "कौन सा ग्रह पूर्व से पश्चिम (East to West) की ओर घूर्णन करता है?", answer: "शुक्र और अरुण", 
+                theory: "सभी ग्रह पश्चिम से पूर्व की ओर घूर्णन करते हैं, सिवाय शुक्र (Venus) और अरुण (Uranus) के। इन दोनों पर सूर्योदय पश्चिम में होता है।", 
+                booster: "Brain Booster 🧠: शुक्र का घूर्णन इतना धीमा है कि इसका 1 दिन इसके 1 वर्ष (243 दिन) के बराबर होता है।",
+                options: ["शुक्र और अरुण", "बुध और मंगल", "पृथ्वी और शनि", "बृहस्पति और वरुण"]
+            },
+            { 
+                setId: 6, id: "g25", question: "सौरमंडल में सबसे अधिक घनत्व (5.5 ग्राम/सेमी³) वाला ग्रह कौन सा है?", answer: "पृथ्वी (Earth)", 
+                theory: "पृथ्वी सौरमंडल का सबसे सघन ग्रह है। इसे 'नीला ग्रह' भी कहा जाता है क्योंकि इसकी सतह पर 70% जल मौजूद है।", 
+                booster: "Brain Booster 🧠: पृथ्वी ही एकमात्र ग्रह है जो जीवन का समर्थन करता है।",
+                options: ["पृथ्वी (Earth)", "बुध (Mercury)", "बृहस्पति (Jupiter)", "शनि (Saturn)"]
+            },
+            { 
+                setId: 6, id: "g26", question: "किस ग्रह को उसकी मिट्टी में लोहे (Iron) की अधिक मात्रा के कारण 'लाल ग्रह' कहा जाता है?", answer: "मंगल (Mars)", 
+                theory: "मंगल की सतह लाल होती है। यह बुध के बाद दूसरा सबसे छोटा ग्रह है। इसके दिन की अवधि (24h 37m) पृथ्वी के लगभग समान है।", 
+                booster: "Brain Booster 🧠: आयरन ऑक्साइड लोहे पर लगने वाली जंग के समान है।",
+                options: ["मंगल (Mars)", "शुक्र (Venus)", "बृहस्पति (Jupiter)", "बुध (Mercury)"]
+            },
+            { 
+                setId: 6, id: "g27", question: "सौरमंडल का सबसे बड़ा ज्वालामुखी 'ओलंपस मॉन्स' (Olympus Mons) किस ग्रह पर स्थित है?", answer: "मंगल (Mars)", 
+                theory: "मंगल पर स्थित 'ओलंपस मॉन्स' (ऊंचाई: 22-25 किमी) सौरमंडल का सबसे बड़ा ज्वालामुखी और सबसे ऊंचा पर्वत है। यह माउंट एवरेस्ट से लगभग 3 गुना ऊंचा है।", 
+                booster: "Brain Booster 🧠: माउंट एवरेस्ट (8.8 किमी) से भी 3 गुना ऊँचा पर्वत! 🌋",
+                options: ["मंगल (Mars)", "पृथ्वी (Earth)", "शुक्र (Venus)", "बृहस्पति (Jupiter)"]
+            },
+            { 
+                setId: 6, id: "g28", question: "'फोबोस' और 'डीमोस' (Phobos and Deimos) किस ग्रह के प्राकृतिक उपग्रह हैं?", answer: "मंगल (Mars)", 
+                theory: "मंगल के केवल दो प्राकृतिक उपग्रह हैं: फोबोस और डीमोस। बुध और शुक्र का कोई उपग्रह नहीं है, पृथ्वी का केवल एक (चंद्रमा) है।", 
+                booster: "Brain Booster 🧠: मंगल देव के दो 'बेटे' - फोबोस और डीमोस।",
+                options: ["मंगल (Mars)", "बृहस्पति (Jupiter)", "शनि (Saturn)", "अरुण (Uranus)"]
+            },
+            { 
+                setId: 6, id: "g29", question: "क्षुद्रग्रह घेरा (Asteroid Belt) किन दो ग्रहों की कक्षाओं के बीच स्थित है?", answer: "मंगल और बृहस्पति", 
+                theory: "क्षुद्रग्रह (Asteroids) चट्टानी या धात्विक पिंड होते हैं। अधिकांश क्षुद्रग्रह मंगल और बृहस्पति के बीच एक बेल्ट में सूर्य की परिक्रमा करते हैं।", 
+                booster: "Brain Booster 🧠: M (Mars) और J (Jupiter) के बीच पत्थरों की दीवार (Asteroid belt) है।",
+                options: ["मंगल और बृहस्पति", "पृथ्वी और मंगल", "बृहस्पति और शनि", "शुक्र और पृथ्वी"]
+            },
+            { 
+                setId: 6, id: "g30", question: "वायुमंडल से गुजरते हुए जलने वाले उल्कापिंडों (Meteoroids) को क्या कहा जाता है?", answer: "उल्का (Meteor / टूटता तारा)", 
+                theory: "जब एक उल्कापिंड (Meteoroid) पृथ्वी के मध्यमंडल (Mesosphere) में प्रवेश करता है, तो घर्षण से जलकर रोशनी की लकीर छोड़ता है। इसे उल्का (Meteor / टूटता तारा) कहते हैं। यदि वह सतह से टकरा जाए तो उसे उल्कापिंड (Meteorite) कहते हैं।", 
+                booster: "Brain Booster 🧠: जल गया तो Meteor, जमीन से टकराया तो Meteorite.",
+                options: ["उल्का (Meteor)", "क्षुद्रग्रह (Asteroid)", "धूमकेतु (Comet)", "उपग्रह (Satellite)"]
+            },
 
-                    const imgElement = document.getElementById('pdfImage');
-                    imgElement.src = canvas.toDataURL('image/png');
-                    document.getElementById('aadhaarWorkspace').style.display = 'block';
+            // ====== SET 7: बाह्य और बौने ग्रह (Outer & Dwarf Planets) (setId: 7) ======
+            { 
+                setId: 7, id: "g31", question: "किस ग्रह की घूर्णन अवधि (Rotation) सौरमंडल में सबसे कम (लगभग 9 घंटे 55 मिनट) है?", answer: "बृहस्पति (Jupiter)", 
+                theory: "बृहस्पति सौरमंडल का सबसे बड़ा ग्रह है (गैस दानव), लेकिन यह अपनी धुरी पर सबसे तेज़ गति से घूमता है। इसका वायुमंडल हाइड्रोजन और हीलियम से भरा है।", 
+                booster: "Brain Booster 🧠: सबसे बड़ा होने के बावजूद यह लट्टू की तरह सबसे तेज़ घूमता है।",
+                options: ["बृहस्पति (Jupiter)", "शनि (Saturn)", "पृथ्वी (Earth)", "बुध (Mercury)"]
+            },
+            { 
+                setId: 7, id: "g32", question: "सौरमंडल का सबसे बड़ा प्राकृतिक उपग्रह 'गैनीमीड' (Ganymede) किस ग्रह का चक्कर लगाता है?", answer: "बृहस्पति (Jupiter)", 
+                theory: "बृहस्पति के पास 95 चंद्रमा हैं (लो, यूरोपा, गैनीमीड, कैलिस्टो प्रमुख हैं जिन्हें गैलीलियो ने खोजा था)। गैनीमीड पूरे सौरमंडल का सबसे बड़ा उपग्रह है।", 
+                booster: "Brain Booster 🧠: सबसे बड़े ग्रह का चंद्रमा भी सबसे बड़ा है।",
+                options: ["बृहस्पति (Jupiter)", "शनि (Saturn)", "अरुण (Uranus)", "मंगल (Mars)"]
+            },
+            { 
+                setId: 7, id: "g33", question: "किस ग्रह का घनत्व पानी से भी कम (0.69 ग्राम/सेमी³) है, जिसके कारण वह पानी पर तैर सकता है?", answer: "शनि (Saturn)", 
+                theory: "शनि दूसरा सबसे बड़ा ग्रह है। इसके चारों ओर बर्फ और पत्थरों के स्पष्ट छल्ले (Rings) हैं। इसका घनत्व इतना कम है कि एक विशाल महासागर में यह तैरने लगेगा।", 
+                booster: "Brain Booster 🧠: शनि पानी से भी हल्का है (1 g/cm3 से कम)।",
+                options: ["शनि (Saturn)", "अरुण (Uranus)", "वरुण (Neptune)", "बृहस्पति (Jupiter)"]
+            },
+            { 
+                setId: 7, id: "g34", question: "'टाइटन' (Titan) किस ग्रह का सबसे बड़ा उपग्रह है?", answer: "शनि (Saturn)", 
+                theory: "टाइटन शनि का सबसे बड़ा (और सौरमंडल का दूसरा सबसे बड़ा) चंद्रमा है। यह एकमात्र चंद्रमा है जहां पृथ्वी की तरह सघन वायुमंडल मौजूद है।", 
+                booster: "Brain Booster 🧠: टाइटन में जीवन (Life) की संभावना तलाशी जा रही है।",
+                options: ["शनि (Saturn)", "बृहस्पति (Jupiter)", "अरुण (Uranus)", "वरुण (Neptune)"]
+            },
+            { 
+                setId: 7, id: "g35", question: "मीथेन (CH4) गैस की उपस्थिति के कारण कौन सा ग्रह हरे रंग का दिखाई देता है?", answer: "अरुण (Uranus)", 
+                theory: "अरुण ग्रह को 'हरा ग्रह' भी कहा जाता है क्योंकि इसके वायुमंडल में मीथेन गैस भारी मात्रा में है। इसकी खोज 1781 में विलियम हर्शेल ने की थी।", 
+                booster: "Brain Booster 🧠: अरुण (Uranus) = मीथेन = हरा रंग।",
+                options: ["अरुण (Uranus)", "वरुण (Neptune)", "पृथ्वी (Earth)", "मंगल (Mars)"]
+            },
+            { 
+                setId: 7, id: "g36", question: "किस ग्रह को अपने अक्ष पर अत्यधिक झुकाव (98°) के कारण \"लेटा हुआ ग्रह\" कहा जाता है?", answer: "अरुण (Uranus)", 
+                theory: "अरुण अपनी धुरी पर 98 डिग्री तक झुका हुआ है, इसलिए इसे \"लुढ़कता हुआ ग्रह\" या \"लेटा हुआ ग्रह\" (Rolling Planet) कहा जाता है।", 
+                booster: "Brain Booster 🧠: अरुण इतना आलसी है कि लेटा हुआ रहता है।",
+                options: ["अरुण (Uranus)", "वरुण (Neptune)", "शुक्र (Venus)", "शनि (Saturn)"]
+            },
+            { 
+                setId: 7, id: "g37", question: "सूर्य से सबसे दूर स्थित और सबसे लंबी परिक्रमा (165 वर्ष) करने वाला ग्रह कौन सा है?", answer: "वरुण (Neptune)", 
+                theory: "वरुण सूर्य से सबसे दूर है। इसे 1846 में जोहान गाले ने खोजा था। इसका प्रमुख चंद्रमा 'ट्राइटन' (Triton) है और यह सबसे तेज हवाओं वाला ग्रह है।", 
+                booster: "Brain Booster 🧠: वरुण को गणितीय अनुमान से खोजा गया था, टेलीस्कोप से नहीं।",
+                options: ["वरुण (Neptune)", "अरुण (Uranus)", "शनि (Saturn)", "बृहस्पति (Jupiter)"]
+            },
+            { 
+                setId: 7, id: "g38", question: "अंतर्राष्ट्रीय खगोलीय संघ (IAU) ने किस वर्ष प्लूटो को ग्रहों की सूची से हटाकर 'बौना ग्रह' घोषित किया?", answer: "2006", 
+                theory: "2006 में IAU ने ग्रहों की नई परिभाषा तय की। प्लूटो अपनी कक्षा को अन्य मलबे से साफ़ नहीं कर पाता था और वरुण की कक्षा को काटता था, इसलिए इसे बौना ग्रह (Dwarf Planet) बना दिया गया।", 
+                booster: "Brain Booster 🧠: 2006 में 9वें ग्रह की छुट्टी हो गई।",
+                options: ["2006", "2004", "2008", "2010"]
+            },
+            { 
+                setId: 7, id: "g39", question: "प्लूटो की खोज किसने की थी?", answer: "क्लाइड टॉम्बो", 
+                theory: "प्लूटो की खोज 1930 में क्लाइड टॉम्बो (Clyde Tombaugh) ने की थी। इसका सबसे बड़ा उपग्रह 'चारोन' है। यह कुइपर बेल्ट (Kuiper Belt) का सदस्य है।", 
+                booster: "Brain Booster 🧠: अरुण (हर्शेल), वरुण (गाले), और प्लूटो (टॉम्बो)।",
+                options: ["क्लाइड टॉम्बो", "विलियम हर्शेल", "गैलीलियो गैलीली", "योहानस केप्लर"]
+            },
+            { 
+                setId: 7, id: "g40", question: "सौरमंडल के प्रमुख बौने ग्रह (Dwarf Planets) कौन से हैं?", answer: "प्लूटो, एरिस, मेकमेक, हौमिया, सेरेस", 
+                theory: "सौरमंडल में 5 मान्यता प्राप्त बौने ग्रह हैं। इनमें प्लूटो सबसे बड़ा है, उसके बाद एरिस (Eris) है। सेरेस क्षुद्रग्रह बेल्ट में स्थित है, बाकी कुइपर बेल्ट में हैं।", 
+                booster: "Brain Booster 🧠: सेरेस (Ceres) इकलौता बौना ग्रह है जो क्षुद्रग्रह बेल्ट में है।",
+                options: ["प्लूटो, एरिस, मेकमेक, हौमिया, सेरेस", "प्लूटो, टाइटन, ट्राइटन, फोबोस", "एरिस, गैनीमीड, कैलिस्टो, सेरेस", "प्लूटो, सेरेस, वेस्ता, पलास"]
+            },
 
-                    if (aadhaarCropper) aadhaarCropper.destroy();
-                    
-                    // UPDATE: Aadhaar Cropper settings change kiya gaya hai
-                    aadhaarCropper = new Cropper(imgElement, {
-                        viewMode: 1, 
-                        dragMode: 'crop', 
-                        zoomable: false, // Zooming disable kar diya gaya taaki image pagal na ho
-                        movable: false,  // Image hilegi nahi, sirf crop box hilega
-                        ready() {
-                            setTimeout(() => {
-                                // UPDATE: Crop box ko ekdum ID card size ka aur thik niche set kiya hai
-                                const boxY = fullHeight * 0.680; // Pehle se thoda niche (exact card level)
-                                const boxW = fullWidth * 0.420;  // Card ki chaurai ke hisaab se
-                                const boxH = fullHeight * 0.190; // Card ki lambaai ke hisaab se (85x54 ratio)
+            // ====== SET 8: अंतरिक्ष मिशन और तथ्य (Space Missions & Concepts) (setId: 8) ======
+            { 
+                setId: 8, id: "g41", question: "हैली धूमकेतु (Halley's Comet) कितने वर्षों के अंतराल पर दिखाई देता है?", answer: "76 वर्ष", 
+                theory: "धूमकेतु बर्फ, गैस और धूल के पिंड होते हैं जो सूर्य के पास आने पर वाष्पीकृत होकर पूंछ बनाते हैं। हैली धूमकेतु 1986 में दिखा था और अब 2061 में दिखेगा।", 
+                booster: "Brain Booster 🧠: 1986 + 75/76 साल = 2061 में वापसी।",
+                options: ["76 वर्ष", "86 वर्ष", "66 वर्ष", "96 वर्ष"]
+            },
+            { 
+                setId: 8, id: "g42", question: "चंद्रशेखर सीमा (Chandrasekhar Limit) सूर्य के द्रव्यमान का लगभग कितना गुना होती है?", answer: "1.44 गुना", 
+                theory: "सुब्रह्मण्यम चंद्रशेखर ने 1930 में यह सीमा बताई थी। यदि किसी तारे का द्रव्यमान सूर्य से 1.44 गुना से अधिक है, तो वह श्वेत बौना (White Dwarf) नहीं बन पाता और सुपरनोवा बन जाता है।", 
+                booster: "Brain Booster 🧠: इसके लिए उन्हें 1983 में भौतिकी का नोबेल मिला था।",
+                options: ["1.44 गुना", "2.44 गुना", "1.14 गुना", "3.14 गुना"]
+            },
+            { 
+                setId: 8, id: "g43", question: "किसी तारे के भयंकर विस्फोट को क्या कहा जाता है?", answer: "सुपरनोवा (Supernova)", 
+                theory: "भारी द्रव्यमान वाले तारे अपने अंत समय में भयानक विस्फोट करते हैं जिसे सुपरनोवा कहते हैं। इसके बाद वे न्यूट्रॉन तारा (पल्सर) या ब्लैक होल में बदल जाते हैं।", 
+                booster: "Brain Booster 🧠: ब्लैक होल में गुरुत्वाकर्षण इतना अधिक होता है कि प्रकाश भी बाहर नहीं जा सकता।",
+                options: ["सुपरनोवा (Supernova)", "पल्सर (Pulsar)", "ब्लैक होल", "नेबुला (Nebula)"]
+            },
+            { 
+                setId: 8, id: "g44", question: "पृथ्वी और चंद्रमा के बीच की दूरी लगभग कितनी है?", answer: "3,84,000 किमी", 
+                theory: "चंद्रमा पृथ्वी का एकमात्र प्राकृतिक उपग्रह है। यह पृथ्वी से 3,84,000 किमी दूर है। चंद्रमा का प्रकाश पृथ्वी तक पहुँचने में 1.26 सेकंड का समय लेता है।", 
+                booster: "Brain Booster 🧠: चंद्रमा का घूर्णन और परिक्रमण काल समान (27.3 दिन) है, इसलिए हमें उसका 1 ही भाग दिखता है।",
+                options: ["3,84,000 किमी", "3,50,000 किमी", "4,00,000 किमी", "2,84,000 किमी"]
+            },
+            { 
+                setId: 8, id: "g45", question: "चंद्रमा पर गुरुत्वाकर्षण पृथ्वी के गुरुत्वाकर्षण का कितना भाग है?", answer: "1/6", 
+                theory: "चंद्रमा का द्रव्यमान पृथ्वी से कम है, इसलिए वहां गुरुत्वाकर्षण पृथ्वी का केवल छठा भाग (1/6) है। (यदि पृथ्वी पर आपका वजन 60 किलो है, तो चाँद पर 10 किलो होगा)।", 
+                booster: "Brain Booster 🧠: गुरुत्वाकर्षण कम होने के कारण वहां वायुमंडल नहीं टिक पाया।",
+                options: ["1/6", "1/4", "1/3", "1/8"]
+            },
+            { 
+                setId: 8, id: "g46", question: "भारत का पहला सौर वेधशाला मिशन कौन सा है जिसे L1 पॉइंट पर भेजा गया है?", answer: "आदित्य-L1", 
+                theory: "आदित्य-L1 भारत का पहला मिशन है जिसे ISRO द्वारा सूर्य का अध्ययन करने के लिए L1 (लैग्रेंज पॉइंट) पर भेजा गया है। L1 पर सूर्य और पृथ्वी का गुरुत्वाकर्षण संतुलित रहता है।", 
+                booster: "Brain Booster 🧠: आदित्य (Aditya) का हिंदी में मतलब ही 'सूर्य' होता है।",
+                options: ["आदित्य-L1", "गगनयान", "चंद्रयान-3", "मंगलयान"]
+            },
+            { 
+                setId: 8, id: "g47", question: "चंद्रयान-3 के लैंडर (विक्रम) के उतरने वाले स्थान (दक्षिणी ध्रुव) को क्या नाम दिया गया है?", answer: "शिव शक्ति बिंदु", 
+                theory: "ISRO का चंद्रयान-3 (GSLV-Mk3 द्वारा) 23 अगस्त को चंद्रमा पर उतरा (राष्ट्रीय अंतरिक्ष दिवस)। रोवर का नाम 'प्रज्ञान' था। चंद्रयान-2 के क्रैश पॉइंट को 'तिरंगा बिंदु' कहा जाता है।", 
+                booster: "Brain Booster 🧠: चंद्रयान-4 पृथ्वी पर नमूने (रेगोलिथ) वापस लाएगा।",
+                options: ["शिव शक्ति बिंदु", "तिरंगा बिंदु", "जवाहर बिंदु", "प्रज्ञान बिंदु"]
+            },
+            { 
+                setId: 8, id: "g48", question: "नासा (NASA) का 'आर्टेमिस II' मिशन (2026) किससे संबंधित है?", answer: "चंद्रमा पर मानव को ले जाने से", 
+                theory: "आर्टेमिस II चंद्रमा पर मानव को वापस ले जाने का NASA का मिशन है। इसमें 4 अंतरिक्ष यात्री चंद्रमा की परिक्रमा करेंगे।", 
+                booster: "Brain Booster 🧠: ISRO और JAXA (जापान) मिलकर LUPEX मिशन (चंद्र ध्रुवीय अन्वेषण) भी करेंगे।",
+                options: ["चंद्रमा पर मानव को ले जाने से", "सूर्य का अध्ययन करने से", "मंगल ग्रह पर रोवर भेजने से", "बृहस्पति के उपग्रहों की जांच से"]
+            },
+            { 
+                setId: 8, id: "g49", question: "अंतर्राष्ट्रीय अंतरिक्ष स्टेशन (ISS) पृथ्वी से कितनी ऊंचाई पर परिक्रमा करता है?", answer: "लगभग 400 किमी", 
+                theory: "ISS अंतरिक्ष में मानव निर्मित सबसे बड़ी वस्तु है। यह 400 किमी की ऊंचाई पर 28000 किमी/घंटा की गति से पृथ्वी का चक्कर लगाता है (हर 90 मिनट में एक परिक्रमा)।", 
+                booster: "Brain Booster 🧠: इसे 5 एजेंसियों (NASA, Roscosmos, JAXA, ESA, CSA) ने मिलकर बनाया है।",
+                options: ["लगभग 400 किमी", "लगभग 800 किमी", "लगभग 200 किमी", "लगभग 36000 किमी"]
+            },
+            { 
+                setId: 8, id: "g50", question: "भारत का लक्ष्य किस वर्ष तक अपना भारतीय अंतरिक्ष स्टेशन स्थापित करना है?", answer: "2035", 
+                theory: "भारत का लक्ष्य 2035 तक पृथ्वी से 400 किमी ऊपर की कक्षा में अपना खुद का भारतीय अंतरिक्ष स्टेशन स्थापित करना है। चीन का स्वनिर्मित अंतरिक्ष स्टेशन 'तियांगोंग' है।", 
+                booster: "Brain Booster 🧠: 2040 तक इसरो का लक्ष्य चंद्रमा पर मानव भेजना है।",
+                options: ["2035", "2030", "2040", "2047"]
+            }
+            
+            /* 
+             ====================================================
+             HOW TO ADD NEW QUESTIONS:
+             Just add a new object here. Look at the subjectsData array below to see which 'setId' matches which Topic.
+             Example for Geography (setId: 4):
+             { 
+                setId: 4, id: "q31", question: "भारत का सबसे दक्षिणी बिंदु कौन सा है?", answer: "इंदिरा पॉइंट", 
+                theory: "भारत का सबसे दक्षिणी बिंदु इंदिरा पॉइंट है, जो ग्रेट निकोबार द्वीप में स्थित है।", 
+                booster: "Brain Booster 🧠: ...",
+                options: ["इंदिरा पॉइंट", "कन्याकुमारी", "गुहार मोती", "किबिथू"]
+             }
+             ====================================================
+            */
+        ];
 
-                                // Auto Crop Front
-                                aadhaarCropper.setData({ x: fullWidth * 0.045, y: boxY, width: boxW, height: boxH });
-                                document.getElementById('frontPreview').src = aadhaarCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
-                                
-                                // Auto Crop Back
-                                aadhaarCropper.setData({ x: fullWidth * 0.530, y: boxY, width: boxW, height: boxH });
-                                document.getElementById('backPreview').src = aadhaarCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
-                                
-                                // Reset box focus to Front so user can edit if they want
-                                aadhaarCropper.setData({ x: fullWidth * 0.045, y: boxY, width: boxW, height: boxH });
+        // ==========================================
+        // DYNAMIC HIERARCHICAL FOLDER STRUCTURE (SUBJECTS -> TOPICS -> SETS)
+        // Add new Subjects and Topics here. The UI will build itself automatically!
+        // ==========================================
+        const subjectsData = [
+            {
+                id: 'polity',
+                title: 'Polity (संविधान)',
+                icon: 'fa-building-columns',
+                topics: [
+                    {
+                        id: 'making_of_const',
+                        title: 'संविधान का निर्माण',
+                        subtitle: 'Making of Constitution',
+                        icon: 'fa-book-open-reader',
+                        sets: [
+                            { id: 1, title: 'आधार और अंतरिम सरकार', subtitle: 'Cabinet Mission & Govt' },
+                            { id: 2, title: 'समितियां और बैठकें', subtitle: 'Committees & Draft' },
+                            { id: 3, title: 'महत्वपूर्ण तथ्य (Facts)', subtitle: 'Adoption & Flag' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'geography',
+                title: 'Geography (भूगोल)',
+                icon: 'fa-earth-americas',
+                topics: [
+                    {
+                        id: 'solar_system',
+                        title: 'सौरमंडल और ब्रह्मांड',
+                        subtitle: 'Solar System & Universe',
+                        icon: 'fa-user-astronaut',
+                        sets: [
+                            { id: 4, title: 'ब्रह्मांड की उत्पत्ति', subtitle: 'Origin of Universe' },
+                            { id: 5, title: 'सूर्य और तारे', subtitle: 'Sun & Stars' },
+                            { id: 6, title: 'आंतरिक ग्रह (Inner Planets)', subtitle: 'Mercury to Mars' },
+                            { id: 7, title: 'बाह्य और बौने ग्रह', subtitle: 'Outer & Dwarf Planets' },
+                            { id: 8, title: 'अंतरिक्ष मिशन और तथ्य', subtitle: 'Missions & Concepts' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'ancient_history',
+                title: 'Ancient History',
+                icon: 'fa-monument',
+                topics: [
+                    {
+                        id: 'ivc',
+                        title: 'सिंधु घाटी सभ्यता',
+                        subtitle: 'Indus Valley',
+                        icon: 'fa-vihara',
+                        sets: [
+                            { id: 5, title: 'हड़प्पा संस्कृति', subtitle: 'Harappan Culture' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'medieval_history',
+                title: 'Medieval History',
+                icon: 'fa-fort-awesome',
+                topics: [
+                    {
+                        id: 'delhi_sultanate',
+                        title: 'दिल्ली सल्तनत',
+                        subtitle: 'Delhi Sultanate',
+                        icon: 'fa-chess-rook',
+                        sets: [
+                            { id: 6, title: 'गुलाम वंश', subtitle: 'Slave Dynasty' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'modern_history',
+                title: 'Modern History',
+                icon: 'fa-flag',
+                topics: [
+                    {
+                        id: 'freedom_struggle',
+                        title: 'स्वतंत्रता संग्राम',
+                        subtitle: 'Freedom Struggle',
+                        icon: 'fa-person-rifle',
+                        sets: [
+                            { id: 7, title: '1857 की क्रांति', subtitle: 'Revolt of 1857' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'economics',
+                title: 'Economics (अर्थशास्त्र)',
+                icon: 'fa-chart-line',
+                topics: [
+                    {
+                        id: 'macro_econ',
+                        title: 'मैक्रो इकोनॉमिक्स',
+                        subtitle: 'Macro Economics',
+                        icon: 'fa-coins',
+                        sets: [
+                            { id: 8, title: 'राष्ट्रीय आय', subtitle: 'National Income' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'physics',
+                title: 'Physics (भौतिकी)',
+                icon: 'fa-atom',
+                topics: [
+                    {
+                        id: 'mechanics',
+                        title: 'यांत्रिकी',
+                        subtitle: 'Mechanics',
+                        icon: 'fa-weight-hanging',
+                        sets: [
+                            { id: 9, title: 'गति और बल', subtitle: 'Motion & Force' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'chemistry',
+                title: 'Chemistry (रसायन)',
+                icon: 'fa-flask',
+                topics: [
+                    {
+                        id: 'atomic_structure',
+                        title: 'परमाणु संरचना',
+                        subtitle: 'Atomic Structure',
+                        icon: 'fa-vial',
+                        sets: [
+                            { id: 10, title: 'तत्व और यौगिक', subtitle: 'Elements & Compounds' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'biology',
+                title: 'Biology (जीव विज्ञान)',
+                icon: 'fa-dna',
+                topics: [
+                    {
+                        id: 'human_body',
+                        title: 'मानव शरीर',
+                        subtitle: 'Human Anatomy',
+                        icon: 'fa-heart-pulse',
+                        sets: [
+                            { id: 11, title: 'पाचन तंत्र', subtitle: 'Digestive System' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'ecology',
+                title: 'Ecology (पारिस्थितिकी)',
+                icon: 'fa-seedling',
+                topics: [
+                    {
+                        id: 'environment',
+                        title: 'पर्यावरण',
+                        subtitle: 'Environment',
+                        icon: 'fa-tree',
+                        sets: [
+                            { id: 12, title: 'पारिस्थितिकी तंत्र', subtitle: 'Ecosystem' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'static_gk',
+                title: 'Static GK',
+                icon: 'fa-book-atlas',
+                topics: [
+                    {
+                        id: 'art_culture',
+                        title: 'कला और संस्कृति',
+                        subtitle: 'Art & Culture',
+                        icon: 'fa-masks-theater',
+                        sets: [
+                            { id: 13, title: 'लोक नृत्य', subtitle: 'Folk Dances' }
+                        ]
+                    }
+                ]
+            }
+        ];
 
-                                document.getElementById('finalActionsAadhaar').style.display = 'flex';
-                            }, 200);
-                        }
-                    });
-                } catch (error) {
-                    if (error.name === 'PasswordException') alert('❌ Wrong Password!');
-                    else alert('❌ Error loading PDF.');
-                }
-            };
-            fileReader.readAsArrayBuffer(fileInput.files[0]);
+        // ==========================================
+        // LOGIC & STATE MANAGEMENT
+        // ==========================================
+
+        let completedSets = JSON.parse(localStorage.getItem('ssc_gs_completed_sets')) || {};
+        let quizScores = JSON.parse(localStorage.getItem('ssc_gs_quiz_scores')) || {};
+        let bookmarks = JSON.parse(localStorage.getItem('ssc_gs_bookmarks')) || []; 
+
+        let timerInterval;
+        let timeElapsed = 0;
+        let totalFlips = 0;
+        let currentSetIndex = null;
+        let currentSubjectId = null;
+        let currentTopicId = null;
+        let currentSetFlippedCards = new Set(); 
+
+        let qCurrentSetId = null;
+        let qQuestions = [];
+        let qIndex = 0;
+        let qScore = 0;
+        let globalSeconds = 0;
+
+        function initApp() {
+            setupNavigation();
+            setupSearch();
+            renderSubjects();
+            renderQuizSubjects();
+            updateStats();
+            renderSavedBookmarks();
+            startGlobalTimer();
         }
 
-        function captureFront() {
-            if (!aadhaarCropper) return;
-            document.getElementById('frontPreview').src = aadhaarCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
-        }
-        function captureBack() {
-            if (!aadhaarCropper) return;
-            document.getElementById('backPreview').src = aadhaarCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' }).toDataURL('image/jpeg', 1.0);
-        }
-
-        function printAadhaarCards() {
-            const front = document.getElementById('frontPreview').src;
-            const back = document.getElementById('backPreview').src;
-            document.getElementById('print-area').innerHTML = `<div class="page"><img src="${front}" class="print-card"><img src="${back}" class="print-card"></div>`;
-            setTimeout(() => { window.print(); }, 500);
+        function startGlobalTimer() {
+            setInterval(() => {
+                globalSeconds++;
+                let h = Math.floor(globalSeconds / 3600);
+                let m = Math.floor((globalSeconds % 3600) / 60);
+                let s = globalSeconds % 60;
+                let timeStr = "";
+                if(h > 0) timeStr += (h < 10 ? "0"+h : h) + ":";
+                timeStr += (m < 10 ? "0"+m : m) + ":" + (s < 10 ? "0"+s : s);
+                document.getElementById('global-timer').innerHTML = `<i class="fa-solid fa-fire" style="color:var(--danger)"></i> ${timeStr}`;
+            }, 1000);
         }
 
-
-        // ================= GENERAL IMAGE LOGIC =================
-        let genCropper = null;
-
-        function loadGeneralImage(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imgElement = document.getElementById('generalImage');
-                imgElement.src = e.target.result;
-                document.getElementById('generalWorkspace').style.display = 'block';
-                document.getElementById('rotateSlider').value = 0; 
-                resetGeneralFilters(); 
-                
-                checkGenFinalActions(); 
-
-                if (genCropper) genCropper.destroy();
-                // General image mein zoom available rakha hai agar aapko chahiye, otherwise isme bhi `zoomable: false` kar sakte hain
-                genCropper = new Cropper(imgElement, {
-                    viewMode: 1, dragMode: 'crop', autoCropArea: 0.8, zoomable: true,
-                    ready() {
-                        applyImagePreviewFilters();
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const views = document.querySelectorAll('.view');
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    views.forEach(view => view.classList.remove('active'));
+                    item.classList.add('active');
+                    document.getElementById(item.getAttribute('data-target')).classList.add('active');
+                    if(item.getAttribute('data-target') === 'view-saved') {
+                        renderSavedBookmarks();
                     }
                 });
-                
-                event.target.value = '';
-            };
-            reader.readAsDataURL(file);
+            });
+        }
+        
+        function resetToHome() {
+            const views = document.querySelectorAll('.view');
+            views.forEach(view => view.classList.remove('active'));
+            document.getElementById('view-home').classList.add('active');
+            updateStats();
         }
 
-        function applyImagePreviewFilters() {
-            const br = document.getElementById('brightnessSlider').value;
-            const ct = document.getElementById('contrastSlider').value;
-            const sh = document.getElementById('shadowSlider').value;
+        function goBackToHome() {
+            document.getElementById('view-topics').classList.remove('active');
+            document.getElementById('view-home').classList.add('active');
+            updateStats();
+        }
+
+        function goBackToTopics() {
+            document.getElementById('view-sets').classList.remove('active');
+            document.getElementById('view-topics').classList.add('active');
+            updateStats();
+        }
+
+        function closeOverlay(id) {
+            document.getElementById(id).classList.add('hidden');
+            if(id === 'overlay-flashcard') {
+                clearInterval(timerInterval);
+                if(currentSubjectId && currentTopicId) {
+                    renderSetsGrid(currentSubjectId, currentTopicId);
+                }
+                updateStats();
+            }
+            if(id === 'overlay-quiz') {
+                if(currentSubjectId && currentTopicId) {
+                    openQuizTopic(currentSubjectId, currentTopicId);
+                }
+            }
+        }
+
+        function updateStats() {
+            let totalSetsCount = 0;
+            subjectsData.forEach(sub => sub.topics.forEach(t => totalSetsCount += t.sets.length));
             
-            const filterStyle = `brightness(${br}%) contrast(${ct}%) drop-shadow(0px 0px ${sh}px rgba(0,0,0,0.5))`;
+            const doneSets = Object.keys(completedSets).length;
+            document.getElementById('stat-sets').innerText = `${doneSets}/${totalSetsCount}`;
             
-            document.getElementById('generalImage').style.filter = filterStyle;
-            
-            const cropperImages = document.querySelectorAll('#generalWorkspace .cropper-container img');
-            cropperImages.forEach(img => {
-                img.style.filter = filterStyle;
+            const progress = totalSetsCount === 0 ? 0 : (doneSets / totalSetsCount) * 100;
+            document.getElementById('overall-progress-bar').style.width = `${progress}%`;
+            document.getElementById('overall-progress-text').innerText = progress.toFixed(0);
+
+            document.getElementById('stat-bookmarks-home').innerText = bookmarks.length;
+            document.getElementById('saved-count-text').innerText = bookmarks.length;
+            document.getElementById('saved-badge-count').innerText = bookmarks.length;
+            document.getElementById('stat-total-words').innerText = gsData.length;
+        }
+
+        // --- RENDER 1: Subjects (Home Screen) ---
+        function renderSubjects() {
+            const list = document.getElementById('subject-list');
+            list.innerHTML = '';
+            subjectsData.forEach(sub => {
+                let totalSets = 0;
+                let doneSets = 0;
+                sub.topics.forEach(t => {
+                    totalSets += t.sets.length;
+                    t.sets.forEach(s => { if(completedSets[s.id]) doneSets++; });
+                });
+                const progress = totalSets === 0 ? 0 : (doneSets / totalSets) * 100;
+
+                list.innerHTML += `
+                    <div class="category-card" onclick="openSubject('${sub.id}')">
+                        <div class="cat-icon-box"><i class="fa-solid ${sub.icon}"></i></div>
+                        <div class="cat-info">
+                            <h3>${sub.title}</h3>
+                            <p>${sub.topics.length} Topics • ${totalSets} Sets</p>
+                            <div style="height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);">
+                                <div style="height: 100%; width: ${progress}%; background: linear-gradient(90deg, var(--primary), var(--green)); border-radius: 10px;"></div>
+                            </div>
+                        </div>
+                        <div class="cat-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                `;
             });
         }
 
-        function captureFilteredCanvas() {
-            if (!genCropper) return null;
+        // --- RENDER 2: Topics under a Subject ---
+        function openSubject(subjectId) {
+            currentSubjectId = subjectId;
+            const sub = subjectsData.find(s => s.id === subjectId);
             
-            const originalCanvas = genCropper.getCroppedCanvas({ imageSmoothingQuality: 'high' });
+            document.getElementById('view-home').classList.remove('active');
+            document.getElementById('view-topics').classList.add('active');
             
-            const filteredCanvas = document.createElement('canvas');
-            filteredCanvas.width = originalCanvas.width;
-            filteredCanvas.height = originalCanvas.height;
-            const ctx = filteredCanvas.getContext('2d');
+            document.getElementById('topics-page-title').innerText = sub.title;
+            document.getElementById('topics-page-subtitle').innerText = `${sub.topics.length} Topics inside`;
             
-            const br = document.getElementById('brightnessSlider').value;
-            const ct = document.getElementById('contrastSlider').value;
-            const sh = document.getElementById('shadowSlider').value;
-            
-            ctx.filter = `brightness(${br}%) contrast(${ct}%) drop-shadow(0px 0px ${sh}px rgba(0,0,0,0.5))`;
-            ctx.drawImage(originalCanvas, 0, 0);
-            
-            ctx.filter = 'none';
-            return filteredCanvas.toDataURL('image/jpeg', 1.0);
+            const list = document.getElementById('topics-list');
+            list.innerHTML = '';
+            sub.topics.forEach(topic => {
+                let doneSets = 0;
+                topic.sets.forEach(s => { if(completedSets[s.id]) doneSets++; });
+                const progress = topic.sets.length === 0 ? 0 : (doneSets / topic.sets.length) * 100;
+
+                list.innerHTML += `
+                    <div class="category-card" onclick="openTopic('${subjectId}', '${topic.id}')" style="background: rgba(255,255,255,0.03);">
+                        <div class="cat-icon-box" style="background: rgba(6, 182, 212, 0.1);"><i class="fa-solid ${topic.icon}"></i></div>
+                        <div class="cat-info">
+                            <h3 style="font-size: 16px;">${topic.title}</h3>
+                            <p>${topic.subtitle} (${topic.sets.length} Sets)</p>
+                            <div style="height: 4px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 8px;">
+                                <div style="height: 100%; width: ${progress}%; background: var(--green); border-radius: 10px;"></div>
+                            </div>
+                        </div>
+                        <div class="cat-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                `;
+            });
         }
 
-        function resetGeneralFilters() {
-            document.getElementById('brightnessSlider').value = 100;
-            document.getElementById('contrastSlider').value = 100;
-            document.getElementById('shadowSlider').value = 0;
-            applyImagePreviewFilters();
+        // --- RENDER 3: Sets under a Topic ---
+        function openTopic(subjectId, topicId) {
+            currentSubjectId = subjectId;
+            currentTopicId = topicId;
+            
+            document.getElementById('view-topics').classList.remove('active');
+            document.getElementById('view-sets').classList.add('active');
+            
+            renderSetsGrid(subjectId, topicId);
+        }
+        
+        function renderSetsGrid(subjectId, topicId) {
+            const sub = subjectsData.find(s => s.id === subjectId);
+            const topic = sub.topics.find(t => t.id === topicId);
+            
+            document.getElementById('sets-page-title').innerText = topic.title;
+            document.getElementById('sets-page-subtitle').innerText = `${topic.sets.length} Sets`;
+
+            const grid = document.getElementById('setsGridContainer');
+            grid.innerHTML = '';
+            
+            topic.sets.forEach((set, index) => { 
+                const i = set.id;
+                const isDone = completedSets[i];
+                const badgeHTML = isDone 
+                    ? `<div class="status-badge completed"><i class="fa-solid fa-check-double" style="margin-right:4px;"></i> Done</div>` 
+                    : `<div class="status-badge pending">Pending</div>`;
+
+                let quizScoreBadge = '';
+                let totalQs = gsData.filter(q => q.setId === i).length;
+                
+                if(quizScores[i] !== undefined) {
+                    quizScoreBadge = `<div class="score-badge" style="display: inline-block;"><i class="fa-solid fa-bullseye"></i> ${quizScores[i]}/${totalQs}</div>`;
+                }
+                
+                const card = document.createElement('div');
+                card.className = `set-file-card ${isDone ? 'completed' : ''}`;
+                card.style.animationDelay = `${(index * 0.03)}s`;
+                card.onclick = () => openFlashcards(i, set.title);
+                
+                card.innerHTML = `
+                    <div class="folder-icon-wrapper">
+                        <i class="fa-solid fa-folder-open set-icon"></i>
+                        <div class="folder-tick"><i class="fa-solid fa-check"></i></div>
+                    </div>
+                    <div class="set-title" style="font-size: 13px;">${set.title}</div>
+                    <div class="set-info" style="font-size:11px;">${totalQs} Questions</div>
+                    <div class="set-badges">
+                        ${badgeHTML}
+                        ${quizScoreBadge}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
         }
 
-        function captureGen1() {
-            const filteredDataUrl = captureFilteredCanvas();
-            if (filteredDataUrl) {
-                document.getElementById('genPreview1').src = filteredDataUrl;
-                checkGenFinalActions();
+        // --- FLASHCARD LOGIC ---
+        function openFlashcards(setNum, setTitle) {
+            currentSetIndex = setNum;
+            currentSetFlippedCards.clear();
+            totalFlips = 0;
+            timeElapsed = 0;
+            
+            const currentQuestions = gsData.filter(q => q.setId === setNum);
+            let totalQ = currentQuestions.length;
+            
+            document.getElementById('fc-set-title').innerText = setTitle || `Set ${setNum}`;
+            document.getElementById('fc-learned-text').innerText = `0/${totalQ} Read`;
+            document.getElementById('flipDisplay').innerText = "0";
+            document.getElementById('timerDisplay').innerText = "00:00";
+            document.getElementById('fc-progressBar').style.width = '0%';
+            document.getElementById('fc-progress-text').innerText = '0%';
+            
+            const overlay = document.getElementById('overlay-flashcard');
+            overlay.classList.remove('hidden');
+            
+            const cardsContainer = document.getElementById('cardsScreen');
+            cardsContainer.innerHTML = '';
+            
+            if(totalQ === 0) {
+                cardsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                        <i class="fa-solid fa-folder-plus" style="font-size: 50px; opacity: 0.2; margin-bottom: 20px;"></i>
+                        <h3 style="color: #fff; margin-bottom: 10px;">Coming Soon!</h3>
+                        <p>Questions for this set will be added shortly.</p>
+                    </div>
+                `;
+                return;
             }
+
+            currentQuestions.forEach((item, index) => {
+                const isSaved = bookmarks.includes(item.id);
+                const markClass = isSaved ? 'fa-solid' : 'fa-regular';
+                
+                const trickHtml = item.booster ? `<div class="trick-box"><div class="trick-title"><i class="fa-solid fa-bolt"></i> ${item.booster.split(':')[0]}</div>${item.booster.split(':')[1]}</div>` : '';
+
+                const cardEl = document.createElement('div');
+                cardEl.className = 'flashcard';
+                cardEl.innerHTML = `
+                    <div class="flashcard-inner">
+                        <div class="card-front" onclick="handleCardFlip(event, this, ${index})">
+                            <div class="fc-top-row">
+                                <span class="fc-number">Q${index + 1}</span>
+                                <div class="fc-actions">
+                                    <i class="${markClass} fa-bookmark" onclick="toggleBookmark(event, this, '${item.id}')"></i>
+                                </div>
+                            </div>
+                            <div class="fc-center-front">
+                                <h2 class="gs-question">${item.question}</h2>
+                                <span class="tap-hint"><i class="fa-solid fa-hand-pointer"></i> Tap to see Answer & Theory</span>
+                            </div>
+                        </div>
+                        <div class="card-back" onclick="handleCardFlip(event, this, ${index})">
+                            <div class="fc-top-row" style="margin-bottom: 15px;">
+                                <span class="fc-number" style="color: var(--primary); background: rgba(6, 182, 212, 0.1);">Q${index + 1}</span>
+                                <span style="font-size: 11px; color: var(--text-muted);"><i class="fa-solid fa-rotate"></i> Tap to flip</span>
+                            </div>
+                            <div style="flex:1; display:flex; flex-direction:column; text-align:left;">
+                                <h2 class="gs-answer"><i class="fa-solid fa-check" style="margin-right:8px;"></i>${item.answer}</h2>
+                                <div class="details-box">
+                                    <div class="theory-box">
+                                        <span class="detail-title theory-title"><i class="fa-solid fa-book-open"></i> Detailed Theory</span>
+                                        ${item.theory}
+                                    </div>
+                                    ${trickHtml}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cardsContainer.appendChild(cardEl);
+            });
+            startTimer();
         }
 
-        function captureGen2() {
-            const filteredDataUrl = captureFilteredCanvas();
-            if (filteredDataUrl) {
-                document.getElementById('genPreview2').src = filteredDataUrl;
-                checkGenFinalActions();
-            }
-        }
-
-        function fineRotateImage() {
-            if (genCropper) {
-                const degree = parseFloat(document.getElementById('rotateSlider').value);
-                genCropper.rotateTo(degree);
-            }
-        }
-
-        function rotateGenManual(degree) {
-            if (genCropper) genCropper.rotate(degree);
-        }
-
-        function resetGeneralRotate() {
-            if (genCropper) {
-                document.getElementById('rotateSlider').value = 0;
-                genCropper.rotateTo(0);
-            }
-        }
-
-        function checkGenFinalActions() {
-            const src1 = document.getElementById('genPreview1').src;
-            const src2 = document.getElementById('genPreview2').src;
+        function handleCardFlip(event, element, cardIndex) {
+            if (event.target.closest('.fc-actions')) return;
+            const card = element.closest('.flashcard');
             
-            const hasImg1 = src1 && src1.length > 100;
-            const hasImg2 = src2 && src2.length > 100;
+            if (!card.classList.contains('flipped')) {
+                totalFlips++;
+                document.getElementById('flipDisplay').innerText = totalFlips;
+                currentSetFlippedCards.add(cardIndex);
+                
+                let totalQ = gsData.filter(q => q.setId === currentSetIndex).length;
+                let count = currentSetFlippedCards.size;
+                let progressPercent = (count / totalQ) * 100;
+                
+                document.getElementById('fc-learned-text').innerText = `${count}/${totalQ} Read`;
+                document.getElementById('fc-progressBar').style.width = progressPercent + '%';
+                document.getElementById('fc-progress-text').innerText = progressPercent + '%';
 
-            if (hasImg1 || hasImg2) {
-                document.getElementById('finalActionsGen').style.display = 'flex';
+                if (count === totalQ && totalQ > 0) {
+                    if (!completedSets[currentSetIndex]) {
+                        completedSets[currentSetIndex] = true;
+                        localStorage.setItem('ssc_gs_completed_sets', JSON.stringify(completedSets));
+                        showCelebration();
+                    }
+                }
+            }
+            card.classList.toggle('flipped');
+        }
+
+        function toggleBookmark(event, iconEl, itemId) {
+            event.stopPropagation();
+            const index = bookmarks.indexOf(itemId);
+            
+            const cardInner = iconEl.closest('.flashcard-inner');
+            const icons = cardInner ? cardInner.querySelectorAll('.fa-bookmark') : [iconEl];
+            
+            if(index === -1) {
+                bookmarks.push(itemId);
+                icons.forEach(i => { i.classList.remove('fa-regular'); i.classList.add('fa-solid'); });
             } else {
-                document.getElementById('finalActionsGen').style.display = 'none';
+                bookmarks.splice(index, 1);
+                icons.forEach(i => { i.classList.remove('fa-solid'); i.classList.add('fa-regular'); });
+            }
+            localStorage.setItem('ssc_gs_bookmarks', JSON.stringify(bookmarks));
+            updateStats();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeElapsed++;
+                let minutes = Math.floor(timeElapsed / 60);
+                let seconds = timeElapsed % 60;
+                document.getElementById('timerDisplay').innerText = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+            }, 1000);
+        }
+
+        function showCelebration() {
+            const popup = document.getElementById('celebrationPopup');
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 3000);
+        }
+
+        // --- SAVED / BOOKMARKS ---
+        function renderSavedBookmarks() {
+            const savedList = document.getElementById('saved-list');
+            if(bookmarks.length === 0) {
+                savedList.innerHTML = `
+                    <div style="text-align: center; padding: 80px 20px; color: var(--text-muted);">
+                        <i class="fa-regular fa-bookmark" style="font-size: 60px; opacity: 0.15; margin-bottom: 24px;"></i>
+                        <h3 style="color: #fff; margin-bottom: 12px; font-weight: 800;">No Saved Questions</h3>
+                        <p style="font-size: 14px; line-height: 1.6;">Tap the bookmark icon on any difficult question to save it here for quick revision.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            bookmarks.forEach(id => {
+                const item = gsData.find(w => w.id === id);
+                if(item) {
+                    html += `
+                        <div class="saved-item-card">
+                            <div class="saved-item-info">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">Q: ${item.question}</h4>
+                                <p style="color: var(--green);">Ans: ${item.answer}</p>
+                            </div>
+                            <div class="saved-action" onclick="removeBookmarkFromTab('${item.id}')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            savedList.innerHTML = html;
+        }
+
+        function removeBookmarkFromTab(id) {
+            const index = bookmarks.indexOf(id);
+            if(index !== -1) {
+                bookmarks.splice(index, 1);
+                localStorage.setItem('ssc_gs_bookmarks', JSON.stringify(bookmarks));
+                updateStats();
+                renderSavedBookmarks();
             }
         }
 
-        function clearGen1() {
-            document.getElementById('genPreview1').src = "";
-            checkGenFinalActions();
+        // --- SEARCH ---
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', (e) => performSearch(e.target.value));
         }
 
-        function clearGen2() {
-            document.getElementById('genPreview2').src = "";
-            checkGenFinalActions();
+        function performSearch(query) {
+            const resultsContainer = document.getElementById('search-results');
+            if (!query.trim()) {
+                resultsContainer.innerHTML = '<div style="text-align:center; padding:60px 20px; color:var(--text-muted);"><i class="fa-solid fa-landmark" style="font-size: 48px; opacity: 0.1; margin-bottom: 16px;"></i><p>Start typing...</p></div>';
+                return;
+            }
+            const lowerQuery = query.toLowerCase();
+            const results = gsData.filter(item => {
+                return item.question.toLowerCase().includes(lowerQuery) || 
+                       item.answer.toLowerCase().includes(lowerQuery) ||
+                       item.theory.toLowerCase().includes(lowerQuery);
+            });
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted);"><i class="fa-solid fa-ghost" style="font-size: 40px; opacity:0.2; margin-bottom: 16px;"></i><p>No matches found!</p></div>`;
+                return;
+            }
+
+            resultsContainer.innerHTML = results.map(item => `
+                <div class="search-result-card">
+                    <h4 style="color:var(--primary); margin-bottom: 6px;">Q: ${item.question.replace(new RegExp(query, 'gi'), match => `<span class="highlight">${match}</span>`)}</h4>
+                    <p style="color: var(--green); font-weight:700; margin-bottom: 8px;">Ans: ${item.answer.replace(new RegExp(query, 'gi'), match => `<span class="highlight">${match}</span>`)}</p>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">${item.theory.replace(new RegExp(query, 'gi'), match => `<span class="highlight">${match}</span>`)}</p>
+                </div>
+            `).join('');
         }
 
-        function printGenCards() {
-            const src1 = document.getElementById('genPreview1').src;
-            const src2 = document.getElementById('genPreview2').src;
+        // ==========================================
+        // GS QUIZ LOGIC (NESTED FOLDER UI)
+        // ==========================================
+
+        function resetToQuizHome() {
+            const views = document.querySelectorAll('.view');
+            views.forEach(view => view.classList.remove('active'));
+            document.getElementById('view-quiz').classList.add('active');
+        }
+
+        function goBackToQuizHome() {
+            document.getElementById('view-quiz-topics').classList.remove('active');
+            document.getElementById('view-quiz').classList.add('active');
+        }
+
+        function goBackToQuizTopics() {
+            document.getElementById('view-quiz-sets').classList.remove('active');
+            document.getElementById('view-quiz-topics').classList.add('active');
+        }
+
+        // Render 1: Quiz Subjects
+        function renderQuizSubjects() {
+            const list = document.getElementById('quiz-subjects-list');
+            list.innerHTML = '';
+            subjectsData.forEach(sub => {
+                let totalSets = 0;
+                sub.topics.forEach(t => totalSets += t.sets.length);
+
+                list.innerHTML += `
+                    <div class="category-card" onclick="openQuizSubject('${sub.id}')">
+                        <div class="cat-icon-box"><i class="fa-solid ${sub.icon}"></i></div>
+                        <div class="cat-info">
+                            <h3>${sub.title} Quiz</h3>
+                            <p>${sub.topics.length} Topics • ${totalSets} Mock Tests</p>
+                        </div>
+                        <div class="cat-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                `;
+            });
+        }
+
+        // Render 2: Quiz Topics
+        function openQuizSubject(subjectId) {
+            currentSubjectId = subjectId;
+            const sub = subjectsData.find(s => s.id === subjectId);
             
-            let printHtml = '<div class="page page-gen">';
-            if (src1 && src1.length > 100) printHtml += `<img src="${src1}" class="print-card">`;
-            if (src2 && src2.length > 100) printHtml += `<img src="${src2}" class="print-card">`;
-            printHtml += '</div>';
-
-            document.getElementById('print-area').innerHTML = printHtml;
-            setTimeout(() => { window.print(); }, 500);
+            document.getElementById('view-quiz').classList.remove('active');
+            document.getElementById('view-quiz-topics').classList.add('active');
+            
+            document.getElementById('quiz-topics-title').innerText = `${sub.title} Quizzes`;
+            
+            const list = document.getElementById('quiz-topics-list');
+            list.innerHTML = '';
+            sub.topics.forEach(topic => {
+                list.innerHTML += `
+                    <div class="category-card" onclick="openQuizTopic('${subjectId}', '${topic.id}')" style="background: rgba(255,255,255,0.03);">
+                        <div class="cat-icon-box" style="background: rgba(20, 184, 166, 0.1);"><i class="fa-solid ${topic.icon}"></i></div>
+                        <div class="cat-info">
+                            <h3 style="font-size: 16px;">${topic.title} Test</h3>
+                            <p>${topic.subtitle} (${topic.sets.length} Tests)</p>
+                        </div>
+                        <div class="cat-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                `;
+            });
         }
+
+        // Render 3: Quiz Sets
+        function openQuizTopic(subjectId, topicId) {
+            currentSubjectId = subjectId;
+            currentTopicId = topicId;
+            const sub = subjectsData.find(s => s.id === subjectId);
+            const topic = sub.topics.find(t => t.id === topicId);
+            
+            document.getElementById('view-quiz-topics').classList.remove('active');
+            document.getElementById('view-quiz-sets').classList.add('active');
+            
+            document.getElementById('quiz-sets-title').innerText = `${topic.title}`;
+            document.getElementById('quiz-sets-subtitle').innerText = `Select Mock Test`;
+
+            const grid = document.getElementById('quiz-sets-grid');
+            grid.innerHTML = '';
+            
+            topic.sets.forEach((set, index) => {
+                const i = set.id;
+                const score = quizScores[i] || 0;
+                const played = quizScores.hasOwnProperty(i);
+                
+                let totalQs = gsData.filter(q => q.setId === i).length;
+                let isFullMarks = score === totalQs && totalQs > 0;
+
+                let badgeStyle = isFullMarks ? `background: rgba(16,185,129,0.1); color: var(--green); border-color: rgba(16,185,129,0.2);` : (played ? `background: rgba(245,158,11,0.1); color: var(--warning); border-color: rgba(245,158,11,0.2);` : `background: rgba(255,255,255,0.05); color: var(--text-muted);`);
+                let badgeText = played ? `Score: ${score}/${totalQs}` : 'Not Attempted';
+
+                grid.innerHTML += `
+                    <div class="set-file-card" style="animation-delay: ${index*0.03}s; text-align:center;" onclick="initQuizSession(${i})">
+                        <div class="folder-icon-wrapper" style="margin-bottom: 12px;">
+                            <i class="fa-solid fa-file-signature set-icon" style="color: ${isFullMarks ? 'var(--green)' : 'var(--primary)'}; font-size: 2.2rem;"></i>
+                        </div>
+                        <div class="set-title" style="font-size: 12px;">${set.title}</div>
+                        <div class="status-badge" style="justify-content:center; margin-top:10px; padding:6px; ${badgeStyle}">${badgeText}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function shuffleOptions(optionsArray, correctText) {
+            let opts = optionsArray.map(t => {
+                return { text: t, isCorrect: t === correctText };
+            });
+            return opts.sort(() => Math.random() - 0.5);
+        }
+
+        function initQuizSession(setId) {
+            qCurrentSetId = setId;
+            qScore = 0;
+            qIndex = 0;
+            
+            let setTitle = "";
+            subjectsData.forEach(sub => {
+                sub.topics.forEach(t => {
+                    t.sets.forEach(s => {
+                        if(s.id === setId) setTitle = s.title;
+                    });
+                });
+            });
+            
+            const setQuestions = gsData.filter(q => q.setId === setId);
+            
+            if(setQuestions.length === 0) {
+                alert("Questions for this mock test are coming soon!");
+                return;
+            }
+
+            qQuestions = setQuestions.map(targetQ => {
+                return {
+                    question: targetQ.question,
+                    options: shuffleOptions(targetQ.options, targetQ.answer)
+                };
+            });
+
+            document.getElementById('quiz-title').innerText = `${setTitle} Quiz`;
+            let totalQ = qQuestions.length;
+            document.getElementById('quiz-score-badge').innerHTML = `<i class="fa-solid fa-bullseye"></i> 0/${totalQ}`; 
+            document.getElementById('overlay-quiz').classList.remove('hidden');
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            let totalQ = qQuestions.length;
+            document.getElementById('quiz-score-badge').innerHTML = `<i class="fa-solid fa-bullseye"></i> ${qScore}/${totalQ}`;
+            document.getElementById('quiz-progressBar').style.width = `${((qIndex) / totalQ) * 100}%`;
+            
+            if(qIndex >= totalQ) {
+                finishQuiz();
+                return;
+            }
+
+            const q = qQuestions[qIndex];
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            let html = `
+                <div style="text-align: center; margin-bottom: 35px; background: rgba(0,0,0,0.4); padding: 30px 20px; border-radius: 24px; border: 1px solid var(--glass-border);">
+                    <p style="color: var(--text-muted); margin-bottom: 12px; font-weight: 700; font-size: 13px; text-transform:uppercase; letter-spacing:1px;">Question ${qIndex + 1} of ${totalQ}</p>
+                    <h2 style="font-size: 20px; font-weight: 700; color: #fff; line-height: 1.5;">${q.question}</h2>
+                </div>
+                <div style="display: flex; flex-direction: column;" id="quiz-options">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                html += `
+                    <button class="quiz-option" onclick="handleQuizAnswer(this, ${opt.isCorrect})">
+                        <div class="opt-letter">${letters[idx]}</div> 
+                        <div style="line-height:1.4;">${opt.text}</div>
+                    </button>
+                `;
+            });
+            html += `</div>`;
+            document.getElementById('quiz-question-container').innerHTML = html;
+        }
+
+        function handleQuizAnswer(btn, isCorrect) {
+            const buttons = document.querySelectorAll('.quiz-option');
+            buttons.forEach(b => b.onclick = null); 
+            
+            if(isCorrect) {
+                btn.classList.add('correct');
+                btn.querySelector('.opt-letter').innerHTML = '<i class="fa-solid fa-check" style="color:#000;"></i>';
+                qScore++;
+            } else {
+                btn.classList.add('wrong');
+                btn.querySelector('.opt-letter').innerHTML = '<i class="fa-solid fa-xmark" style="color:#fff;"></i>';
+                
+                // Show the correct answer automatically
+                buttons.forEach(b => {
+                    const optText = b.querySelector('div:nth-child(2)').innerText.trim();
+                    const correctOpt = qQuestions[qIndex].options.find(o => o.isCorrect).text.trim();
+                    if(optText === correctOpt) {
+                        b.style.borderColor = 'var(--green)';
+                        b.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.4)';
+                        b.querySelector('.opt-letter').innerHTML = '<i class="fa-solid fa-check" style="color:var(--green);"></i>';
+                    }
+                });
+            }
+            
+            setTimeout(() => {
+                qIndex++;
+                renderQuizQuestion();
+            }, 1800);
+        }
+
+        function finishQuiz() {
+            if (quizScores[qCurrentSetId] === undefined || qScore > quizScores[qCurrentSetId]) {
+                quizScores[qCurrentSetId] = qScore;
+                localStorage.setItem('ssc_gs_quiz_scores', JSON.stringify(quizScores));
+            }
+            
+            let totalQ = qQuestions.length;
+            
+            document.getElementById('quiz-question-container').innerHTML = `
+                <div style="text-align: center; padding: 40px 20px; background: rgba(0,0,0,0.3); border-radius: 24px; border: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-trophy" style="font-size: 70px; color: var(--warning); margin-bottom: 24px; filter: drop-shadow(0 0 20px rgba(245,158,11,0.5));"></i>
+                    <h2 style="font-size: 30px; font-weight:800; margin-bottom: 12px; letter-spacing:-1px;">Test Completed!</h2>
+                    <p style="font-size: 18px; color: var(--text-muted); margin-bottom: 35px; font-weight:600;">You scored <span style="color:var(--green); font-size: 24px;">${qScore}</span> out of ${totalQ}</p>
+                    <button class="btn-primary" onclick="closeOverlay('overlay-quiz')">Return to Quizzes</button>
+                </div>
+            `;
+            document.getElementById('quiz-progressBar').style.width = `100%`;
+        }
+
+        // Boot
+        window.onload = initApp;
     </script>
 </body>
 </html>

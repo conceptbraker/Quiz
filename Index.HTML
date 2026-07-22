@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GS ConceptBreaker</title>
+    <title>SSC GS Master Pro</title>
     
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,21 +12,21 @@
     
     <style>
         :root {
-            /* Scientific Premium Theme (Slate & Cyan) */
+            /* Scientific Premium Theme (Emerald Green) */
             --bg-dark: #0f172a;
             --bg-gradient: radial-gradient(circle at top left, #1e293b, #0f172a 80%);
             --card-bg: rgba(30, 41, 59, 0.7);
             --card-hover: rgba(51, 65, 85, 0.9);
             --card-back: rgba(15, 23, 42, 0.95);
-            --primary: #06b6d4; /* Cyan */
-            --primary-hover: #0891b2;
-            --primary-glow: rgba(6, 182, 212, 0.3);
+            --primary: #10b981; /* Emerald Green */
+            --primary-hover: #059669;
+            --primary-glow: rgba(16, 185, 129, 0.3);
             --green: #10b981; /* Emerald */
             --danger: #f43f5e; /* Rose */
             --warning: #f59e0b; /* Amber */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --glass-border: rgba(6, 182, 212, 0.15);
+            --glass-border: rgba(16, 185, 129, 0.15);
             
             /* Layout */
             --nav-height: 75px;
@@ -69,7 +69,7 @@
         }
         @keyframes pulseGlow {
             0% { box-shadow: 0 0 15px var(--primary-glow); }
-            50% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.6); }
+            50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.6); }
             100% { box-shadow: 0 0 15px var(--primary-glow); }
         }
 
@@ -97,7 +97,7 @@
 
         /* Hero Card */
         .hero-card {
-            background: rgba(6, 182, 212, 0.05);
+            background: rgba(16, 185, 129, 0.05);
             backdrop-filter: blur(20px);
             border-radius: var(--radius-lg);
             padding: 24px;
@@ -108,7 +108,7 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
         .hero-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-        .hero-top h1 { font-size: 24px; font-weight: 800; background: linear-gradient(to right, #fff, #67e8f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;}
+        .hero-top h1 { font-size: 24px; font-weight: 800; background: linear-gradient(to right, #fff, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;}
         .hero-top .subtitle { font-size: 13px; color: var(--primary); margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
         .streak-badge { background: rgba(245, 158, 11, 0.1); padding: 8px 14px; border-radius: 20px; font-weight: 700; color: var(--warning); display: flex; gap: 8px; align-items: center; font-size: 14px; border: 1px solid rgba(245, 158, 11, 0.2);}
         
@@ -117,8 +117,9 @@
         .stat-box h3 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
         .stat-box p { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;}
         
-        .progress-track-main { height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
-        .progress-fill-main { height: 100%; background: linear-gradient(90deg, var(--primary), #67e8f9); border-radius: 10px; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 10px var(--primary-glow);}
+        /* Thinner progress bar */
+        .progress-track-main { height: 3px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill-main { height: 100%; background: linear-gradient(90deg, var(--primary), #6ee7b7); border-radius: 10px; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 10px var(--primary-glow);}
         .progress-text { font-size: 12px; color: var(--text-muted); text-align: right; font-weight: 600;}
 
         /* Category/Folder Cards */
@@ -133,8 +134,8 @@
             opacity: 0; animation: slideUpFade 0.4s forwards;
         }
         .category-card:active { transform: scale(0.96); }
-        .category-card:hover { background: var(--card-hover); border-color: rgba(6, 182, 212, 0.4); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
-        .cat-icon-box { width: 56px; height: 56px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.05)); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--primary); flex-shrink: 0; border: 1px solid rgba(6, 182, 212, 0.2);}
+        .category-card:hover { background: var(--card-hover); border-color: rgba(16, 185, 129, 0.4); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
+        .cat-icon-box { width: 56px; height: 56px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05)); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--primary); flex-shrink: 0; border: 1px solid rgba(16, 185, 129, 0.2);}
         .cat-info { flex: 1; }
         .cat-info h3 { font-size: 17px; color: #fff; margin-bottom: 6px; font-weight: 700;}
         .cat-info p { font-size: 12px; color: var(--text-muted); font-weight: 500;}
@@ -184,7 +185,8 @@
         .pill { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: 20px; padding: 8px 14px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: #fff; }
         
         .fc-progress-container { flex: 1; display: flex; align-items: center; gap: 12px; }
-        .fc-progress-track { flex: 1; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);}
+        /* Thinner fc progress track */
+        .fc-progress-track { flex: 1; height: 4px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);}
         .fc-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--green)); border-radius: 10px; transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .fc-progress-text { font-size: 12px; color: #fff; font-weight: 700; width: 30px; text-align: right; }
 
@@ -199,7 +201,7 @@
         .card-back::-webkit-scrollbar { display: none; }
 
         .fc-top-row { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: auto; }
-        .fc-number { font-size: 13px; font-weight: 800; color: var(--primary); background: rgba(6, 182, 212, 0.1); padding: 6px 12px; border-radius: 10px;}
+        .fc-number { font-size: 13px; font-weight: 800; color: var(--primary); background: rgba(16, 185, 129, 0.1); padding: 6px 12px; border-radius: 10px;}
         .fc-actions { display: flex; gap: 16px; align-items: center; }
         .fc-actions i { font-size: 20px; color: var(--text-muted); cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.05); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%;}
         .fc-actions i.fa-solid.fa-bookmark { color: var(--warning); background: rgba(245, 158, 11, 0.15);}
@@ -208,7 +210,7 @@
         /* GS Card specific content styling */
         .fc-center-front { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
         .gs-question { font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-bottom: 20px; line-height: 1.4;}
-        .tap-hint { font-size: 0.9rem; color: var(--primary); font-weight: 600; background: rgba(6, 182, 212, 0.1); padding: 8px 18px; border-radius: 20px; border: 1px dashed var(--primary);}
+        .tap-hint { font-size: 0.9rem; color: var(--primary); font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 8px 18px; border-radius: 20px; border: 1px dashed var(--primary);}
         
         .gs-answer { font-size: 1.3rem; font-weight: 800; color: var(--green); margin-bottom: 15px; text-align: left; line-height: 1.4; background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 12px; border-left: 4px solid var(--green);}
         .details-box { width: 100%; text-align: left; font-size: 0.95rem; line-height: 1.6; }
@@ -227,11 +229,11 @@
         .quiz-option.correct .opt-letter { background: var(--green); color: #000;}
         .quiz-option.wrong .opt-letter { background: var(--danger); color: #fff;}
 
-        .btn-primary { width: 100%; background: var(--primary); color: #0f172a; border: none; padding: 18px; border-radius: var(--radius-lg); font-size: 16px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.2s; box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4); animation: pulseGlow 3s infinite;}
+        .btn-primary { width: 100%; background: var(--primary); color: #0f172a; border: none; padding: 18px; border-radius: var(--radius-lg); font-size: 16px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.2s; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); animation: pulseGlow 3s infinite;}
         .btn-primary:active { transform: scale(0.97); }
 
         /* Celebration */
-        .celebration-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: rgba(30, 41, 59, 0.95); border: 2px solid var(--primary); box-shadow: 0 0 50px rgba(6, 182, 212, 0.4); padding: 40px 30px; border-radius: 24px; text-align: center; z-index: 1000; backdrop-filter: blur(20px); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 85%; max-width: 400px; }
+        .celebration-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: rgba(30, 41, 59, 0.95); border: 2px solid var(--primary); box-shadow: 0 0 50px rgba(16, 185, 129, 0.4); padding: 40px 30px; border-radius: 24px; text-align: center; z-index: 1000; backdrop-filter: blur(20px); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 85%; max-width: 400px; }
         .celebration-popup.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         .celebration-popup h2 { color: var(--primary); font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
 
@@ -260,8 +262,8 @@
             <header class="hero-card">
                 <div class="hero-top">
                     <div>
-                        <h1>GS Concept Breaker</h1>
-                        <p class="subtitle">All Subjects By Akash</p>
+                        <h1>GS Master Pro</h1>
+                        <p class="subtitle">All Subjects Library</p>
                     </div>
                     <div class="streak-badge">
                         <i class="fa-solid fa-fire"></i> <span id="global-timer">00:00</span>
@@ -496,7 +498,6 @@
     <script>
         // ==========================================
         // DYNAMIC GS DATA
-        // Just add a new object here and define its "setId" to match the folder structure below.
         // ==========================================
         const gsData = [
             // ====== SET 1: Polity - आधार और अंतरिम सरकार (setId: 1) ======
@@ -577,7 +578,7 @@
             { 
                 setId: 2, id: "q13", question: "प्रारूप समिति (Drafting Committee) की स्थापना कब की गई थी?", answer: "29 अगस्त 1947", 
                 theory: "संविधान का ड्राफ्ट तैयार करने के लिए 29 अगस्त 1947 को प्रारूप समिति बनी, जिसके अध्यक्ष डॉ. बी. आर. अंबेडकर थे। इसमें कुल 7 सदस्य थे.", 
-                booster: "Brain Booster 🧠: आज़ादी (15 अगस्त) के ठीक 14 दिन बाद प्रारूप समिति बनी।",
+                booster: "Brain Booster 🧠: आज़ादी (15 अगस्त) के ठीक 14 दिन बाद प्रारूप समिति बनी।",
                 options: ["29 अगस्त 1947", "15 अगस्त 1947", "26 नवंबर 1949", "24 जनवरी 1950"]
             },
             { 
@@ -619,7 +620,7 @@
             { 
                 setId: 2, id: "q20", question: "संविधान तैयार करने में कुल कितना खर्च (बजट) आया था?", answer: "64 लाख रुपये", 
                 theory: "संविधान को तैयार करने में कुल 64 लाख रुपये (लगभग) का खर्च आया था और 11 सत्र (165 दिन) आयोजित किए गए थे.", 
-                booster: "Brain Booster 🧠: 1947 के समय में 64 लाख बहुत बड़ी रकम थी (64 Lakhs)।",
+                booster: "Brain Booster 🧠: 1947 के समय में 64 लाख बहुत बड़ी रकम थी (64 Lakhs)।",
                 options: ["64 लाख रुपये", "50 लाख रुपये", "86 लाख रुपये", "1 करोड़ रुपये"]
             },
 
@@ -633,7 +634,7 @@
             { 
                 setId: 3, id: "q22", question: "मूल संविधान में कितने अनुच्छेद (Articles) और अनुसूचियां (Schedules) शामिल थीं?", answer: "395 अनुच्छेद, 8 अनुसूचियां", 
                 theory: "26 नवंबर 1949 को अपनाए गए मूल संविधान में 395 अनुच्छेद, 8 अनुसूचियां, 22 भाग और एक प्रस्तावना शामिल थी.", 
-                booster: "Brain Booster 🧠: वर्तमान में अनुसूचियां 8 से बढ़कर 12 हो गई हैं।",
+                booster: "Brain Booster 🧠: वर्तमान में अनुसूचियां 8 से बढ़कर 12 हो गई हैं।",
                 options: ["395 अनुच्छेद, 8 अनुसूचियां", "448 अनुच्छेद, 12 अनुसूचियां", "395 अनुच्छेद, 10 अनुसूचियां", "390 अनुच्छेद, 8 अनुसूचियां"]
             },
             { 
@@ -701,7 +702,7 @@
             { 
                 setId: 4, id: "g3", question: "1929 में किसने यह प्रमाणित किया कि ब्रह्मांड का निरंतर विस्तार हो रहा है?", answer: "एडविन हबल", 
                 theory: "एडविन हबल ने ब्रह्मांड के विस्तार की परिकल्पना दी। उन्होंने बताया कि दूर की आकाशगंगाएं पृथ्वी से और दूर जा रही हैं, जिससे ब्रह्मांड के फैलने का प्रमाण मिला।", 
-                booster: "Brain Booster 🧠: इन्हीं के नाम पर 'हबल टेलीस्कोप' का नाम रखा गया है।",
+                booster: "Brain Booster 🧠: इन्हीं के नाम पर 'हबल टेलीस्कोप' का नाम रखा गया।",
                 options: ["एडविन हबल", "फ्रेड होयल", "थॉमस गोल्ड", "जॉर्ज लेमैत्रे"]
             },
             { 
@@ -785,7 +786,7 @@
                 options: ["सूर्य धब्बे (Sunspots)", "सौर ज्वाला (Solar Flare)", "कोरोना", "सौर पवन (Solar Wind)"]
             },
             { 
-                setId: 5, id: "g17", "question": "पृथ्वी के ध्रुवीय क्षेत्रों में वायुमंडल से टकराने वाली सौर ज्वालाओं से उत्पन्न प्रकाश को क्या कहते हैं?", answer: "अरोरा (Aurora)", 
+                setId: 5, id: "g17", question: "पृथ्वी के ध्रुवीय क्षेत्रों में वायुमंडल से टकराने वाली सौर ज्वालाओं से उत्पन्न प्रकाश को क्या कहते हैं?", answer: "अरोरा (Aurora)", 
                 theory: "उत्तरी ध्रुव पर इसे 'अरोरा बोरेलिस' (Aurora Borealis) और दक्षिणी ध्रुव पर 'अरोरा ऑस्ट्रेलिस' (Aurora Australis) कहा जाता है।", 
                 booster: "Brain Booster 🧠: ऑस्ट्रेलिया दक्षिण में है, इसलिए वहां 'ऑस्ट्रेलिस' होता है।",
                 options: ["अरोरा (Aurora)", "पल्सर", "सुपरनोवा", "धूमकेतु"]
@@ -994,25 +995,10 @@
                 booster: "Brain Booster 🧠: 2040 तक इसरो का लक्ष्य चंद्रमा पर मानव भेजना है।",
                 options: ["2035", "2030", "2040", "2047"]
             }
-            
-            /* 
-             ====================================================
-             HOW TO ADD NEW QUESTIONS:
-             Just add a new object here. Look at the subjectsData array below to see which 'setId' matches which Topic.
-             Example for Geography (setId: 4):
-             { 
-                setId: 4, id: "q31", question: "भारत का सबसे दक्षिणी बिंदु कौन सा है?", answer: "इंदिरा पॉइंट", 
-                theory: "भारत का सबसे दक्षिणी बिंदु इंदिरा पॉइंट है, जो ग्रेट निकोबार द्वीप में स्थित है।", 
-                booster: "Brain Booster 🧠: ...",
-                options: ["इंदिरा पॉइंट", "कन्याकुमारी", "गुहार मोती", "किबिथू"]
-             }
-             ====================================================
-            */
         ];
 
         // ==========================================
         // DYNAMIC HIERARCHICAL FOLDER STRUCTURE (SUBJECTS -> TOPICS -> SETS)
-        // Add new Subjects and Topics here. The UI will build itself automatically!
         // ==========================================
         const subjectsData = [
             {
@@ -1221,6 +1207,45 @@
         let qScore = 0;
         let globalSeconds = 0;
 
+        // Hardware Back Button Integration
+        window.addEventListener('popstate', function(e) {
+            const overlayQuiz = document.getElementById('overlay-quiz');
+            const overlayFlashcard = document.getElementById('overlay-flashcard');
+            const viewQuizSets = document.getElementById('view-quiz-sets');
+            const viewQuizTopics = document.getElementById('view-quiz-topics');
+            const viewSets = document.getElementById('view-sets');
+            const viewTopics = document.getElementById('view-topics');
+
+            if (!overlayQuiz.classList.contains('hidden')) {
+                overlayQuiz.classList.add('hidden');
+            } else if (!overlayFlashcard.classList.contains('hidden')) {
+                overlayFlashcard.classList.add('hidden');
+                clearInterval(timerInterval);
+                if(currentSubjectId && currentTopicId) {
+                    renderSetsGrid(currentSubjectId, currentTopicId);
+                }
+                updateStats();
+            } else if (viewQuizSets.classList.contains('active')) {
+                viewQuizSets.classList.remove('active');
+                viewQuizTopics.classList.add('active');
+            } else if (viewQuizTopics.classList.contains('active')) {
+                viewQuizTopics.classList.remove('active');
+                document.getElementById('view-quiz').classList.add('active');
+            } else if (viewSets.classList.contains('active')) {
+                viewSets.classList.remove('active');
+                viewTopics.classList.add('active');
+                updateStats();
+            } else if (viewTopics.classList.contains('active')) {
+                viewTopics.classList.remove('active');
+                document.getElementById('view-home').classList.add('active');
+                updateStats();
+            }
+        });
+
+        function pushAppHistory() {
+            history.pushState({ appView: true }, "", window.location.href);
+        }
+
         function initApp() {
             setupNavigation();
             setupSearch();
@@ -1268,33 +1293,9 @@
             updateStats();
         }
 
-        function goBackToHome() {
-            document.getElementById('view-topics').classList.remove('active');
-            document.getElementById('view-home').classList.add('active');
-            updateStats();
-        }
-
-        function goBackToTopics() {
-            document.getElementById('view-sets').classList.remove('active');
-            document.getElementById('view-topics').classList.add('active');
-            updateStats();
-        }
-
-        function closeOverlay(id) {
-            document.getElementById(id).classList.add('hidden');
-            if(id === 'overlay-flashcard') {
-                clearInterval(timerInterval);
-                if(currentSubjectId && currentTopicId) {
-                    renderSetsGrid(currentSubjectId, currentTopicId);
-                }
-                updateStats();
-            }
-            if(id === 'overlay-quiz') {
-                if(currentSubjectId && currentTopicId) {
-                    openQuizTopic(currentSubjectId, currentTopicId);
-                }
-            }
-        }
+        function goBackToHome() { history.back(); }
+        function goBackToTopics() { history.back(); }
+        function closeOverlay(id) { history.back(); }
 
         function updateStats() {
             let totalSetsCount = 0;
@@ -1332,7 +1333,7 @@
                         <div class="cat-info">
                             <h3>${sub.title}</h3>
                             <p>${sub.topics.length} Topics • ${totalSets} Sets</p>
-                            <div style="height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);">
+                            <div style="height: 3px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);">
                                 <div style="height: 100%; width: ${progress}%; background: linear-gradient(90deg, var(--primary), var(--green)); border-radius: 10px;"></div>
                             </div>
                         </div>
@@ -1344,6 +1345,7 @@
 
         // --- RENDER 2: Topics under a Subject ---
         function openSubject(subjectId) {
+            pushAppHistory();
             currentSubjectId = subjectId;
             const sub = subjectsData.find(s => s.id === subjectId);
             
@@ -1362,11 +1364,11 @@
 
                 list.innerHTML += `
                     <div class="category-card" onclick="openTopic('${subjectId}', '${topic.id}')" style="background: rgba(255,255,255,0.03);">
-                        <div class="cat-icon-box" style="background: rgba(6, 182, 212, 0.1);"><i class="fa-solid ${topic.icon}"></i></div>
+                        <div class="cat-icon-box" style="background: rgba(16, 185, 129, 0.1);"><i class="fa-solid ${topic.icon}"></i></div>
                         <div class="cat-info">
                             <h3 style="font-size: 16px;">${topic.title}</h3>
                             <p>${topic.subtitle} (${topic.sets.length} Sets)</p>
-                            <div style="height: 4px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 8px;">
+                            <div style="height: 2px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 8px;">
                                 <div style="height: 100%; width: ${progress}%; background: var(--green); border-radius: 10px;"></div>
                             </div>
                         </div>
@@ -1378,6 +1380,7 @@
 
         // --- RENDER 3: Sets under a Topic ---
         function openTopic(subjectId, topicId) {
+            pushAppHistory();
             currentSubjectId = subjectId;
             currentTopicId = topicId;
             
@@ -1434,6 +1437,7 @@
 
         // --- FLASHCARD LOGIC ---
         function openFlashcards(setNum, setTitle) {
+            pushAppHistory();
             currentSetIndex = setNum;
             currentSetFlippedCards.clear();
             totalFlips = 0;
@@ -1490,7 +1494,7 @@
                         </div>
                         <div class="card-back" onclick="handleCardFlip(event, this, ${index})">
                             <div class="fc-top-row" style="margin-bottom: 15px;">
-                                <span class="fc-number" style="color: var(--primary); background: rgba(6, 182, 212, 0.1);">Q${index + 1}</span>
+                                <span class="fc-number" style="color: var(--primary); background: rgba(16, 185, 129, 0.1);">Q${index + 1}</span>
                                 <span style="font-size: 11px; color: var(--text-muted);"><i class="fa-solid fa-rotate"></i> Tap to flip</span>
                             </div>
                             <div style="flex:1; display:flex; flex-direction:column; text-align:left;">
@@ -1660,15 +1664,8 @@
             document.getElementById('view-quiz').classList.add('active');
         }
 
-        function goBackToQuizHome() {
-            document.getElementById('view-quiz-topics').classList.remove('active');
-            document.getElementById('view-quiz').classList.add('active');
-        }
-
-        function goBackToQuizTopics() {
-            document.getElementById('view-quiz-sets').classList.remove('active');
-            document.getElementById('view-quiz-topics').classList.add('active');
-        }
+        function goBackToQuizHome() { history.back(); }
+        function goBackToQuizTopics() { history.back(); }
 
         // Render 1: Quiz Subjects
         function renderQuizSubjects() {
@@ -1693,6 +1690,7 @@
 
         // Render 2: Quiz Topics
         function openQuizSubject(subjectId) {
+            pushAppHistory();
             currentSubjectId = subjectId;
             const sub = subjectsData.find(s => s.id === subjectId);
             
@@ -1719,6 +1717,7 @@
 
         // Render 3: Quiz Sets
         function openQuizTopic(subjectId, topicId) {
+            pushAppHistory();
             currentSubjectId = subjectId;
             currentTopicId = topicId;
             const sub = subjectsData.find(s => s.id === subjectId);
@@ -1764,6 +1763,7 @@
         }
 
         function initQuizSession(setId) {
+            pushAppHistory();
             qCurrentSetId = setId;
             qScore = 0;
             qIndex = 0;
